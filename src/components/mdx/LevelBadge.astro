@@ -1,0 +1,19 @@
+---
+/**
+ * CEFR level chip — exactly one after every ### subsection heading
+ * (GRAMMAR-AUTHORING-GUIDE.md §3). Bands share the site palette: A=teal,
+ * B=gold, C=plum.
+ */
+interface Props {
+  level: string;
+}
+
+const { level } = Astro.props;
+if (!/^(A1|A2|B1|B2|C1|C2)\+?$/.test(level) || level === 'C2+') {
+  throw new Error(`<LevelBadge> invalid level "${level}"`);
+}
+
+const band = level.startsWith('A') ? 'text-success bg-success-bg' : level.startsWith('B') ? 'text-gold bg-gold-bg' : 'text-grammar bg-grammar-soft';
+---
+
+<span class:list={['mb-2 inline-block rounded-pill px-2.5 py-0.5 text-xs font-bold tracking-wide select-none', band]}>{level}</span>

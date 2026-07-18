@@ -1,0 +1,116 @@
+---
+/**
+ * Shared page chrome (SPEC §7: nav structure identical across sections; only
+ * the active-link accent flexes — coral for vocabulary, plum for grammar).
+ */
+import '../styles/global.css';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Which nav item is active — drives the accent color of that pill only. */
+  section?: 'vocabulary' | 'grammar' | 'progress' | null;
+}
+
+const { title, description, section = null } = Astro.props;
+
+const navItems = [
+  { key: 'vocabulary', label: 'Vocabulary', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
+  { key: 'grammar', label: 'Grammar', href: withBase('/grammar/'), activeClass: 'text-grammar bg-grammar-soft' },
+  { key: 'progress', label: 'Progress', href: withBase('/progress/'), activeClass: 'text-ink bg-surface-sunken' },
+] as const;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    {description && <meta name="description" content={description} />}
+    <title>{title}</title>
+    <script is:inline>
+      // Theme init before first paint — user toggle wins, else system preference.
+      (() => {
+        const stored = localStorage.getItem('lalista:theme');
+        const theme =
+          stored === 'dark' || stored === 'light'
+            ? stored
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <nav class="flex items-center justify-between border-b border-border bg-surface-raised px-4 py-4 sm:px-8">
+      <a href={withBase('/')} class="font-display flex items-center gap-0.5 text-2xl font-semibold text-ink no-underline">
+        <span class="font-bold text-vocab">¡</span>LaLista
+      </a>
+      <div class="flex items-center gap-1 sm:gap-3">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                'rounded-pill px-3 py-2 text-sm font-semibold no-underline',
+                section === item.key ? item.activeClass : 'text-ink-soft hover:text-ink',
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle dark mode"
+          class="ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border border-border bg-surface-base text-ink-soft hover:text-ink"
+        >
+          {/* Sun shown in dark mode ("switch to light"), moon in light mode — punch-list fix */}
+          <svg class="theme-icon-moon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="theme-icon-sun h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer class="mt-auto border-t border-border px-8 py-6 text-center text-xs text-ink-faint">
+      <p>
+        LaLista is free, ad-free and account-free. Definitions informed by WordReference and the RAE.
+        Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS.
+      </p>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById('theme-toggle');
+      toggle?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('lalista:theme', next);
+      });
+    </script>
+
+    <style>
+      /* Icon swap follows the CURRENT theme (punch list: never static) */
+      .theme-icon-sun {
+        display: none;
+      }
+      :global([data-theme='dark']) .theme-icon-moon {
+        display: none;
+      }
+      :global([data-theme='dark']) .theme-icon-sun {
+        display: block;
+      }
+    </style>
+  </body>
+</html>

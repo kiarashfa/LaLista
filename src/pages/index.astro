@@ -1,37 +1,37 @@
 ---
-/**
- * Round 1 skeleton — verifies the data pipeline + content collections end to
- * end. Replaced by the real landing/profile page in later rounds.
- */
-import { getCollection } from 'astro:content';
-import '../styles/global.css';
-import words from '../content/vocabulary/words.json';
+/** Landing page. The profile-picker layer arrives with persistence in Round 5. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
 import groups from '../content/vocabulary/groups.json';
-
-const lessons = await getCollection('grammarLessons');
-const meta = await getCollection('grammarMeta');
-const exercises = await getCollection('grammarExercises');
-const totalExercises = exercises.reduce((n, e) => n + e.data.exercises.length, 0);
-const withLL = words.filter((w) => w.audio.linguaLibre).length;
+import words from '../content/vocabulary/words.json';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LaLista — build skeleton</title>
-  </head>
-  <body class="mx-auto max-w-2xl p-8 font-sans">
-    <h1 class="text-3xl font-bold">LaLista <span class="text-sm font-normal">(Round 1 skeleton)</span></h1>
-    <p class="mt-2">Data pipeline verification — this page is replaced in Round 2.</p>
-    <ul class="mt-6 list-disc space-y-1 pl-6">
-      <li>Vocabulary: <b>{words.length}</b> words in <b>{groups.length}</b> groups ({withLL} with Lingua Libre audio)</li>
-      <li>Grammar lessons (MDX): <b>{lessons.length}</b></li>
-      <li>Grammar meta entries: <b>{meta.length}</b></li>
-      <li>Grammar exercises: <b>{totalExercises}</b> across <b>{exercises.length}</b> workbooks</li>
-      <li>First lesson: <b>{meta.find((m) => m.id === 'lesson-01')?.data.title}</b></li>
-      <li>Last lesson: <b>{meta.find((m) => m.id === 'lesson-57')?.data.title}</b></li>
-    </ul>
-  </body>
-</html>
+<BaseLayout title="LaLista — learn Spanish, the Castellano way" description="Free Spanish vocabulary trainer and complete grammar reference. No ads, no accounts — your progress lives in a file you keep.">
+  <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-16 sm:px-8">
+    <header class="relative mx-auto max-w-[640px] text-center">
+      <span class="font-display pointer-events-none absolute -top-10 -left-4 z-0 text-[11rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
+      <span class="font-display pointer-events-none absolute -right-4 -bottom-16 z-0 text-[11rem] leading-none font-light text-grammar opacity-[0.06] select-none" aria-hidden="true">¡</span>
+      <h1 class="display-friendly relative z-10 m-0 text-5xl font-medium text-ink sm:text-6xl">¡LaLista!</h1>
+      <p class="relative z-10 mx-auto mt-5 max-w-[480px] text-lg leading-relaxed text-ink-soft">
+        Learn Spanish — the Castellano way. {words.length} words with real pronunciation, and a grammar reference that
+        covers every topic completely.
+      </p>
+      <p class="relative z-10 mt-3 text-sm text-ink-faint">Free. No ads. No accounts — your progress lives in a file you keep.</p>
+    </header>
+
+    <div class="mx-auto mt-14 grid max-w-[720px] gap-5 sm:grid-cols-2">
+      <a href={withBase('/vocabulary/')} class="group rounded-lg border border-border bg-surface-raised p-6 no-underline shadow-md transition-shadow hover:shadow-lg">
+        <p class="m-0 text-xs font-bold tracking-widest text-vocab uppercase">Vocabulary</p>
+        <p class="display-friendly m-0 mt-2 text-2xl font-semibold text-ink group-hover:text-vocab">Flashcard trainer</p>
+        <p class="m-0 mt-2 text-sm leading-relaxed text-ink-soft">
+          {words.length} words in {groups.length} topic groups, three study modes, audio for every word.
+        </p>
+      </a>
+      <a href={withBase('/grammar/')} class="group rounded-lg border border-border bg-surface-raised p-6 no-underline shadow-md transition-shadow hover:shadow-lg">
+        <p class="m-0 text-xs font-bold tracking-widest text-grammar uppercase">Grammar</p>
+        <p class="display-editorial m-0 mt-2 text-2xl font-semibold text-ink group-hover:text-grammar">The reference</p>
+        <p class="m-0 mt-2 text-sm leading-relaxed text-ink-soft">57 chapters, each one grammatical topic covered end-to-end, with interactive workbooks.</p>
+      </a>
+    </div>
+  </main>
+</BaseLayout>

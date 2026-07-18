@@ -1,0 +1,19 @@
+---
+/**
+ * Anchor override for lesson MDX. Authored cross-links use relative hrefs
+ * (`../lesson-23`) — resolved here to real, base-path-aware routes so they
+ * work under any deployment base and trailing-slash config.
+ */
+import { withBase } from '../../lib/paths';
+
+interface Props {
+  href?: string;
+}
+
+const { href = '', ...rest } = Astro.props;
+const match = href.match(/^\.\.\/(lesson-\d{2})\/?$/);
+const resolved = match ? withBase(`/grammar/${match[1]}/`) : href;
+const external = /^https?:\/\//.test(resolved);
+---
+
+<a href={resolved} {...rest} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}><slot /></a>

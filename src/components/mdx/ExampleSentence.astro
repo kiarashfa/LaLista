@@ -1,0 +1,19 @@
+---
+/** Text-only example sentence — grammar has no audio (SPEC §8). */
+interface Props {
+  es: string;
+  en: string;
+  note?: string;
+}
+
+const { es, en, note } = Astro.props;
+---
+
+<figure class="my-6 flex items-start gap-3 rounded-md border-l-[3px] border-grammar bg-surface-sunken px-5 py-4">
+  <span class="font-display mt-1 shrink-0 text-3xl leading-[0.6] text-grammar opacity-40 select-none" aria-hidden="true">&ldquo;</span>
+  <div class="min-w-0">
+    <p class="m-0 font-semibold text-ink">{es}</p>
+    <p class="m-0 mt-0.5 text-sm text-ink-faint">{en}</p>
+    {note && <figcaption class="mt-2 border-t border-border pt-2 text-xs text-ink-soft italic">{note}</figcaption>}
+  </div>
+</figure>

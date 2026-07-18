@@ -1,0 +1,136 @@
+---
+/**
+ * The lesson READ page — prose only; exercises live on the separate workbook
+ * page reached via the explicit CTA (SPEC §6: two pages, not one scroll).
+ */
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BootTable from '../../../components/mdx/BootTable.astro';
+import ExampleSentence from '../../../components/mdx/ExampleSentence.astro';
+import GrammarNote from '../../../components/mdx/GrammarNote.astro';
+import LessonLink from '../../../components/mdx/LessonLink.astro';
+import LevelBadge from '../../../components/mdx/LevelBadge.astro';
+import SentenceStructure from '../../../components/mdx/SentenceStructure.astro';
+import { lessonId, lessonNumber, partOf } from '../../../lib/grammarParts';
+import { withBase } from '../../../lib/paths';
+
+export async function getStaticPaths() {
+  const metas = await getCollection('grammarMeta');
+  return metas.map((meta) => ({ params: { lesson: meta.id }, props: { meta } }));
+}
+
+const { meta } = Astro.props;
+const id = meta.id;
+const number = lessonNumber(id);
+
+const lesson = await getEntry('grammarLessons', id);
+if (!lesson) throw new Error(`Missing lesson.mdx for ${id}`);
+const { Content } = await render(lesson);
+
+const exercises = await getEntry('grammarExercises', id);
+const exerciseCount = exercises?.data.exercises.length ?? 0;
+const exerciseTypes = [...new Set(exercises?.data.exercises.map((e) => e.type) ?? [])];
+
+const allMetas = await getCollection('grammarMeta');
+const titleOf = (lid: string) => allMetas.find((m) => m.id === lid)?.data.title ?? lid;
+
+const part = partOf(id);
+const partIds = Array.from({ length: part.to - part.from + 1 }, (_, i) => lessonId(part.from + i));
+const prevId = number > 1 ? lessonId(number - 1) : null;
+const nextId = number < 57 ? lessonId(number + 1) : null;
+
+const components = {
+  BootTable,
+  ExampleSentence,
+  GrammarNote,
+  LevelBadge,
+  SentenceStructure,
+  a: LessonLink,
+};
+---
+
+<BaseLayout section="grammar" title={`${meta.data.title} — LaLista Grammar`} description={meta.data.summary}>
+  <div class="mx-auto grid w-full max-w-[1100px] flex-1 grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)]">
+    <aside class="hidden border-r border-border px-6 py-10 lg:block">
+      <nav class="sticky top-6">
+        <p class="mb-3 text-xs font-bold tracking-widest text-grammar uppercase">Part {part.numeral} · {part.title}</p>
+        {
+          partIds.map((pid) => (
+            <a
+              href={withBase(`/grammar/${pid}/`)}
+              class:list={[
+                'block border-l-2 py-2 pl-3 text-[0.92rem] no-underline',
+                pid === id ? 'border-grammar font-semibold text-grammar' : 'border-transparent text-ink-faint hover:text-ink',
+              ]}
+            >
+              {lessonNumber(pid)} · {titleOf(pid)}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
+
+    <article class="w-full max-w-[720px] px-6 py-12 sm:px-10">
+      <header class="relative">
+        {/* Ghosted ¡ — anchored to the article column (not the grid), so it can't clip into the sidebar (§7 punch list) */}
+        <span class="font-display pointer-events-none absolute -top-6 -left-3 z-0 text-[10rem] leading-none font-light text-grammar opacity-[0.07] select-none" aria-hidden="true">¡</span>
+        <p class="relative z-10 m-0 mb-3 text-sm font-bold tracking-wider text-grammar uppercase">Chapter {number} · {meta.data.level}</p>
+        <h1 class="display-editorial relative z-10 m-0 mb-6 text-4xl leading-tight font-medium text-ink sm:text-[2.6rem]">{meta.data.title}</h1>
+      </header>
+
+      {
+        meta.data.prerequisites.length > 0 && (
+          <p class="mb-8 rounded-md bg-surface-sunken px-4 py-3 text-sm text-ink-soft">
+            Might help first:{' '}
+            {meta.data.prerequisites.map((pid, i) => (
+              <>
+                {i > 0 && ', '}
+                <a href={withBase(`/grammar/${pid}/`)} class="font-semibold text-grammar">
+                  Ch. {lessonNumber(pid)} — {titleOf(pid)}
+                </a>
+              </>
+            ))}
+            <span class="text-ink-faint"> (a suggestion, never a requirement)</span>
+          </p>
+        )
+      }
+
+      <div class="lesson-prose">
+        <Content components={components} />
+      </div>
+
+      <div class="mt-14 flex flex-wrap items-center justify-between gap-4 rounded-md border-[1.5px] border-dashed border-grammar px-6 py-5">
+        <div>
+          <p class="m-0 font-bold text-ink">Ready to practice?</p>
+          <p class="m-0 mt-0.5 text-sm text-ink-faint">
+            {exerciseCount} exercises · {exerciseTypes.slice(0, 3).join(', ')}{exerciseTypes.length > 3 ? '…' : ''}
+          </p>
+        </div>
+        <a href={withBase(`/grammar/${id}/workbook/`)} class="rounded-pill bg-grammar px-6 py-3 text-sm font-bold text-white no-underline hover:bg-grammar-hover">
+          Start workbook →
+        </a>
+      </div>
+
+      <nav class="mt-10 flex justify-between gap-4 border-t border-border pt-6 text-sm">
+        {
+          prevId ? (
+            <a href={withBase(`/grammar/${prevId}/`)} class="max-w-[45%] text-ink-faint no-underline hover:text-grammar">
+              ← Ch. {number - 1} · {titleOf(prevId)}
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          nextId ? (
+            <a href={withBase(`/grammar/${nextId}/`)} class="max-w-[45%] text-right text-ink-faint no-underline hover:text-grammar">
+              Ch. {number + 1} · {titleOf(nextId)} →
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+    </article>
+  </div>
+</BaseLayout>

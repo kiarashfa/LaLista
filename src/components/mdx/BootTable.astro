@@ -1,0 +1,104 @@
+---
+/**
+ * Six-cell pronoun grid with an auto-computed "boot" outline (guide §3).
+ * The outline is NEVER authored — it's detected from the forms:
+ *
+ *  - Reference stem = longest common prefix of nosotros + vosotros (the row
+ *    that stays regular in stem-changing verbs).
+ *  - A cell is deviant if it doesn't start with that stem, or — yo only —
+ *    if its remainder after the stem is "go" (g-insertion: tengo, salgo,
+ *    pongo, vengo… a closed irregular family; "pago" stays regular because
+ *    its remainder is just "o").
+ *  - Recognized clusters: the classic 4-cell boot (yo/tú/él/ellos) or a
+ *    lone irregular yo. Anything else — fully regular verbs, uniform
+ *    irregular stems (tuve…), non-verb sets like possessives — renders as a
+ *    plain grid, by design (SPEC §15).
+ */
+const PRONOUNS = ['yo', 'tú', 'él/ella/usted', 'nosotros', 'vosotros', 'ellos/ellas/ustedes'] as const;
+type Pronoun = (typeof PRONOUNS)[number];
+
+interface Props {
+  label: string;
+  caption?: string;
+  forms: Record<Pronoun, string>;
+}
+
+const { label, caption, forms } = Astro.props;
+
+const missing = PRONOUNS.filter((p) => typeof forms?.[p] !== 'string' || !forms[p]);
+const extra = Object.keys(forms ?? {}).filter((k) => !PRONOUNS.includes(k as Pronoun));
+if (missing.length || extra.length) {
+  throw new Error(`<BootTable label="${label}"> bad forms — missing: [${missing}] unexpected: [${extra}]`);
+}
+
+function lcp(a: string, b: string): string {
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  return a.slice(0, i);
+}
+
+const refStem = lcp(forms['nosotros'], forms['vosotros']);
+const deviant = new Set<Pronoun>(
+  PRONOUNS.filter((p) => p !== 'nosotros' && p !== 'vosotros').filter((p) => {
+    const form = forms[p];
+    if (!form.startsWith(refStem)) return true;
+    return p === 'yo' && form.slice(refStem.length) === 'go';
+  }),
+);
+
+const BOOT: Pronoun[] = ['yo', 'tú', 'él/ella/usted', 'ellos/ellas/ustedes'];
+const isBoot = deviant.size === 4 && BOOT.every((p) => deviant.has(p));
+const isYoOnly = deviant.size === 1 && deviant.has('yo');
+const cluster = isBoot || isYoOnly ? deviant : new Set<Pronoun>();
+
+/* Grid: left column singular top-to-bottom, right column plural. */
+const LAYOUT: { pronoun: Pronoun; neighbors: Partial<Record<'top' | 'right' | 'bottom' | 'left', Pronoun>> }[] = [
+  { pronoun: 'yo', neighbors: { right: 'nosotros', bottom: 'tú' } },
+  { pronoun: 'nosotros', neighbors: { left: 'yo', bottom: 'vosotros' } },
+  { pronoun: 'tú', neighbors: { top: 'yo', right: 'vosotros', bottom: 'él/ella/usted' } },
+  { pronoun: 'vosotros', neighbors: { top: 'nosotros', left: 'tú', bottom: 'ellos/ellas/ustedes' } },
+  { pronoun: 'él/ella/usted', neighbors: { top: 'tú', right: 'ellos/ellas/ustedes' } },
+  { pronoun: 'ellos/ellas/ustedes', neighbors: { top: 'vosotros', left: 'él/ella/usted' } },
+];
+
+/** Accent edges via inset box-shadow (no layout shift): drawn on every cluster-cell side not shared with another cluster cell. */
+function outlineShadow(pronoun: Pronoun): string | undefined {
+  if (!cluster.has(pronoun)) return undefined;
+  const { neighbors } = LAYOUT.find((c) => c.pronoun === pronoun)!;
+  const edges: string[] = [];
+  const facesOut = (side: 'top' | 'right' | 'bottom' | 'left') => {
+    const n = neighbors[side];
+    return !n || !cluster.has(n);
+  };
+  if (facesOut('top')) edges.push('inset 0 2px 0 0 var(--grammar-accent)');
+  if (facesOut('right')) edges.push('inset -2px 0 0 0 var(--grammar-accent)');
+  if (facesOut('bottom')) edges.push('inset 0 -2px 0 0 var(--grammar-accent)');
+  if (facesOut('left')) edges.push('inset 2px 0 0 0 var(--grammar-accent)');
+  return edges.join(', ');
+}
+---
+
+<figure class="my-8 overflow-hidden rounded-md border border-border bg-surface-raised shadow-sm">
+  <figcaption class="border-b border-border bg-grammar-soft px-5 py-3.5">
+    <span class="font-display text-lg text-grammar italic">{label}</span>
+    {caption && <span class="ml-2 text-sm text-ink-faint">{caption}</span>}
+  </figcaption>
+  <div class="grid grid-cols-2">
+    {
+      LAYOUT.map(({ pronoun }, i) => (
+        <div
+          class:list={[
+            'flex items-baseline justify-between gap-3 px-5 py-3',
+            i < 4 && 'border-b border-border',
+            i % 2 === 0 && 'border-r border-border',
+            cluster.has(pronoun) && 'bg-grammar-soft',
+          ]}
+          style={outlineShadow(pronoun) ? { boxShadow: outlineShadow(pronoun) } : undefined}
+        >
+          <span class="text-sm font-medium text-ink-faint">{pronoun}</span>
+          <span class:list={['font-display text-[1.05rem] font-semibold', cluster.has(pronoun) ? 'text-grammar' : 'text-ink']}>{forms[pronoun]}</span>
+        </div>
+      ))
+    }
+  </div>
+</figure>

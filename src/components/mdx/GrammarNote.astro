@@ -1,0 +1,61 @@
+---
+/**
+ * Callout for warnings, exceptions and regional (Spain vs. Latin America)
+ * usage notes. Three fixed types (guide §3) — don't invent more.
+ */
+interface Props {
+  type: 'tip' | 'warning' | 'regional';
+}
+
+const { type } = Astro.props;
+if (!['tip', 'warning', 'regional'].includes(type)) {
+  throw new Error(`<GrammarNote> invalid type "${type}"`);
+}
+
+const styles = {
+  tip: { box: 'border-success bg-success-bg', label: 'text-success', text: 'Tip' },
+  warning: { box: 'border-warning bg-gold-bg', label: 'text-warning', text: 'Watch out' },
+  regional: { box: 'border-grammar bg-grammar-soft', label: 'text-grammar', text: 'Regional note' },
+}[type];
+---
+
+<aside class:list={['my-6 rounded-md border-l-[3px] px-5 py-4', styles.box]}>
+  <p class:list={['m-0 mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase', styles.label]}>
+    {
+      type === 'tip' ? (
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18h6m-5 3h4m-2-21a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V16h6v-1.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 0z" transform="translate(0 1.5) scale(0.95)" />
+        </svg>
+      ) : type === 'warning' ? (
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m10.3 3.8-8.5 14.7a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0z" />
+          <path d="M12 9v4m0 4h.01" />
+        </svg>
+      ) : (
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+      )
+    }
+    {styles.text}
+  </p>
+  <div class="note-body text-[0.95rem] leading-relaxed text-ink-soft">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .note-body :global(p) {
+    margin: 0.35rem 0;
+  }
+  .note-body :global(p:first-child) {
+    margin-top: 0;
+  }
+  .note-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .note-body :global(strong) {
+    color: var(--ink);
+  }
+</style>

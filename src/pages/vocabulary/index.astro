@@ -1,0 +1,34 @@
+---
+/** Vocabulary hub — 27 topic groups. Trainer routes arrive in Round 4. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import groups from '../../content/vocabulary/groups.json';
+import words from '../../content/vocabulary/words.json';
+---
+
+<BaseLayout
+  section="vocabulary"
+  title="Vocabulary — LaLista"
+  description="2001 Spanish (Castellano) words across 27 topic groups, each with native and TTS pronunciation."
+>
+  <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-12 sm:px-8">
+    <header class="relative mb-12">
+      <span class="font-display pointer-events-none absolute -top-8 -left-2 z-0 text-[9rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
+      <h1 class="display-friendly relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">Vocabulary</h1>
+      <p class="relative z-10 mt-4 max-w-[600px] text-lg leading-relaxed text-ink-soft">
+        {words.length} words in {groups.length} topic groups, every one with audio. The flashcard trainer opens in Round 4 —
+        for now, here's the full map.
+      </p>
+    </header>
+
+    <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        groups.map((group) => (
+          <li class="flex flex-col rounded-md border border-border bg-surface-raised px-4 py-3 shadow-sm">
+            <span class="font-semibold text-ink">{group.title}</span>
+            <span class="mt-1 text-sm text-ink-faint">{group.count} words</span>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</BaseLayout>

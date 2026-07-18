@@ -1,0 +1,37 @@
+---
+/**
+ * Word-order visualization — color-coded roles, consistent site-wide so
+ * readers learn to recognize roles by color over time (guide §3).
+ */
+type Role = 'subject' | 'verb' | 'object' | 'pronoun' | 'connector' | 'other';
+
+interface Props {
+  parts: { text: string; role: Role }[];
+}
+
+const { parts } = Astro.props;
+
+const ROLE_STYLES: Record<Role, string> = {
+  subject: 'text-vocab bg-vocab-soft',
+  verb: 'text-success bg-success-bg',
+  object: 'text-gold bg-gold-bg',
+  pronoun: 'text-grammar bg-grammar-soft',
+  connector: 'text-ink-soft bg-surface-sunken',
+  other: 'text-ink-faint bg-surface-sunken',
+};
+
+for (const part of parts ?? []) {
+  if (!(part.role in ROLE_STYLES)) throw new Error(`<SentenceStructure> unknown role "${part.role}"`);
+}
+---
+
+<figure class="my-7 flex flex-wrap items-start gap-2">
+  {
+    parts.map((part) => (
+      <span class="flex flex-col items-center gap-1">
+        <span class:list={['rounded-sm px-3 py-1.5 text-[1.02rem] font-semibold', ROLE_STYLES[part.role]]}>{part.text}</span>
+        <span class="text-[0.65rem] font-semibold tracking-wider text-ink-faint uppercase select-none">{part.role}</span>
+      </span>
+    ))
+  }
+</figure>

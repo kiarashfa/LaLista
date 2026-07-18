@@ -19,6 +19,8 @@
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",
     "@astrojs/react": "^6.0.1",
+    "@fontsource-variable/figtree": "^5.2.10",
+    "@fontsource-variable/fraunces": "^5.2.9",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",

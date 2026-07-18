@@ -1,1 +1,278 @@
-@import "tailwindcss";
+/* ===== LaLista global styles ===== */
+/* Token values are the literal source of truth from docs/mockups/tokens.css
+   (owner-approved, SPEC §7) — do not re-derive or eyeball-adjust. */
+
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/figtree/wght.css';
+@import '@fontsource-variable/figtree/wght-italic.css';
+
+/* Dark mode is driven by the data-theme attribute (user toggle), not media query */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  /* --- Base surfaces --- */
+  --surface-base: #fafaf7;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f0eee7;
+  --ink: #1a1a2e;
+  --ink-soft: #4a4a5e;
+  --ink-faint: #8b8b9e;
+  --border: #e2e0d8;
+
+  /* --- Shared accent (identical in both sections — the unifying color) --- */
+  --success: #3d8b7d;
+  --success-bg: #e4f2ee;
+  --warning: #c9822b;
+  --error: #c24b4b;
+  --error-bg: #fbebea;
+
+  /* --- Vocabulary accent (coral — full saturation here) --- */
+  --vocab-accent: #e85d4c;
+  --vocab-accent-soft: #fbe4e0;
+  --vocab-accent-hover: #d14c3c;
+
+  /* --- Grammar accent (plum — same warm hue-family, calmer/muted) --- */
+  --grammar-accent: #8b4a6b;
+  --grammar-accent-soft: #f1e4eb;
+  --grammar-accent-hover: #733a57;
+
+  /* --- Achievement / mastered (shared, used sparingly) --- */
+  --gold: #b8912e;
+  --gold-bg: #f7efd9;
+
+  /* --- Shadows (renamed from tokens.css --shadow-* to avoid the Tailwind namespace) --- */
+  --elev-sm: 0 1px 2px rgba(26, 26, 46, 0.06), 0 1px 1px rgba(26, 26, 46, 0.04);
+  --elev-md: 0 4px 12px rgba(26, 26, 46, 0.08), 0 2px 4px rgba(26, 26, 46, 0.04);
+  --elev-lg: 0 12px 32px rgba(26, 26, 46, 0.14), 0 4px 8px rgba(26, 26, 46, 0.06);
+}
+
+[data-theme='dark'] {
+  --surface-base: #17171f;
+  --surface-raised: #1f1f2b;
+  --surface-sunken: #12121a;
+  --ink: #f0efea;
+  --ink-soft: #c3c2d4;
+  --ink-faint: #7c7c8e;
+  --border: #2e2e3d;
+
+  --success: #4fa695;
+  --success-bg: #17332c;
+  --warning: #d9954a;
+  --error: #d9756f;
+  --error-bg: #3a2020;
+
+  --vocab-accent: #f0725f;
+  --vocab-accent-soft: #3a2420;
+  --vocab-accent-hover: #f58671;
+
+  --grammar-accent: #b87ca0;
+  --grammar-accent-soft: #2e2130;
+  --grammar-accent-hover: #c892b2;
+
+  --gold: #d4af5c;
+  --gold-bg: #332c18;
+
+  --elev-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --elev-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --elev-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+@theme {
+  /* Typeface families — the shared "bones" (never change by section) */
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Figtree Variable', system-ui, sans-serif;
+
+  /* Radius scale (shared bones) — deliberately replaces Tailwind's defaults */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+}
+
+/* Runtime-switchable tokens exposed as Tailwind utilities (bg-surface-base,
+   text-ink, border-border, shadow-md, …) that follow the theme attribute. */
+@theme inline {
+  --color-surface-base: var(--surface-base);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-error-bg: var(--error-bg);
+  --color-vocab: var(--vocab-accent);
+  --color-vocab-soft: var(--vocab-accent-soft);
+  --color-vocab-hover: var(--vocab-accent-hover);
+  --color-grammar: var(--grammar-accent);
+  --color-grammar-soft: var(--grammar-accent-soft);
+  --color-grammar-hover: var(--grammar-accent-hover);
+  --color-gold: var(--gold);
+  --color-gold-bg: var(--gold-bg);
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+  --shadow-lg: var(--elev-lg);
+}
+
+body {
+  margin: 0;
+  background: var(--surface-base);
+  color: var(--ink);
+  font-family: var(--font-body);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+/* --- Fraunces expression presets (SPEC §7: same family, different axes) --- */
+/* Editorial — grammar headings: tighter optical size, low softness */
+.display-editorial {
+  font-family: var(--font-display);
+  font-variation-settings:
+    'opsz' 60,
+    'SOFT' 20,
+    'WONK' 0;
+}
+/* Friendly — vocabulary word display: soft + wonky at the same family */
+.display-friendly {
+  font-family: var(--font-display);
+  font-variation-settings:
+    'opsz' 40,
+    'SOFT' 80,
+    'WONK' 1;
+}
+
+/* --- Lesson prose (MDX-rendered markdown between components) --- */
+.lesson-prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+
+  & > p:first-child {
+    font-size: 1.08rem;
+  }
+
+  & h2 {
+    font-family: var(--font-display);
+    font-variation-settings:
+      'opsz' 40,
+      'SOFT' 20,
+      'WONK' 0;
+    font-weight: 550;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 2.75rem 0 1rem;
+  }
+
+  & h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin: 2.25rem 0 0.35rem;
+  }
+
+  & p {
+    margin: 1rem 0;
+  }
+
+  & strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  & ul,
+  & ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & li {
+    margin: 0.35rem 0;
+  }
+  & li::marker {
+    color: var(--ink-faint);
+  }
+
+  & a {
+    color: var(--grammar-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--grammar-accent) 35%, transparent);
+    text-underline-offset: 3px;
+  }
+  & a:hover {
+    text-decoration-color: var(--grammar-accent);
+  }
+
+  /* Markdown tables — same visual language as the conjugation-table mockup */
+  & table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1.5rem 0;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--elev-sm);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  & th,
+  & td {
+    padding: 0.65rem 1.1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  & th {
+    color: var(--ink-faint);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--surface-sunken);
+  }
+  & tr:last-child td {
+    border-bottom: none;
+  }
+  & td {
+    color: var(--ink-soft);
+  }
+  & td strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.02em;
+  }
+
+  & blockquote {
+    border-left: 3px solid var(--border);
+    margin: 1.25rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    color: var(--ink-faint);
+  }
+
+  & code {
+    font-size: 0.9em;
+    background: var(--surface-sunken);
+    border-radius: 5px;
+    padding: 0.1em 0.35em;
+  }
+
+  & hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+}
