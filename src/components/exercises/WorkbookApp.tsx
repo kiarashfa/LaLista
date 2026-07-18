@@ -16,6 +16,7 @@ import { MatchingPairs } from './MatchingPairs';
 import { GenderAgreement, MultipleChoice } from './MultipleChoice';
 import { SentenceReorder } from './SentenceReorder';
 import { ErrorCorrection, FillBlank, SentenceTransformation } from './TextExercises';
+import SaveNudge from '../profile/SaveNudge';
 
 interface Props {
   lessonId: string;
@@ -154,6 +155,7 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
           )}
         </p>
         <p className="mt-1 text-xs text-ink-faint">Retake any time — only your best attempt counts.</p>
+        <SaveNudge />
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"

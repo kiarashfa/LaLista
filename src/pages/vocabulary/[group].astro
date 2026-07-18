@@ -1,0 +1,20 @@
+---
+/** Group Study — the only mode that changes SRS stage (SPEC §8). */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GroupStudyApp from '../../components/trainer/GroupStudyApp';
+import { withBase } from '../../lib/paths';
+import groups from '../../content/vocabulary/groups.json';
+import allWords from '../../content/vocabulary/words.json';
+import type { Word } from '../../types/word';
+
+export async function getStaticPaths() {
+  return groups.map((group) => ({ params: { group: group.slug }, props: { group } }));
+}
+
+const { group } = Astro.props;
+const words = (allWords as unknown as Word[]).filter((w) => w.group === group.slug);
+---
+
+<BaseLayout section="vocabulary" title={`${group.title} — LaLista Vocabulary`} description={`Study the ${group.count} words of ${group.title} with spaced repetition and audio.`}>
+  <GroupStudyApp client:only="react" groupTitle={group.title} words={words} vocabularyUrl={withBase('/vocabulary/')} />
+</BaseLayout>

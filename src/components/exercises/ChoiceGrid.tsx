@@ -14,9 +14,12 @@ interface Props {
   onGraded: (correct: boolean, selected: string) => void;
   /** Grid columns on desktop; stacks on mobile regardless. */
   columns?: 1 | 2;
+  /** Section accent for hover states — plum (grammar) or coral (vocabulary). */
+  accent?: 'grammar' | 'vocab';
 }
 
-export function ChoiceGrid({ options, correct, onGraded, columns = 2 }: Props) {
+export function ChoiceGrid({ options, correct, onGraded, columns = 2, accent = 'grammar' }: Props) {
+  const hoverClass = accent === 'vocab' ? 'hover:border-vocab hover:bg-vocab-soft' : 'hover:border-grammar hover:bg-grammar-soft';
   const [selected, setSelected] = useState<string | null>(null);
   const answered = selected !== null;
 
@@ -59,7 +62,7 @@ export function ChoiceGrid({ options, correct, onGraded, columns = 2 }: Props) {
                   ? 'border-error bg-error-bg text-error'
                   : answered
                     ? 'border-border bg-surface-raised text-ink opacity-60'
-                    : 'border-border bg-surface-raised text-ink hover:border-grammar hover:bg-grammar-soft active:border-b-2 active:translate-y-[2px]',
+                    : `border-border bg-surface-raised text-ink ${hoverClass} active:border-b-2 active:translate-y-[2px]`,
             ].join(' ')}
           >
             <KbdBadge>{i + 1}</KbdBadge>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
+---
+
+<BaseLayout title="Page not found — LaLista">
+  <main class="mx-auto w-full max-w-[560px] flex-1 px-6 py-20 text-center">
+    <p class="display-friendly m-0 text-7xl font-semibold text-vocab" aria-hidden="true">¿?</p>
+    <h1 class="mt-4 mb-2 text-2xl font-bold text-ink">Esta página no existe</h1>
+    <p class="m-0 leading-relaxed text-ink-soft">This page doesn't exist — but 2001 words and 57 grammar chapters do.</p>
+    <p class="mt-6 flex justify-center gap-3">
+      <a href={withBase('/vocabulary/')} class="rounded-pill bg-vocab px-5 py-2.5 text-sm font-bold text-white no-underline hover:bg-vocab-hover">Vocabulary</a>
+      <a href={withBase('/grammar/')} class="rounded-pill bg-grammar px-5 py-2.5 text-sm font-bold text-white no-underline hover:bg-grammar-hover">Grammar</a>
+    </p>
+  </main>
+</BaseLayout>

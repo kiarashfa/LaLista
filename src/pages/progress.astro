@@ -1,14 +1,36 @@
 ---
-/** Progress / load-save page — full implementation arrives in Round 5 (SPEC §5, §9). */
+/** Progress page — SPEC §5's load/save surface + §9's dashboard and profile. */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProgressApp from '../components/profile/ProgressApp';
+import { GRAMMAR_PARTS, lessonId, lessonNumber } from '../lib/grammarParts';
+import { withBase } from '../lib/paths';
+import groups from '../content/vocabulary/groups.json';
+import words from '../content/vocabulary/words.json';
+
+const metas = await getCollection('grammarMeta');
+const titleOf = new Map(metas.map((m) => [m.id, m.data.title]));
+
+const groupCards = groups.map((g) => ({
+  slug: g.slug,
+  title: g.title,
+  count: g.count,
+  url: withBase(`/vocabulary/${g.slug}/`),
+  wordIds: words.filter((w) => w.group === g.slug).map((w) => w.id),
+}));
+
+const parts = GRAMMAR_PARTS.map((part) => ({
+  numeral: part.numeral,
+  title: part.title,
+  lessons: Array.from({ length: part.to - part.from + 1 }, (_, i) => {
+    const id = lessonId(part.from + i);
+    return { id, number: lessonNumber(id), title: titleOf.get(id) ?? id, url: withBase(`/grammar/${id}/`) };
+  }),
+}));
 ---
 
-<BaseLayout section="progress" title="Progress — LaLista">
-  <main class="mx-auto w-full max-w-[640px] flex-1 px-6 py-16 text-center">
-    <h1 class="display-editorial m-0 text-4xl font-medium text-ink">Your progress, your file</h1>
-    <p class="mx-auto mt-4 max-w-[480px] leading-relaxed text-ink-soft">
-      LaLista has no accounts. Your progress lives in a small file you keep — load it when you arrive, save it when you're
-      done. The load/save page, dashboard and profile arrive in Round 5.
-    </p>
+<BaseLayout section="progress" title="Progress — LaLista" description="Load or save your progress file, and see your whole course at a glance.">
+  <main class="w-full flex-1 px-4 py-10 sm:px-8">
+    <ProgressApp client:only="react" groups={groupCards} parts={parts} />
   </main>
 </BaseLayout>

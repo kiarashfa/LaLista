@@ -30,3 +30,4 @@ data/vocabulary/master.xlsx
 scratch/
 public/audio/*_1.mp3
 .env*
+lalista-progress-*.json

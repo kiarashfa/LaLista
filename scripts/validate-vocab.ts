@@ -28,12 +28,22 @@ const manifest = parseCsvRecords(
 // --- Words ---
 if (words.length !== 2001) errors.push(`expected 2001 words, found ${words.length}`);
 
+// The WordReference (_1) files are personal-use only and gitignored (SPEC §14):
+// a public checkout (e.g. CI) legitimately has NONE of them. All-absent is
+// fine; PARTIALLY absent means something got lost locally — that's an error.
+const wrExpected = words.filter((w) => w.audio.wordreference).length;
+const wrOnDisk = words.filter(
+  (w) => w.audio.wordreference && existsSync(resolve(AUDIO_DIR, w.audio.wordreference)),
+).length;
+const wrCheckout = wrOnDisk > 0;
+if (!wrCheckout) console.log(`validate-vocab: public checkout — all ${wrExpected} personal _1 files absent (expected)`);
+
 const ids = new Set<string>();
 for (const w of words) {
   if (ids.has(w.id)) errors.push(`duplicate id "${w.id}"`);
   ids.add(w.id);
   if (!/^[^\s_]+_[^\s]+$/.test(w.id)) errors.push(`id "${w.id}" not in <prefix>_<word> shape`);
-  for (const file of [w.audio.wordreference, w.audio.linguaLibre, w.audio.tts]) {
+  for (const file of [wrCheckout ? w.audio.wordreference : null, w.audio.linguaLibre, w.audio.tts]) {
     if (file && !existsSync(resolve(AUDIO_DIR, file)))
       errors.push(`${w.id}: referenced audio file missing on disk: ${file}`);
   }

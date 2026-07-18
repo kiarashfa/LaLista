@@ -17,6 +17,21 @@ npm run data:all   # rebuild vocabulary JSON from data/vocabulary/master.xlsx + 
 npm test           # unit tests
 ```
 
+## Deploy
+
+Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
+tests + data validation, then an Astro build published to GitHub Pages at
+`https://kiarashfa.github.io/LaLista/`. The base path applies automatically on
+CI; local dev stays at `/`. To test a based build locally:
+`DEPLOY_BASE=1 npx astro build`.
+
+## Personal WordReference audio (SPEC §14)
+
+The `public/audio/*_1.mp3` files are personal-use only: gitignored, never
+deployed. To hear them locally, create a `.env` file (also gitignored) with
+`PUBLIC_PERSONAL_AUDIO=true` — the trainer then offers a third "WR" play
+button. Leave it unset for anything public.
+
 ## Layout
 
 - `data/` — human-edited source of truth (workbook, 57 grammar lesson folders).

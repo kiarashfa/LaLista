@@ -1,0 +1,21 @@
+---
+/**
+ * Attribution page — the Lingua Libre speaker credits are a CC-BY-4.0
+ * licence CONDITION (SPEC §12/§14), rendered from the generated
+ * audio-credits.md so they always match the shipped audio.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Content as AudioCredits } from '../content/vocabulary/audio-credits.md';
+---
+
+<BaseLayout title="Credits — LaLista" description="Audio and data attributions for LaLista.">
+  <main class="mx-auto w-full max-w-[720px] flex-1 px-6 py-12 sm:px-8">
+    <h1 class="display-editorial m-0 mb-6 text-4xl font-medium text-ink">Credits</h1>
+    <p class="mb-8 leading-relaxed text-ink-soft">
+      LaLista exists thanks to people and projects that share their work freely. Definitions were informed by
+      individual lookups on WordReference and the RAE's DLE — thank you both. The pronunciation audio below carries
+      formal attribution requirements, honored gladly.
+    </p>
+    <div class="lesson-prose"><AudioCredits /></div>
+  </main>
+</BaseLayout>

@@ -1,6 +1,7 @@
 ---
-/** Vocabulary hub — 27 topic groups. Trainer routes arrive in Round 4. */
+/** Vocabulary hub — the 27 topic groups + the Review/Test modes (SPEC §8). */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/paths';
 import groups from '../../content/vocabulary/groups.json';
 import words from '../../content/vocabulary/words.json';
 ---
@@ -11,21 +12,40 @@ import words from '../../content/vocabulary/words.json';
   description="2001 Spanish (Castellano) words across 27 topic groups, each with native and TTS pronunciation."
 >
   <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-12 sm:px-8">
-    <header class="relative mb-12">
+    <header class="relative mb-10">
       <span class="font-display pointer-events-none absolute -top-8 -left-2 z-0 text-[9rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
       <h1 class="display-friendly relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">Vocabulary</h1>
       <p class="relative z-10 mt-4 max-w-[600px] text-lg leading-relaxed text-ink-soft">
-        {words.length} words in {groups.length} topic groups, every one with audio. The flashcard trainer opens in Round 4 —
-        for now, here's the full map.
+        {words.length} words in {groups.length} topic groups, every one with audio. Pick a group to study — or drill
+        what you've already mastered.
       </p>
     </header>
 
+    <div class="mb-10 grid gap-4 sm:grid-cols-2">
+      <a href={withBase('/vocabulary/review/')} class="group rounded-lg border border-border bg-surface-raised p-5 no-underline shadow-md transition-shadow hover:shadow-lg">
+        <p class="m-0 text-xs font-bold tracking-widest text-success uppercase">Review</p>
+        <p class="m-0 mt-1 text-lg font-bold text-ink group-hover:text-success">Keep it bright</p>
+        <p class="m-0 mt-1 text-sm text-ink-soft">Relaxed reinforcement of your Mastered words. Six choices, no clock.</p>
+      </a>
+      <a href={withBase('/vocabulary/test/')} class="group rounded-lg border border-border bg-surface-raised p-5 no-underline shadow-md transition-shadow hover:shadow-lg">
+        <p class="m-0 text-xs font-bold tracking-widest text-vocab uppercase">Test</p>
+        <p class="m-0 mt-1 text-lg font-bold text-ink group-hover:text-vocab">Race the clock</p>
+        <p class="m-0 mt-1 text-sm text-ink-soft">Timed recall, five lives, high scores. Mastered words only.</p>
+      </a>
+    </div>
+
+    <h2 class="mb-4 border-b border-border pb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">Topic groups</h2>
     <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
       {
         groups.map((group) => (
-          <li class="flex flex-col rounded-md border border-border bg-surface-raised px-4 py-3 shadow-sm">
-            <span class="font-semibold text-ink">{group.title}</span>
-            <span class="mt-1 text-sm text-ink-faint">{group.count} words</span>
+          <li>
+            <a
+              href={withBase(`/vocabulary/${group.slug}/`)}
+              class="group flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 no-underline shadow-sm transition-colors hover:border-vocab"
+            >
+              <span class="font-semibold text-ink group-hover:text-vocab">{group.title}</span>
+              <span class="mt-1 text-sm text-ink-faint">{group.count} words</span>
+            </a>
           </li>
         ))
       }

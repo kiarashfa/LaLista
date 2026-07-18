@@ -4,6 +4,7 @@
  * the active-link accent flexes — coral for vocabulary, plum for grammar).
  */
 import '../styles/global.css';
+import SaveButton from '../components/profile/SaveButton';
 import { withBase } from '../lib/paths';
 
 interface Props {
@@ -16,9 +17,9 @@ interface Props {
 const { title, description, section = null } = Astro.props;
 
 const navItems = [
-  { key: 'vocabulary', label: 'Vocabulary', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
-  { key: 'grammar', label: 'Grammar', href: withBase('/grammar/'), activeClass: 'text-grammar bg-grammar-soft' },
-  { key: 'progress', label: 'Progress', href: withBase('/progress/'), activeClass: 'text-ink bg-surface-sunken' },
+  { key: 'vocabulary', label: 'Vocabulary', short: 'Vocab', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
+  { key: 'grammar', label: 'Grammar', short: 'Grammar', href: withBase('/grammar/'), activeClass: 'text-grammar bg-grammar-soft' },
+  { key: 'progress', label: 'Progress', short: 'Progress', href: withBase('/progress/'), activeClass: 'text-ink bg-surface-sunken' },
 ] as const;
 ---
 
@@ -45,29 +46,31 @@ const navItems = [
     </script>
   </head>
   <body class="flex min-h-screen flex-col">
-    <nav class="flex items-center justify-between border-b border-border bg-surface-raised px-4 py-4 sm:px-8">
-      <a href={withBase('/')} class="font-display flex items-center gap-0.5 text-2xl font-semibold text-ink no-underline">
+    <nav class="flex items-center justify-between gap-1 border-b border-border bg-surface-raised px-2.5 py-3 sm:px-8 sm:py-4">
+      <a href={withBase('/')} class="font-display flex items-center gap-0.5 text-xl font-semibold text-ink no-underline sm:text-2xl">
         <span class="font-bold text-vocab">¡</span>LaLista
       </a>
-      <div class="flex items-center gap-1 sm:gap-3">
+      <div class="flex items-center gap-0.5 sm:gap-3">
         {
           navItems.map((item) => (
             <a
               href={item.href}
               class:list={[
-                'rounded-pill px-3 py-2 text-sm font-semibold no-underline',
+                'rounded-pill px-2 py-1.5 text-[0.82rem] font-semibold no-underline sm:px-3 sm:py-2 sm:text-sm',
                 section === item.key ? item.activeClass : 'text-ink-soft hover:text-ink',
               ]}
             >
-              {item.label}
+              <span class="sm:hidden">{item.short}</span>
+              <span class="hidden sm:inline">{item.label}</span>
             </a>
           ))
         }
+        <SaveButton client:load />
         <button
           id="theme-toggle"
           type="button"
           aria-label="Toggle dark mode"
-          class="ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border border-border bg-surface-base text-ink-soft hover:text-ink"
+          class="ml-1 flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-pill border border-border bg-surface-base text-ink-soft hover:text-ink sm:h-10 sm:w-10"
         >
           {/* Sun shown in dark mode ("switch to light"), moon in light mode — punch-list fix */}
           <svg class="theme-icon-moon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -86,7 +89,8 @@ const navItems = [
     <footer class="mt-auto border-t border-border px-8 py-6 text-center text-xs text-ink-faint">
       <p>
         LaLista is free, ad-free and account-free. Definitions informed by WordReference and the RAE.
-        Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS.
+        Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS —
+        <a href={withBase('/credits/')} class="font-semibold text-ink-soft underline">full credits</a>.
       </p>
     </footer>
 

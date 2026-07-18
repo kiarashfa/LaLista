@@ -275,4 +275,13 @@ body {
     border-top: 1px solid var(--border);
     margin: 2.5rem 0;
   }
+
+  /* Mobile: wide markdown tables scroll inside their own box instead of
+     stretching the page (34 lessons carry real conjugation tables). */
+  @media (max-width: 640px) {
+    & table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
 }

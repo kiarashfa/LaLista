@@ -300,7 +300,7 @@
       "linguaLibre": null,
       "tts": "greetings_perdón_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Perdón apologizes — for bumping into someone or a small mistake. To get attention politely use disculpe; to squeeze past people, con permiso.",
     "relatedWords": [
       "greetings_con-permiso",
       "greetings_disculpe"
@@ -322,7 +322,7 @@
       "linguaLibre": null,
       "tts": "greetings_disculpe_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Disculpe (formal) gets someone's attention or asks pardon politely — the flag-the-waiter 'excuse me'. Perdón apologizes; con permiso asks for way.",
     "relatedWords": [
       "greetings_con-permiso",
       "greetings_perdón"
@@ -401,7 +401,7 @@
       "linguaLibre": "greetings_claro_2.mp3",
       "tts": "greetings_claro_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Claro is the everyday conversational 'of course, sure' — very common as a one-word reply. Por supuesto is a touch more emphatic and formal.",
     "relatedWords": [
       "greetings_por-supuesto"
     ]
@@ -422,7 +422,7 @@
       "linguaLibre": null,
       "tts": "greetings_por-supuesto_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Por supuesto is the fuller, slightly more formal 'of course'. Claro is the casual everyday one.",
     "relatedWords": [
       "greetings_claro"
     ]
@@ -785,7 +785,7 @@
       "linguaLibre": null,
       "tts": "greetings_con-permiso_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Con permiso asks for way — leaving a room or passing through a crowd. Perdón apologizes; disculpe gets attention.",
     "relatedWords": [
       "greetings_disculpe",
       "greetings_perdón"
@@ -1073,7 +1073,7 @@
       "linguaLibre": "greetings_tú_2.mp3",
       "tts": "greetings_tú_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Tú is the informal 'you' — friends, family, peers — and the default in Spain. Usted is formal and takes third-person verb forms.",
     "relatedWords": [
       "greetings_usted"
     ]
@@ -1094,7 +1094,7 @@
       "linguaLibre": "greetings_usted_2.mp3",
       "tts": "greetings_usted_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Usted is the formal, respectful 'you' (strangers, elders, officialdom) and takes third-person verbs. Tú is the informal default in Spain.",
     "relatedWords": [
       "greetings_tú"
     ]
@@ -1210,7 +1210,7 @@
       "linguaLibre": "greetings_este_2.mp3",
       "tts": "greetings_este_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Este is 'this' for masculine nouns: este libro. Feminine is esta; for unnamed things or ideas use neuter esto.",
     "relatedWords": [
       "greetings_esta",
       "greetings_esto"
@@ -1232,7 +1232,7 @@
       "linguaLibre": "greetings_esta_2.mp3",
       "tts": "greetings_esta_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Esta is 'this' for feminine nouns: esta casa. Masculine is este; unnamed things or ideas take neuter esto.",
     "relatedWords": [
       "greetings_este",
       "greetings_esto"
@@ -1254,7 +1254,7 @@
       "linguaLibre": "greetings_esto_2.mp3",
       "tts": "greetings_esto_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Esto is the neuter 'this' — for unnamed things and ideas (¿qué es esto?). It never sits before a noun; those are este/esta.",
     "relatedWords": [
       "greetings_esta",
       "greetings_este"
@@ -1276,7 +1276,7 @@
       "linguaLibre": "greetings_ese_2.mp3",
       "tts": "greetings_ese_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Ese is 'that' for masculine nouns: ese coche. Feminine is esa; unnamed things or ideas take neuter eso.",
     "relatedWords": [
       "greetings_esa",
       "greetings_eso"
@@ -1298,7 +1298,7 @@
       "linguaLibre": "greetings_esa_2.mp3",
       "tts": "greetings_esa_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Esa is 'that' for feminine nouns: esa mesa. Masculine is ese; unnamed things or ideas take neuter eso.",
     "relatedWords": [
       "greetings_ese",
       "greetings_eso"
@@ -1320,7 +1320,7 @@
       "linguaLibre": "greetings_eso_2.mp3",
       "tts": "greetings_eso_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Eso is the neuter 'that' — for unnamed things and ideas (eso es verdad). It never sits before a noun; those are ese/esa.",
     "relatedWords": [
       "greetings_esa",
       "greetings_ese"
@@ -1342,7 +1342,7 @@
       "linguaLibre": "greetings_estos_2.mp3",
       "tts": "greetings_estos_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Estos is 'these' for masculine (or mixed) plurals: estos días. Feminine plural is estas.",
     "relatedWords": [
       "greetings_estas"
     ]
@@ -1363,7 +1363,7 @@
       "linguaLibre": "greetings_estas_2.mp3",
       "tts": "greetings_estas_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Estas is 'these' for feminine plurals: estas semanas. Masculine or mixed plural is estos.",
     "relatedWords": [
       "greetings_estos"
     ]
@@ -1384,7 +1384,7 @@
       "linguaLibre": null,
       "tts": "greetings_esos_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Esos is 'those' for masculine (or mixed) plurals: esos zapatos. Feminine plural is esas.",
     "relatedWords": [
       "greetings_esas"
     ]
@@ -1405,7 +1405,7 @@
       "linguaLibre": null,
       "tts": "greetings_esas_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Esas is 'those' for feminine plurals: esas flores. Masculine or mixed plural is esos.",
     "relatedWords": [
       "greetings_esos"
     ]
@@ -1977,7 +1977,7 @@
       "linguaLibre": "colors_suave_2.mp3",
       "tts": "colors_suave_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Suave is smooth-soft: surfaces, skin, sounds, mild flavors. Something squishy that yields when pressed — a pillow, tender meat — is blando.",
     "relatedWords": [
       "physical_blando"
     ]
@@ -3043,7 +3043,7 @@
       "linguaLibre": "animals_pez_2.mp3",
       "tts": "animals_pez_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "El pez swims — the live animal. Once it's caught and headed for a plate, it becomes pescado.",
     "relatedWords": [
       "food_pescado"
     ]
@@ -3520,7 +3520,7 @@
       "linguaLibre": "animals_grillo_2.mp3",
       "tts": "animals_grillo_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Grillo chirps — the insect. The sport is el críquet.",
     "relatedWords": [
       "sports_críquet"
     ]
@@ -5365,7 +5365,7 @@
       "linguaLibre": "food_pescado_2.mp3",
       "tts": "food_pescado_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Pescado is fish as food — on a menu or at the market. The living animal in the water is un pez.",
     "relatedWords": [
       "animals_pez"
     ]
@@ -6450,7 +6450,7 @@
       "linguaLibre": "food_costilla_2.mp3",
       "tts": "food_costilla_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Same word as the anatomy term — costillas on a menu are ribs to eat.",
     "relatedWords": [
       "body_costilla"
     ]
@@ -8029,7 +8029,7 @@
       "linguaLibre": "house_ventilador_2.mp3",
       "tts": "house_ventilador_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Ventilador is the machine that moves air. A sports or music fan is un aficionado.",
     "relatedWords": [
       "sports_aficionado"
     ]
@@ -8411,7 +8411,7 @@
       "linguaLibre": "family_prima_2.mp3",
       "tts": "family_prima_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Prima is specifically a female cousin. A male cousin is primo.",
     "relatedWords": [
       "family_primo"
     ]
@@ -8432,7 +8432,7 @@
       "linguaLibre": "family_primo_2.mp3",
       "tts": "family_primo_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Primo is specifically a male cousin. A female cousin is prima.",
     "relatedWords": [
       "family_prima"
     ]
@@ -12804,7 +12804,7 @@
       "linguaLibre": "body_costilla_2.mp3",
       "tts": "body_costilla_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Same word as the dish — this costilla is the anatomical rib in your chest.",
     "relatedWords": [
       "food_costilla"
     ]
@@ -13262,7 +13262,7 @@
       "linguaLibre": "health_doctor_2.mp3",
       "tts": "health_doctor_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Doctor is mostly the title you address someone by (¡doctor!). Naming the profession, Spaniards usually say médico.",
     "relatedWords": [
       "professions_médico"
     ]
@@ -13283,7 +13283,7 @@
       "linguaLibre": "health_enfermera_2.mp3",
       "tts": "health_enfermera_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Enfermera is a female nurse; a male nurse is enfermero.",
     "relatedWords": [
       "professions_enfermero"
     ]
@@ -14368,7 +14368,7 @@
       "linguaLibre": "professions_médico_2.mp3",
       "tts": "professions_médico_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Médico is the standard word for a physician as a profession (soy médico). Doctor is used mainly as the title and form of address.",
     "relatedWords": [
       "health_doctor"
     ]
@@ -14389,7 +14389,7 @@
       "linguaLibre": "professions_enfermero_2.mp3",
       "tts": "professions_enfermero_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Enfermero is a male nurse; a female nurse is enfermera.",
     "relatedWords": [
       "health_enfermera"
     ]
@@ -14429,7 +14429,7 @@
       "linguaLibre": "professions_estudiante_2.mp3",
       "tts": "professions_estudiante_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Estudiante is the general word for a student at any level (el/la estudiante). Alumno frames someone as the pupil of a particular school or teacher.",
     "relatedWords": [
       "school_alumno"
     ]
@@ -15875,7 +15875,7 @@
       "linguaLibre": "work_empresa_2.mp3",
       "tts": "work_empresa_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Empresa is the standard business word — una empresa de software. Compañía overlaps but leans toward fixed names (compañía aérea) and also means companionship.",
     "relatedWords": [
       "shopping_compañía"
     ]
@@ -18005,7 +18005,7 @@
       "linguaLibre": "hobbies_entrada_2.mp3",
       "tts": "hobbies_entrada_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Entrada is an admission ticket — cinema, concerts, museums, matches (also 'entrance'). Transport tickets in Spain are billetes.",
     "relatedWords": [
       "travel_billete"
     ]
@@ -19052,7 +19052,7 @@
       "linguaLibre": null,
       "tts": "sports_críquet_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Críquet is the sport. The chirping insect is un grillo.",
     "relatedWords": [
       "animals_grillo"
     ]
@@ -19757,7 +19757,7 @@
       "linguaLibre": "sports_aficionado_2.mp3",
       "tts": "sports_aficionado_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Aficionado is an enthusiast — a sports or music fan. The air-moving machine is un ventilador.",
     "relatedWords": [
       "house_ventilador"
     ]
@@ -19987,7 +19987,7 @@
       "linguaLibre": "travel_billete_2.mp3",
       "tts": "travel_billete_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "In Spain billete is a transport ticket — train, bus, plane — and also a banknote. Tickets that admit you to an event are entradas.",
     "relatedWords": [
       "hobbies_entrada"
     ]
@@ -22136,7 +22136,7 @@
       "linguaLibre": "school_escuela_2.mp3",
       "tts": "school_escuela_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Escuela is the general word for school, including 'school of' (escuela de idiomas). Day-to-day, a children's school in Spain is usually el colegio.",
     "relatedWords": [
       "school_colegio"
     ]
@@ -22157,7 +22157,7 @@
       "linguaLibre": "school_colegio_2.mp3",
       "tts": "school_colegio_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Colegio (el cole) is what Spaniards usually call a children's school day-to-day. Escuela is the broader, more general term.",
     "relatedWords": [
       "school_escuela"
     ]
@@ -22254,7 +22254,7 @@
       "linguaLibre": "school_alumno_2.mp3",
       "tts": "school_alumno_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Alumno is a pupil in relation to a school or teacher (los alumnos del colegio). The general word for a student is estudiante.",
     "relatedWords": [
       "professions_estudiante"
     ]
@@ -22503,7 +22503,7 @@
       "linguaLibre": "school_tarea_2.mp3",
       "tts": "school_tarea_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Tarea is a task or chore in general — and 'homework' mainly in Latin America. In Spain, school homework is usually los deberes.",
     "relatedWords": [
       "school_deberes"
     ]
@@ -22638,7 +22638,7 @@
       "linguaLibre": "school_diploma_2.mp3",
       "tts": "school_diploma_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Diploma is the certificate document itself, from any course. Spain's pre-university qualification is el bachillerato.",
     "relatedWords": [
       "school_bachillerato"
     ]
@@ -22887,7 +22887,7 @@
       "linguaLibre": "school_aprobar_2.mp3",
       "tts": "school_aprobar_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Aprobar is to pass an exam or course — and 'to approve'. Almost every other sense of 'pass' (pass by, pass time, hand over) is pasar.",
     "relatedWords": [
       "core_pasar"
     ]
@@ -23060,7 +23060,7 @@
       "linguaLibre": null,
       "tts": "school_deberes_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Los deberes (always plural) is Spain's everyday word for homework. A single task or chore in general is una tarea.",
     "relatedWords": [
       "school_tarea"
     ]
@@ -23423,7 +23423,7 @@
       "linguaLibre": "school_bachillerato_2.mp3",
       "tts": "school_bachillerato_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "El bachillerato is Spain's two-year pre-university stage and its qualification — the closest thing to a 'high-school diploma', though not a paper certificate (that's un diploma).",
     "relatedWords": [
       "school_diploma"
     ]
@@ -23653,7 +23653,7 @@
       "linguaLibre": "technology_computadora_2.mp3",
       "tts": "technology_computadora_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Computadora is the Latin American word. In Spain the everyday word for computer is el ordenador.",
     "relatedWords": [
       "technology_ordenador"
     ]
@@ -23674,7 +23674,7 @@
       "linguaLibre": "technology_ordenador_2.mp3",
       "tts": "technology_ordenador_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Ordenador is Spain's word for computer. Most of Latin America says computadora.",
     "relatedWords": [
       "technology_computadora"
     ]
@@ -26127,7 +26127,7 @@
       "linguaLibre": "numbers_primero_2.mp3",
       "tts": "numbers_primero_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "The ordinal 'first' — it drops -o before a masculine noun: el primer piso. The same word also sequences ideas: primero, …",
     "relatedWords": [
       "question_primero"
     ]
@@ -29568,7 +29568,7 @@
       "linguaLibre": "shopping_compañía_2.mp3",
       "tts": "shopping_compañía_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Compañía means a company too — common in fixed names like compañía aérea — plus 'companionship'. The everyday business word is empresa.",
     "relatedWords": [
       "work_empresa"
     ]
@@ -32173,7 +32173,7 @@
       "linguaLibre": "physical_blando_2.mp3",
       "tts": "physical_blando_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Blando yields to pressure — soft pillows, tender meat (and figuratively a 'soft', lenient person). Smooth or gentle textures and sounds are suave.",
     "relatedWords": [
       "colors_suave"
     ]
@@ -34056,7 +34056,7 @@
       "linguaLibre": "core_andar_2.mp3",
       "tts": "core_andar_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Andar is Spain's everyday verb for walking or getting around — and machines 'run' with it too (mi reloj no anda). The deliberate physical act of walking is caminar.",
     "relatedWords": [
       "actions_caminar"
     ]
@@ -34210,7 +34210,7 @@
       "linguaLibre": "core_conocer_2.mp3",
       "tts": "core_conocer_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Conocer is to know people and places — to be familiar with (conozco Madrid, conozco a Ana). Facts and skills take saber.",
     "relatedWords": [
       "core_saber"
     ]
@@ -34231,7 +34231,7 @@
       "linguaLibre": "core_saber_2.mp3",
       "tts": "core_saber_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Saber is to know facts and how to do things (sé la respuesta, sé nadar). Being familiar with people and places takes conocer.",
     "relatedWords": [
       "core_conocer"
     ]
@@ -34613,7 +34613,7 @@
       "linguaLibre": "core_pasar_2.mp3",
       "tts": "core_pasar_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Pasar covers most senses of 'to pass' — pass by, spend time, hand something over, happen. Passing an exam, though, is aprobar.",
     "relatedWords": [
       "school_aprobar"
     ]
@@ -35033,7 +35033,7 @@
       "linguaLibre": "core_ser_2.mp3",
       "tts": "core_ser_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Ser is 'to be' for identity and traits — who or what something is (soy médico, es alta). States, moods and locations take estar. Grammar Chapter 21 covers the full contrast.",
     "relatedWords": [
       "core_estar"
     ]
@@ -35054,7 +35054,7 @@
       "linguaLibre": "core_estar_2.mp3",
       "tts": "core_estar_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Estar is 'to be' for states, moods and locations — how or where something is (estoy cansado, está en casa). Identity and traits take ser. Grammar Chapter 21 covers the full contrast.",
     "relatedWords": [
       "core_ser"
     ]
@@ -35588,7 +35588,7 @@
       "linguaLibre": "actions_caminar_2.mp3",
       "tts": "actions_caminar_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Caminar is to walk — the physical act itself, a walk or hike. In Spain, andar is often the everyday default (and covers machines 'running').",
     "relatedWords": [
       "core_andar"
     ]
@@ -36787,7 +36787,7 @@
       "linguaLibre": "question_cuándo_2.mp3",
       "tts": "question_cuándo_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "With the accent, cuándo asks — in direct and indirect questions (¿cuándo vienes? / no sé cuándo). Without the accent it's the linking 'when'.",
     "relatedWords": [
       "question_cuando"
     ]
@@ -37131,7 +37131,7 @@
       "linguaLibre": "question_cuando_2.mp3",
       "tts": "question_cuando_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Without the accent, cuando links clauses — cuando llegues, llámame. Asking 'when?', directly or indirectly, takes the accent: cuándo.",
     "relatedWords": [
       "question_cuándo"
     ]
@@ -37418,7 +37418,7 @@
       "linguaLibre": "question_primero_2.mp3",
       "tts": "question_primero_3.mp3"
     },
-    "disambiguationNote": null,
+    "disambiguationNote": "Here primero sequences ideas — 'first, …' at the start of an explanation. It's the same word as the ordinal number (el primer piso).",
     "relatedWords": [
       "numbers_primero"
     ]
