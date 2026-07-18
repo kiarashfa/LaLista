@@ -1,12 +1,11 @@
 ---
-/**
- * Workbook page — placeholder until Round 3 delivers the 9 interactive
- * exercise engines. Route exists now so lesson CTAs never 404.
- */
+/** The workbook page — separate from the read page by design (SPEC §6). */
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { lessonNumber } from '../../../lib/grammarParts';
+import WorkbookApp from '../../../components/exercises/WorkbookApp';
+import { lessonId as toLessonId, lessonNumber } from '../../../lib/grammarParts';
 import { withBase } from '../../../lib/paths';
+import type { Exercise } from '../../../types/exercises';
 
 export async function getStaticPaths() {
   const metas = await getCollection('grammarMeta');
@@ -15,31 +14,30 @@ export async function getStaticPaths() {
 
 const { meta } = Astro.props;
 const id = meta.id;
-const exercises = await getEntry('grammarExercises', id);
-const list = exercises?.data.exercises ?? [];
-const typeCounts = [...list.reduce((m, e) => m.set(e.type, (m.get(e.type) ?? 0) + 1), new Map<string, number>())];
+const number = lessonNumber(id);
+
+const entry = await getEntry('grammarExercises', id);
+const exercises = (entry?.data.exercises ?? []) as unknown as Exercise[];
+
+const allMetas = await getCollection('grammarMeta');
+const nextId = number < 57 ? toLessonId(number + 1) : null;
+const nextTitle = nextId ? (allMetas.find((m) => m.id === nextId)?.data.title ?? null) : null;
 ---
 
 <BaseLayout section="grammar" title={`Workbook: ${meta.data.title} — LaLista`}>
-  <main class="mx-auto w-full max-w-[720px] flex-1 px-6 py-12 sm:px-10">
-    <a href={withBase(`/grammar/${id}/`)} class="text-sm font-semibold text-grammar no-underline">← Back to Chapter {lessonNumber(id)}</a>
-    <p class="mt-6 mb-3 text-sm font-bold tracking-wider text-grammar uppercase">Workbook · Chapter {lessonNumber(id)}</p>
-    <h1 class="display-editorial m-0 text-4xl font-medium text-ink">{meta.data.title}</h1>
+  <main class="mx-auto w-full max-w-[720px] flex-1 px-4 py-10 sm:px-8">
+    <a href={withBase(`/grammar/${id}/`)} class="text-sm font-semibold text-grammar no-underline">← Chapter {number}</a>
+    <p class="mt-5 mb-1 text-sm font-bold tracking-wider text-grammar uppercase">Workbook · Chapter {number}</p>
+    <h1 class="display-editorial m-0 mb-8 text-3xl font-medium text-ink sm:text-4xl">{meta.data.title}</h1>
 
-    <div class="mt-8 rounded-md border-[1.5px] border-dashed border-border px-6 py-8 text-center">
-      <p class="m-0 text-lg font-semibold text-ink">The interactive workbook arrives in Round 3.</p>
-      <p class="mx-auto mt-2 max-w-[420px] text-sm text-ink-soft">
-        This chapter has <b>{list.length} exercises</b> ready and waiting:
-      </p>
-      <ul class="mx-auto mt-4 inline-flex max-w-full list-none flex-wrap justify-center gap-2 p-0">
-        {
-          typeCounts.map(([type, n]) => (
-            <li class="rounded-pill bg-surface-sunken px-3 py-1 text-xs font-semibold text-ink-soft">
-              {type} × {n}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <WorkbookApp
+      client:only="react"
+      lessonId={id}
+      lessonNumber={number}
+      exercises={exercises}
+      lessonUrl={withBase(`/grammar/${id}/`)}
+      nextUrl={nextId ? withBase(`/grammar/${nextId}/`) : null}
+      nextTitle={nextTitle}
+    />
   </main>
 </BaseLayout>
