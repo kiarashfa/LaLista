@@ -1,0 +1,97 @@
+{
+  "lessonId": "lesson-36",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "¡___ más despacio, por favor! (hablar — tú, affirmative)",
+      "options": ["Habla", "Hablas", "Hables", "Hablar"],
+      "correctAnswer": "Habla"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct affirmative tú command for hacer:",
+      "options": ["Hace", "Haz", "Haces", "Hagas"],
+      "correctAnswer": "Haz"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Complete the usted command: ___ la verdad, por favor. (decir)",
+      "correctAnswer": "Diga"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Complete the negative tú command: No ___ tan alto en la biblioteca. (hablar)",
+      "correctAnswer": "hables"
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as a negative tú command:",
+      "originalSentence": "Cómelo.",
+      "instruction": "make negative",
+      "correctAnswer": "No lo comas."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — wrong pronoun placement:",
+      "incorrectSentence": "Te siéntate en la silla.",
+      "correctSentence": "Siéntate en la silla."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order (a negative tú command with a double pronoun):",
+      "words": ["digas.", "No", "lo", "se"],
+      "correctOrder": ["No", "se", "lo", "digas."]
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular affirmative tú command:",
+      "pairs": [
+        { "left": "decir", "right": "di" },
+        { "left": "hacer", "right": "haz" },
+        { "left": "ir", "right": "ve" },
+        { "left": "poner", "right": "pon" },
+        { "left": "salir", "right": "sal" },
+        { "left": "tener", "right": "ten" },
+        { "left": "venir", "right": "ven" },
+        { "left": "ser", "right": "sé" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct usted command form:",
+      "passage": "Primero, {0} (cortar) las verduras. Luego, no {1} (poner) demasiada sal. Finalmente, {2} (servir) el plato caliente.",
+      "blanks": ["corte", "ponga", "sirva"]
+    },
+    {
+      "id": "ex-10",
+      "type": "multiple-choice",
+      "prompt": "Which is the more common, casual way to say \"Let's eat!\" in everyday spoken Spanish?",
+      "options": ["¡Comamos!", "¡Vamos a comer!", "¡Comemos!", "¡Comer!"],
+      "correctAnswer": "¡Vamos a comer!"
+    },
+    {
+      "id": "ex-11",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as an affirmative ustedes command:",
+      "originalSentence": "Cerrar la puerta.",
+      "instruction": "convert to an ustedes command",
+      "correctAnswer": "Cierren la puerta."
+    },
+    {
+      "id": "ex-12",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a vosotros reflexive command:",
+      "incorrectSentence": "Levantados temprano mañana.",
+      "correctSentence": "Levantaos temprano mañana."
+    }
+  ]
+}

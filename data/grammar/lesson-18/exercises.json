@@ -1,0 +1,78 @@
+{
+  "lessonId": "lesson-18",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "¿___ es tu color favorito?",
+      "options": ["Qué", "Cuál", "Quién", "Cómo"],
+      "correctAnswer": "Cuál",
+      "note": "Selecting one favorite from all possible colors calls for cuál — and since cuál isn't glued directly onto a noun here, the Castellano regional exception doesn't apply."
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "(Holding up an unfamiliar object) ¿___ es esto?",
+      "options": ["Qué", "Cuál", "Quién", "Dónde"],
+      "correctAnswer": "Qué",
+      "note": "Asking for a definition or identification of an unknown thing calls for qué, not cuál."
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "No se que hora es.",
+      "correctSentence": "No sé qué hora es.",
+      "note": "This is an indirect question — qué keeps its accent even though there's no question mark. Sé (I know) also needs its own accent to distinguish it from se, the reflexive/impersonal pronoun."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "No vine por qué estaba enfermo.",
+      "correctSentence": "No vine porque estaba enfermo.",
+      "note": "Por qué (why, two words, accented) only introduces a question. The connector 'because' is porque, one word, no accent."
+    },
+    {
+      "id": "ex-5",
+      "type": "fill-blank",
+      "prompt": "¡___ calor hace hoy! (exclamative 'what')",
+      "correctAnswer": "Qué"
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in order to form a question:",
+      "words": ["fiesta?", "¿Cuándo", "a", "vas", "la"],
+      "correctOrder": ["¿Cuándo", "vas", "a", "la", "fiesta?"]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each interrogative word to the kind of question it asks:",
+      "pairs": [
+        { "left": "qué", "right": "asks for a definition or identification" },
+        { "left": "cuál", "right": "asks to select from a set" },
+        { "left": "quién", "right": "asks about a person" },
+        { "left": "dónde", "right": "asks about a place" },
+        { "left": "cuándo", "right": "asks about a time" },
+        { "left": "cómo", "right": "asks about manner" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in each blank with the correct interrogative word:",
+      "passage": "—¿{0} te llamas? —Me llamo Marta. —¿{1} vives? —Vivo en Madrid. —No sé {2} hora es, pero deberíamos irnos.",
+      "blanks": ["Cómo", "Dónde", "qué"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-transformation",
+      "prompt": "Embed this question as an indirect question after 'No sé':",
+      "originalSentence": "¿Qué quieres?",
+      "instruction": "embed as an indirect question after No sé",
+      "correctAnswer": "No sé qué quieres."
+    }
+  ]
+}

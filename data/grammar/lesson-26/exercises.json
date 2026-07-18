@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-26",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Yo ___ con mi hermana ayer. (hablar)",
+      "options": ["hablo", "hablé", "hablaste", "habló"],
+      "correctAnswer": "hablé"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ella ___ (comer) toda la pizza anoche.",
+      "correctAnswer": "comió"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the preterite of vivir (to live):",
+      "verb": "vivir",
+      "givenForms": { "yo": "viví", "nosotros": "vivimos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "viviste", "él/ella/usted": "vivió", "vosotros": "vivisteis", "ellos/ellas/ustedes": "vivieron" }
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Ayer yo ___ (buscar) las llaves por toda la casa.",
+      "correctAnswer": "busqué"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an overgeneralized stem change:",
+      "incorrectSentence": "Ella piensó mucho antes de responder.",
+      "correctSentence": "Ella pensó mucho antes de responder."
+    },
+    {
+      "id": "ex-6",
+      "type": "multiple-choice",
+      "prompt": "What is the yo form of empezar in the preterite?",
+      "options": ["empezé", "empecé", "empiezo", "empezo"],
+      "correctAnswer": "empecé"
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["restaurante", "cenamos", "un", "en", "Anoche"],
+      "correctOrder": ["Anoche", "cenamos", "en", "un", "restaurante"]
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its correct yo-form preterite spelling:",
+      "pairs": [
+        { "left": "buscar", "right": "busqué" },
+        { "left": "llegar", "right": "llegué" },
+        { "left": "empezar", "right": "empecé" },
+        { "left": "tocar", "right": "toqué" },
+        { "left": "pagar", "right": "pagué" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct preterite form:",
+      "passage": "Anoche yo {0} (leer) un artículo interesante y luego {1} (llamar) a mi amigo para hablar de eso. Él no {2} (oír) el teléfono al principio.",
+      "blanks": ["leí", "llamé", "oyó"]
+    }
+  ]
+}

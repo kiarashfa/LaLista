@@ -1,0 +1,32 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# LaLista-specific
+SPEC.md
+GRAMMAR-AUTHORING-GUIDE.md
+data/vocabulary/master.xlsx
+scratch/
+public/audio/*_1.mp3
+.env*

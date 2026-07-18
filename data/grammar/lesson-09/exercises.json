@@ -1,0 +1,77 @@
+{
+  "lessonId": "lesson-09",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form before the noun:",
+      "word": "hermano",
+      "options": ["un", "una"],
+      "correctAnswer": "un",
+      "note": "Uno shortens to un before a masculine singular noun — the same apocope that produces veintiún and treinta y un."
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of veintiuno before empleadas:",
+      "word": "empleadas",
+      "options": ["veintiún", "veintiuna"],
+      "correctAnswer": "veintiuna",
+      "note": "Veintiuno agrees exactly like uno — veintiuna before a feminine noun."
+    },
+    {
+      "id": "ex-3",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of tercero before piso:",
+      "word": "piso",
+      "options": ["tercer", "tercera"],
+      "correctAnswer": "tercer",
+      "note": "Tercero apocopates to tercer directly before a masculine singular noun."
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Hay ___ estudiantes exactamente en el curso. (cien / ciento, for exactly 100)",
+      "correctAnswer": "cien"
+    },
+    {
+      "id": "ex-5",
+      "type": "fill-blank",
+      "prompt": "Hay ___ veinte estudiantes en el curso. (cien / ciento, for 120)",
+      "correctAnswer": "ciento"
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Hay trescientos personas en la sala.",
+      "correctSentence": "Hay trescientas personas en la sala."
+    },
+    {
+      "id": "ex-7",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this sentence uses an unnaturally formal ordinal where real speech uses a cardinal:",
+      "incorrectSentence": "Alfonso Decimotercero fue rey de España.",
+      "correctSentence": "Alfonso Trece fue rey de España."
+    },
+    {
+      "id": "ex-8",
+      "type": "multiple-choice",
+      "prompt": "How would a native speaker most naturally read 'el siglo XXI' aloud?",
+      "options": [
+        "el siglo vigésimo primero",
+        "el siglo veintiuno",
+        "el siglo veinte y uno",
+        "el siglo primero veintiuno"
+      ],
+      "correctAnswer": "el siglo veintiuno"
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form:",
+      "passage": "El evento tuvo lugar en el {0} piso del edificio. Asistieron {1} personas, y compramos {2} entradas para el concierto.",
+      "blanks": ["tercer", "trescientas", "veintiuna"]
+    }
+  ]
+}

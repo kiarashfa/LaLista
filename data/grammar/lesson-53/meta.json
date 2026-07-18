@@ -1,0 +1,7 @@
+{
+  "title": "Basic Word Order & Sentence Structure",
+  "level": "B1",
+  "topics": ["word-order", "sentence-structure", "topicalization"],
+  "prerequisites": ["lesson-04", "lesson-11", "lesson-12", "lesson-18", "lesson-46"],
+  "summary": "Spanish's default SVO order, the verb agreement and personal-a marking that make it more flexible than English, subject-verb inversion and object-fronting for focus, cleft-like lo que...es constructions, and why clitic pronoun placement and passive voice remain fixed exceptions to that flexibility."
+}

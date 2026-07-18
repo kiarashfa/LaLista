@@ -1,0 +1,65 @@
+{
+  "lessonId": "lesson-20",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Which conjugation class does correr (to run) belong to?",
+      "options": ["-AR", "-ER", "-IR", "none — it's irregular"],
+      "correctAnswer": "-ER"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "The stem of estudiar (to study) is ___.",
+      "correctAnswer": "estudi-"
+    },
+    {
+      "id": "ex-3",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its conjugation class:",
+      "pairs": [
+        { "left": "hablar", "right": "-AR" },
+        { "left": "comer", "right": "-ER" },
+        { "left": "vivir", "right": "-IR" },
+        { "left": "trabajar", "right": "-AR" },
+        { "left": "leer", "right": "-ER" },
+        { "left": "escribir", "right": "-IR" }
+      ]
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a learner chopped the infinitive ending before adding a future ending, which is only correct for the stem-based tenses:",
+      "incorrectSentence": "Yo hablré con ella mañana.",
+      "correctSentence": "Yo hablaré con ella mañana."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "Which of the following does a Spanish verb ending NOT typically encode?",
+      "options": ["person", "number", "tense", "gender"],
+      "correctAnswer": "gender"
+    },
+    {
+      "id": "ex-6",
+      "type": "fill-blank",
+      "prompt": "Every Spanish infinitive ends in one of exactly three ways: -ar, -er, or ___.",
+      "correctAnswer": "-ir"
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct grammatical term:",
+      "passage": "Every Spanish verb has two parts: a {0}, which carries the core meaning, and an {1}, which changes to show who, when, and how many. The three conjugation classes are identified by the verb's {2} ending: -ar, -er, or -ir.",
+      "blanks": ["stem", "ending", "infinitive"]
+    },
+    {
+      "id": "ex-8",
+      "type": "multiple-choice",
+      "prompt": "Which pair of verbs belongs to the same conjugation class?",
+      "options": ["hablar and comer", "trabajar and leer", "vivir and escribir", "comer and vivir"],
+      "correctAnswer": "vivir and escribir"
+    }
+  ]
+}

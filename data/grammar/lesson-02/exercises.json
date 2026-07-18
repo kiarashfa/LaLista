@@ -1,0 +1,65 @@
+{
+  "lessonId": "lesson-02",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct plural of 'lápiz':",
+      "options": ["lapizes", "lápizes", "lápices", "lápics"],
+      "correctAnswer": "lápices"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Compré tres ___ (café)",
+      "correctAnswer": "cafés"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Ella tiene muchos ___ (celo) de su hermana.",
+      "correctAnswer": "celos"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Los profesors llegan tarde.",
+      "correctSentence": "Los profesores llegan tarde."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Make the subject plural:",
+      "originalSentence": "El joven tiene un problema.",
+      "instruction": "make the subject plural",
+      "correctAnswer": "Los jóvenes tienen un problema."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each singular noun to its correct plural form:",
+      "pairs": [
+        { "left": "lápiz", "right": "lápices" },
+        { "left": "joven", "right": "jóvenes" },
+        { "left": "club", "right": "clubes" },
+        { "left": "el lunes", "right": "los lunes" },
+        { "left": "régimen", "right": "regímenes" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct plural form of the noun in parentheses:",
+      "passage": "Cerca de mi casa hay tres {0} (café) y dos {1} (club) muy conocidos, pero los {2} (autobús) no pasan los domingos.",
+      "blanks": ["cafés", "clubes", "autobuses"]
+    },
+    {
+      "id": "ex-8",
+      "type": "multiple-choice",
+      "prompt": "Which of these nouns does NOT change form between singular and plural?",
+      "options": ["problema", "ciudad", "análisis", "profesor"],
+      "correctAnswer": "análisis"
+    }
+  ]
+}

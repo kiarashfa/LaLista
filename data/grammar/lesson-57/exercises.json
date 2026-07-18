@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-57",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "— ¿Te vienes al cine esta noche? — ___, vale, aunque estoy cansada. Choose the particle that fits this reluctant, talked-into-it acceptance:",
+      "options": ["Bueno", "Es decir", "Sin embargo", "Por lo tanto"],
+      "correctAnswer": "Bueno"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "No puedo quedar mañana, ___, tengo que trabajar todo el día. Choose the particle that reformulates or clarifies what was just said:",
+      "options": ["o sea", "pues", "sí que", "más o menos"],
+      "correctAnswer": "o sea"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "¿Me haces un ___? Necesito que me ayudes con esto. (Soften favor into a diminutive.)",
+      "correctAnswer": "favorcito"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Estoy ___ cansada — nada grave, pero prefiero no salir esta noche. (Hedge word meaning 'a little.')",
+      "correctAnswer": "un poco"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — quizás requires the subjunctive, unlike its cousin a lo mejor:",
+      "incorrectSentence": "Quizás llueve mañana.",
+      "correctSentence": "Quizás llueva mañana."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Add sí que to make this a genuine emphatic pushback against an implied doubt:",
+      "originalSentence": "Me gusta el flamenco.",
+      "instruction": "add emphatic sí que",
+      "correctAnswer": "Sí que me gusta el flamenco."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each pragmatic particle or structure to the conversational job it does:",
+      "pairs": [
+        { "left": "bueno", "right": "signals a shift or a reluctant concession" },
+        { "left": "pues", "right": "buys thinking time or introduces a mild reason" },
+        { "left": "o sea", "right": "reformulates or clarifies what was just said" },
+        { "left": "lo que pasa es que", "right": "introduces the real underlying reason" },
+        { "left": "sí que", "right": "genuine emphatic affirmation" },
+        { "left": "más o menos", "right": "hedges an evaluation as so-so" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the pragmatic particle or hedge that best fits each moment:",
+      "passage": "— ¿Vienes a la boda de Marta? — {0}... no sé, tengo mucho lío ese fin de semana. — ¡Venga, que es solo un día! — {1}, vale, la verdad es que {2} me apetece verla. {3} no tengo con quién ir.",
+      "blanks": ["Pues", "Bueno", "sí que", "Lo que pasa es que"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["tenía", "Lo", "número.", "que", "no", "pasa", "tu", "es", "que"],
+      "correctOrder": ["Lo", "que", "pasa", "es", "que", "no", "tenía", "tu", "número."]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-49",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Vamos ___ Madrid mañana.",
+      "options": ["a", "de", "en", "con"],
+      "correctAnswer": "a"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "¿Conoces ___ Marta? (personal a, since Marta is a specific person)",
+      "options": ["a", "de", "en", "con"],
+      "correctAnswer": "a"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Vamos a el cine esta noche.",
+      "correctSentence": "Vamos al cine esta noche."
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Vengo ___ trabajo. (de + el)",
+      "correctAnswer": "del"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a specific, named person as a direct object needs personal a:",
+      "incorrectSentence": "Busco mi hermana en la estación.",
+      "correctSentence": "Busco a mi hermana en la estación."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each verb + preposition to its meaning:",
+      "pairs": [
+        { "left": "depender de", "right": "to depend on" },
+        { "left": "soñar con", "right": "to dream of" },
+        { "left": "parecerse a", "right": "to resemble" },
+        { "left": "confiar en", "right": "to trust" },
+        { "left": "casarse con", "right": "to marry" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["a", "Quiero", "perro.", "mucho", "mi"],
+      "correctOrder": ["Quiero", "mucho", "a", "mi", "perro."]
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-transformation",
+      "prompt": "Add the personal a where it's needed:",
+      "originalSentence": "Veo mi hermana en la fiesta.",
+      "instruction": "add personal a",
+      "correctAnswer": "Veo a mi hermana en la fiesta."
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with a, de, or en:",
+      "passage": "Mi vecina viene {0} Argentina, pero ahora vive {1} Barcelona. Conozco muy bien {2} su hermano, que también vive allí.",
+      "blanks": ["de", "en", "a"]
+    }
+  ]
+}

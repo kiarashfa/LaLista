@@ -1,0 +1,91 @@
+{
+  "lessonId": "lesson-53",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Both 'Juan llegó tarde.' and 'Llegó Juan tarde.' are grammatical. What does the second version emphasize that the neutral first version doesn't?",
+      "options": [
+        "That Juan was late, not on time",
+        "That it was Juan — and not someone else — who arrived late",
+        "That the arrival is a habitual, repeated event",
+        "Nothing; the two orders are complete synonyms with no difference at all"
+      ],
+      "correctAnswer": "That it was Juan — and not someone else — who arrived late"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "A María no ___ he visto hoy. (Fill in the resumptive object pronoun that a fronted direct object requires.)",
+      "correctAnswer": "la"
+    },
+    {
+      "id": "ex-3",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the neutral, default Spanish word order:",
+      "words": ["pan.", "compra", "Mi", "el", "hermano"],
+      "correctOrder": ["Mi", "hermano", "compra", "el", "pan."]
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in order to focus on WHO arrived (subject-verb inversion), answering '¿Quién llegó a la reunión?':",
+      "words": ["la", "reunión.", "Llegó", "a", "Juan"],
+      "correctOrder": ["Llegó", "Juan", "a", "la", "reunión."]
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in order to front 'Juan' for contrastive emphasis, with the required resumptive pronoun:",
+      "words": ["visto", "hoy.", "A", "lo", "Juan", "he", "no"],
+      "correctOrder": ["A", "Juan", "no", "lo", "he", "visto", "hoy."]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite fronting the direct object for contrastive emphasis, adding the required resumptive pronoun:",
+      "originalSentence": "No he visto el partido.",
+      "instruction": "front 'el partido' and add the resumptive pronoun",
+      "correctAnswer": "El partido no lo he visto."
+    },
+    {
+      "id": "ex-7",
+      "type": "multiple-choice",
+      "prompt": "Which sentence uses the lo que...es construction to say 'What I need is time'?",
+      "options": [
+        "Necesito tiempo.",
+        "Lo que necesito es tiempo.",
+        "Tiempo es necesitar.",
+        "Es tiempo que yo necesito eso."
+      ],
+      "correctAnswer": "Lo que necesito es tiempo."
+    },
+    {
+      "id": "ex-8",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Veo lo todos los días.",
+      "correctSentence": "Lo veo todos los días.",
+      "note": "Unlike full noun phrases, object pronouns like lo occupy one fixed, grammaticalized position before the conjugated verb — they can't be freely reordered the way this chapter's other patterns can (full placement rules in Chapter 12)."
+    },
+    {
+      "id": "ex-9",
+      "type": "matching-pairs",
+      "prompt": "Match each sentence to what its word order is doing:",
+      "pairs": [
+        { "left": "Juan llegó.", "right": "neutral statement, default SVO order" },
+        { "left": "Llegó Juan.", "right": "subject-verb inversion, focus on who arrived" },
+        { "left": "¿Qué compraste?", "right": "obligatory question fronting/inversion" },
+        { "left": "A Juan no lo he visto.", "right": "fronted object with a resumptive pronoun" },
+        { "left": "Lo que necesito es tiempo.", "right": "cleft-like construction isolating one piece of information" }
+      ]
+    },
+    {
+      "id": "ex-10",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct interrogative word or object pronoun:",
+      "passage": "—¿{0} hiciste anoche? —Fui al cine con mi hermana. —¿Y la película, {1} disfrutasteis? —Sí, {2} disfrutamos mucho los dos.",
+      "blanks": ["Qué", "la", "la"]
+    }
+  ]
+}

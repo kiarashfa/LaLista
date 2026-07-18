@@ -1,0 +1,81 @@
+{
+  "lessonId": "lesson-25",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "What is the gerund of dormir?",
+      "options": ["dormiendo", "durmiendo", "duermendo", "dormendo"],
+      "correctAnswer": "durmiendo"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Estoy ___ (leer) un libro.",
+      "correctAnswer": "leyendo"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present progressive of trabajar with estar:",
+      "verb": "estar + trabajando",
+      "givenForms": { "yo": "estoy trabajando", "nosotros": "estamos trabajando" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "estás trabajando", "él/ella/usted": "está trabajando", "vosotros": "estáis trabajando", "ellos/ellas/ustedes": "están trabajando" }
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the progressive is used where Spanish wants the simple present for a general fact:",
+      "incorrectSentence": "Estoy trabajando en un banco desde hace cinco años.",
+      "correctSentence": "Trabajo en un banco desde hace cinco años."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite attaching the pronoun to the gerund (don't forget the accent):",
+      "originalSentence": "Lo estoy leyendo.",
+      "instruction": "attach the pronoun to the gerund instead",
+      "correctAnswer": "Estoy leyéndolo."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["ahora.", "están", "comiendo", "Los", "niños"],
+      "correctOrder": ["Los", "niños", "están", "comiendo", "ahora."]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular gerund:",
+      "pairs": [
+        { "left": "leer", "right": "leyendo" },
+        { "left": "dormir", "right": "durmiendo" },
+        { "left": "decir", "right": "diciendo" },
+        { "left": "ir", "right": "yendo" },
+        { "left": "poder", "right": "pudiendo" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct gerund:",
+      "passage": "Ahora mismo estoy {0} (escribir) un correo, y mi hermano sigue {1} (dormir) en el sofá.",
+      "blanks": ["escribiendo", "durmiendo"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Which sentence correctly expresses the general fact \"I work at a bank\"?",
+      "options": ["Estoy trabajando en un banco.", "Trabajo en un banco.", "Trabajaba en un banco.", "Voy a trabajar en un banco."],
+      "correctAnswer": "Trabajo en un banco."
+    },
+    {
+      "id": "ex-10",
+      "type": "fill-blank",
+      "prompt": "___ estudiando español desde hace tres años. (seguir — I keep studying Spanish)",
+      "correctAnswer": "Sigo"
+    }
+  ]
+}

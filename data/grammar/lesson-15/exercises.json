@@ -1,0 +1,88 @@
+{
+  "lessonId": "lesson-15",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Yo ___ lavo las manos antes de comer. Choose the correct reflexive pronoun:",
+      "options": ["me", "te", "se", "nos"],
+      "correctAnswer": "me"
+    },
+    {
+      "id": "ex-2",
+      "type": "conjugation-grid",
+      "prompt": "Complete the reflexive conjugation of lavarse (to wash oneself) in the present tense:",
+      "verb": "lavarse",
+      "givenForms": { "yo": "me lavo", "nosotros": "nos lavamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "te lavas", "él/ella/usted": "se lava", "vosotros": "os laváis", "ellos/ellas/ustedes": "se lavan" }
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Se me ___ las llaves esta mañana y llegué tarde al trabajo. (olvidar — preterite, agreeing with las llaves)",
+      "correctAnswer": "olvidaron"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a redundant possessive stacked on top of a reflexive pronoun:",
+      "incorrectSentence": "Me lavo mis manos todas las mañanas.",
+      "correctSentence": "Me lavo las manos todas las mañanas."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["temprano", "levantarme", "quiero", "mañana"],
+      "correctOrder": ["quiero", "levantarme", "temprano", "mañana"]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as an affirmative tú command, attaching the pronoun (don't forget the accent):",
+      "originalSentence": "Te levantas temprano.",
+      "instruction": "make it an affirmative tú command with the pronoun attached",
+      "correctAnswer": "Levántate temprano."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each pronominal verb to its meaning:",
+      "pairs": [
+        { "left": "irse", "right": "to leave, go away" },
+        { "left": "quejarse", "right": "to complain" },
+        { "left": "darse cuenta (de)", "right": "to realize" },
+        { "left": "dormirse", "right": "to fall asleep" },
+        { "left": "equivocarse", "right": "to be wrong, make a mistake" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct reflexive/no-fault se pronoun:",
+      "passage": "Todos los días {0} despierto a las siete. Mi hermano y yo {1} ayudamos con el desayuno. Ayer, sin embargo, a mi madre {2} le olvidaron las llaves del coche.",
+      "blanks": ["me", "nos", "se"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Mis padres ___ mucho después de treinta años juntos. (love each other — reciprocal)",
+      "options": ["se quieren", "se quiere", "quieren se", "los quieren"],
+      "correctAnswer": "se quieren"
+    },
+    {
+      "id": "ex-10",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a verb that's always reflexive is missing its pronoun:",
+      "incorrectSentence": "Quejo mucho del tiempo que hace en invierno.",
+      "correctSentence": "Me quejo mucho del tiempo que hace en invierno."
+    },
+    {
+      "id": "ex-11",
+      "type": "fill-blank",
+      "prompt": "Se le ___ el vaso al camarero. (romper — preterite, singular, no-fault se)",
+      "correctAnswer": "rompió"
+    }
+  ]
+}

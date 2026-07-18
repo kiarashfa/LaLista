@@ -1,0 +1,79 @@
+{
+  "lessonId": "lesson-08",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form:",
+      "word": "amigos",
+      "options": ["mucho", "mucha", "muchos", "muchas"],
+      "correctAnswer": "muchos",
+      "note": "Mucho agrees in gender and number with the noun it quantifies — amigos is masculine plural."
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form:",
+      "word": "paciencia",
+      "options": ["poco", "poca", "pocos", "pocas"],
+      "correctAnswer": "poca",
+      "note": "Poco agrees with paciencia, a feminine singular noun."
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "No tengo ___ interés en el proyecto. (ninguno)",
+      "correctAnswer": "ningún"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "___ persona puede intentarlo; no hace falta ser experto. (cualquiera)",
+      "correctAnswer": "Cualquier"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "No tengo ninguno razón para quedarme.",
+      "correctSentence": "No tengo ninguna razón para quedarme."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Cada estudiantes tiene su propio horario.",
+      "correctSentence": "Cada estudiante tiene su propio horario."
+    },
+    {
+      "id": "ex-7",
+      "type": "multiple-choice",
+      "prompt": "Which sentence uses cualquiera in its dismissive, 'nothing special' sense?",
+      "options": [
+        "Cualquier persona puede venir.",
+        "No es un médico cualquiera.",
+        "Puedes elegir cualquier libro.",
+        "Cualquiera puede intentarlo."
+      ],
+      "correctAnswer": "No es un médico cualquiera."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each quantifier to its meaning:",
+      "pairs": [
+        { "left": "cada", "right": "each / every" },
+        { "left": "varios", "right": "several" },
+        { "left": "ambos", "right": "both" },
+        { "left": "bastante", "right": "enough / quite a lot" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct quantifier form:",
+      "passage": "Tengo {0} amigos en Madrid, pero {1} de ellos hablan inglés. {2} día practico español, aunque tengo {3} tiempo libre.",
+      "blanks": ["muchos", "pocos", "Cada", "poco"]
+    }
+  ]
+}

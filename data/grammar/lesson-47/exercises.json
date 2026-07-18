@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-47",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct form: '___ dos maneras de resolver este problema.'",
+      "options": ["Hay", "Hay que", "Hace", "Han"],
+      "correctAnswer": "Hay"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ayer ___ que terminar el proyecto antes de las cinco. (haber que, imperfecto)",
+      "correctAnswer": "había"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Habían tres personas en la sala.",
+      "correctSentence": "Había tres personas en la sala."
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using impersonal se:",
+      "originalSentence": "La gente cree que va a llover.",
+      "instruction": "rewrite using impersonal se",
+      "correctAnswer": "Se cree que va a llover."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["frío", "Hace", "invierno.", "mucho", "en"],
+      "correctOrder": ["Hace", "mucho", "frío", "en", "invierno."]
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each impersonal expression to its type:",
+      "pairs": [
+        { "left": "Hay tres libros.", "right": "existential hay (no subject slot)" },
+        { "left": "Hace frío.", "right": "weather impersonal (no subject slot)" },
+        { "left": "Se dice que...", "right": "impersonal se" },
+        { "left": "Dicen que...", "right": "third-person-plural impersonal" },
+        { "left": "Uno nunca sabe.", "right": "impersonal uno" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks:",
+      "passage": "En esta ciudad {0} muchos museos interesantes. {1} que hay demasiados para ver en un día, así que {2} que elegir bien cuáles visitar.",
+      "blanks": ["hay", "Dicen", "hay que"]
+    },
+    {
+      "id": "ex-8",
+      "type": "multiple-choice",
+      "prompt": "Which sentence uses TRUE impersonal se (no grammatical subject at all), rather than uno accompanied by its own reflexive se?",
+      "options": ["Uno se acostumbra a todo.", "Se vive bien en esta ciudad.", "Uno nunca sabe qué va a pasar.", "Uno se levanta temprano aquí."],
+      "correctAnswer": "Se vive bien en esta ciudad."
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct translation: 'I arrived two hours ago.'",
+      "options": ["Llegué hace dos horas.", "Hace dos horas que llego.", "Llegué desde hace dos horas.", "Hago dos horas que llegué."],
+      "correctAnswer": "Llegué hace dos horas."
+    }
+  ]
+}

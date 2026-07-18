@@ -1,0 +1,91 @@
+{
+  "lessonId": "lesson-37",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct present subjunctive tú form of hablar:",
+      "options": ["habla", "hablas", "hables", "hablo"],
+      "correctAnswer": "hables"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Es importante que ella ___ (comer) algo antes de salir.",
+      "correctAnswer": "coma"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present subjunctive of escribir (to write):",
+      "verb": "escribir",
+      "givenForms": { "yo": "escriba", "nosotros": "escribamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "escribas", "él/ella/usted": "escriba", "vosotros": "escribáis", "ellos/ellas/ustedes": "escriban" }
+    },
+    {
+      "id": "ex-4",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present subjunctive of poner (to put) — remember the g-insertion spreads to every cell:",
+      "verb": "poner",
+      "givenForms": { "yo": "ponga", "nosotros": "pongamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "pongas", "él/ella/usted": "ponga", "vosotros": "pongáis", "ellos/ellas/ustedes": "pongan" }
+    },
+    {
+      "id": "ex-5",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its present subjunctive yo/usted form:",
+      "pairs": [
+        { "left": "tener", "right": "tenga" },
+        { "left": "poner", "right": "ponga" },
+        { "left": "hacer", "right": "haga" },
+        { "left": "salir", "right": "salga" },
+        { "left": "decir", "right": "diga" },
+        { "left": "venir", "right": "venga" }
+      ]
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a spelling-change verb missing its swap:",
+      "incorrectSentence": "Quiero que nosotros llegemos temprano.",
+      "correctSentence": "Quiero que nosotros lleguemos temprano."
+    },
+    {
+      "id": "ex-7",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct nosotros present subjunctive form of ir:",
+      "options": ["vamos", "vayamos", "íbamos", "fuéramos"],
+      "correctAnswer": "vayamos"
+    },
+    {
+      "id": "ex-8",
+      "type": "fill-blank",
+      "prompt": "Quiero que usted me ___ (dar) su opinión.",
+      "correctAnswer": "dé"
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["a", "tiempo.", "que", "Ojalá", "ellos", "lleguen"],
+      "correctOrder": ["Ojalá", "que", "ellos", "lleguen", "a", "tiempo."]
+    },
+    {
+      "id": "ex-10",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present subjunctive form:",
+      "passage": "El profesor quiere que nosotros {0} (escribir) un ensayo, que {1} (llegar) a tiempo mañana y que {2} (ser) puntuales.",
+      "blanks": ["escribamos", "lleguemos", "seamos"]
+    },
+    {
+      "id": "ex-11",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite adding 'Espero que' and putting the verb in the present subjunctive:",
+      "originalSentence": "Tú vienes a la fiesta.",
+      "instruction": "add Espero que and use the present subjunctive",
+      "correctAnswer": "Espero que tú vengas a la fiesta."
+    }
+  ]
+}

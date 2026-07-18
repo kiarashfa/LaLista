@@ -1,0 +1,92 @@
+{
+  "lessonId": "lesson-50",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "El gato duerme ___ la mesa. (under)",
+      "options": ["bajo", "sobre", "entre", "ante"],
+      "correctAnswer": "bajo"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Caminamos ___ el parque, pero no llegamos a entrar. (direction, no arrival implied)",
+      "options": ["hacia", "hasta", "desde", "entre"],
+      "correctAnswer": "hacia"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Este secreto queda entre tú y ___. (yo, not mí)",
+      "correctAnswer": "yo"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — entre keeps subject pronouns, not ti/mí:",
+      "incorrectSentence": "Entre ti y mí, este plan no va a funcionar.",
+      "correctSentence": "Entre tú y yo, este plan no va a funcionar."
+    },
+    {
+      "id": "ex-5",
+      "type": "matching-pairs",
+      "prompt": "Match each compound prepositional phrase to its meaning:",
+      "pairs": [
+        { "left": "a través de", "right": "through, by means of" },
+        { "left": "a pesar de", "right": "despite" },
+        { "left": "en cuanto a", "right": "as for, regarding" },
+        { "left": "junto a", "right": "next to" },
+        { "left": "frente a", "right": "facing, opposite" }
+      ]
+    },
+    {
+      "id": "ex-6",
+      "type": "multiple-choice",
+      "prompt": "___ tres años que vivo en esta ciudad.",
+      "options": ["Desde", "Hace", "Hacía", "Desde hace"],
+      "correctAnswer": "Hace"
+    },
+    {
+      "id": "ex-7",
+      "type": "fill-blank",
+      "prompt": "Vivo en esta ciudad ___ tres años. (same meaning as Hace tres años que vivo aquí, reordered)",
+      "correctAnswer": "desde hace"
+    },
+    {
+      "id": "ex-8",
+      "type": "fill-blank",
+      "prompt": "Estudio español ___ 2019. (a specific starting point, not a duration)",
+      "correctAnswer": "desde"
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using desde hace:",
+      "originalSentence": "Hace cinco años que trabajo aquí.",
+      "instruction": "rewrite using desde hace",
+      "correctAnswer": "Trabajo aquí desde hace cinco años."
+    },
+    {
+      "id": "ex-10",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this is narrated in the past, so hace must shift to hacía:",
+      "incorrectSentence": "Hace dos años que vivía en Madrid cuando la conocí.",
+      "correctSentence": "Hacía dos años que vivía en Madrid cuando la conocí."
+    },
+    {
+      "id": "ex-11",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["veo.", "que", "Hace", "tiempo", "no", "mucho", "la"],
+      "correctOrder": ["Hace", "mucho", "tiempo", "que", "no", "la", "veo."]
+    },
+    {
+      "id": "ex-12",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with desde, desde hace, or Desde:",
+      "passage": "Mi abuela vive en este pueblo {0} más de cuarenta años. Antes vivía en la ciudad, pero se mudó aquí {1} 1980. {2} entonces, no ha vuelto a la ciudad ni una sola vez.",
+      "blanks": ["desde hace", "desde", "Desde"]
+    }
+  ]
+}

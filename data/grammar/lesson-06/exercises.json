@@ -1,0 +1,67 @@
+{
+  "lessonId": "lesson-06",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "You're holding a book and telling your friend about it. Which demonstrative fits 'Me encanta ___ libro'?",
+      "options": ["ese libro", "aquel libro", "este libro", "esa libro"],
+      "correctAnswer": "este libro"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Complete with the demonstrative for something temporally distant: '___ años de la guerra fueron muy difíciles.'",
+      "correctAnswer": "Aquellos"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Aquello coche que ves allí es de mi tío.",
+      "correctSentence": "Aquel coche que ves allí es de mi tío."
+    },
+    {
+      "id": "ex-4",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct demonstrative:",
+      "word": "mesa",
+      "options": ["este", "esta"],
+      "correctAnswer": "esta",
+      "note": "Demonstratives agree in gender and number with the noun they accompany, just like adjectives."
+    },
+    {
+      "id": "ex-5",
+      "type": "matching-pairs",
+      "prompt": "Match each demonstrative to what it points to:",
+      "pairs": [
+        { "left": "este", "right": "near the speaker" },
+        { "left": "ese", "right": "near the listener" },
+        { "left": "aquel", "right": "far from both speaker and listener" },
+        { "left": "esto", "right": "an unnamed thing or idea, not a specific noun" }
+      ]
+    },
+    {
+      "id": "ex-6",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct demonstrative:",
+      "passage": "¿Ves {0} montañas al fondo? Están muy lejos. {1} libro que tengo en la mano es nuevo. No entiendo {2} — ¿qué querías decir?",
+      "blanks": ["aquellas", "Este", "eso"]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite, dropping the repeated noun and keeping the demonstrative as a pronoun (no accent needed in modern usage):",
+      "originalSentence": "Prefiero este coche, no ese coche.",
+      "instruction": "drop the second noun",
+      "correctAnswer": "Prefiero este coche, no ese."
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["de", "mis", "abuelos", "es", "Aquella", "casa"],
+      "correctOrder": ["Aquella", "casa", "es", "de", "mis", "abuelos"]
+    }
+  ]
+}

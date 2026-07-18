@@ -1,0 +1,78 @@
+{
+  "lessonId": "lesson-30",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "What is the irregular past participle of escribir?",
+      "options": ["escribido", "escrito", "escribió", "escribiendo"],
+      "correctAnswer": "escrito"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Yo todavía no ___ (hacer) la tarea.",
+      "correctAnswer": "he hecho"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present tense of haber (the auxiliary, not hay):",
+      "verb": "haber",
+      "givenForms": { "yo": "he", "nosotros": "hemos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "has", "él/ella/usted": "ha", "vosotros": "habéis", "ellos/ellas/ustedes": "han" }
+    },
+    {
+      "id": "ex-4",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular past participle:",
+      "pairs": [
+        { "left": "escribir", "right": "escrito" },
+        { "left": "hacer", "right": "hecho" },
+        { "left": "decir", "right": "dicho" },
+        { "left": "ver", "right": "visto" },
+        { "left": "poner", "right": "puesto" },
+        { "left": "romper", "right": "roto" }
+      ]
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Hemos escritas las cartas.",
+      "correctSentence": "Hemos escrito las cartas."
+    },
+    {
+      "id": "ex-6",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of 'escrito' to complete: 'las cartas ___' (used here as a plain adjective, not inside a haber construction)",
+      "word": "escrito",
+      "options": ["escrito", "escrita", "escritos", "escritas"],
+      "correctAnswer": "escritas",
+      "note": "As an adjective modifying a feminine plural noun, escrito must agree — contrast with the frozen, invariant escrito in hemos escrito."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using the present perfect instead of the preterite (Peninsular 'today' framing):",
+      "originalSentence": "Comí paella hoy.",
+      "instruction": "use he/has/ha... + participle",
+      "correctAnswer": "He comido paella hoy."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present-perfect form:",
+      "passage": "Hoy {0} (ser) un día muy productivo. Esta mañana me {1} (levantar) temprano y {2} (hacer) la compra. Después, mi hermana y yo {3} (ver) una película y {4} (comer) algo en el centro.",
+      "blanks": ["ha sido", "he levantado", "he hecho", "hemos visto", "hemos comido"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["he", "Todavía", "terminado", "no", "el", "informe."],
+      "correctOrder": ["Todavía", "no", "he", "terminado", "el", "informe."]
+    }
+  ]
+}

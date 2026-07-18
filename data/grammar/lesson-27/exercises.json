@@ -1,0 +1,98 @@
+{
+  "lessonId": "lesson-27",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Yo ___ una reunión muy larga esta mañana. (tener)",
+      "options": ["tuve", "tení", "tuvi", "tengo"],
+      "correctAnswer": "tuve"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ella no ___ (poder) llegar a tiempo.",
+      "correctAnswer": "pudo"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the preterite of decir (to say/tell):",
+      "verb": "decir",
+      "givenForms": { "yo": "dije", "nosotros": "dijimos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "dijiste", "él/ella/usted": "dijo", "vosotros": "dijisteis", "ellos/ellas/ustedes": "dijeron" }
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a j-stem ending error:",
+      "incorrectSentence": "Trajieron comida para todos.",
+      "correctSentence": "Trajeron comida para todos."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "¿Qué ___ con el dinero? (hacer)",
+      "options": ["hizo", "hico", "hació", "hace"],
+      "correctAnswer": "hizo"
+    },
+    {
+      "id": "ex-6",
+      "type": "fill-blank",
+      "prompt": "Él ___ (ser) profesor durante diez años.",
+      "correctAnswer": "fue"
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its correct yo-form preterite:",
+      "pairs": [
+        { "left": "tener", "right": "tuve" },
+        { "left": "poner", "right": "puse" },
+        { "left": "saber", "right": "supe" },
+        { "left": "venir", "right": "vine" },
+        { "left": "querer", "right": "quise" },
+        { "left": "dar", "right": "di" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "conjugation-grid",
+      "prompt": "Complete the preterite of dormir (to sleep) — remember the vowel shift belongs only to the third person:",
+      "verb": "dormir",
+      "givenForms": { "yo": "dormí", "nosotros": "dormimos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "dormiste", "él/ella/usted": "durmió", "vosotros": "dormisteis", "ellos/ellas/ustedes": "durmieron" }
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["palomitas", "pidió", "hermana", "Mi"],
+      "correctOrder": ["Mi", "hermana", "pidió", "palomitas"]
+    },
+    {
+      "id": "ex-10",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite with ellos as the subject:",
+      "originalSentence": "Ella durmió ocho horas.",
+      "instruction": "change the subject to ellos",
+      "correctAnswer": "Ellos durmieron ocho horas."
+    },
+    {
+      "id": "ex-11",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct preterite form:",
+      "passage": "Ayer nosotros {0} (ir) al cine. Yo {1} (tener) que hacer cola, pero al final {2} (poder) comprar las entradas.",
+      "blanks": ["fuimos", "tuve", "pude"]
+    },
+    {
+      "id": "ex-12",
+      "type": "multiple-choice",
+      "prompt": "Which verb shows the -ir stem-changing vowel shift only in él/ella/usted and ellos/ellas/ustedes, not the full six-cell irregularity seen in tener or ir?",
+      "options": ["pedir", "tener", "estar", "dar"],
+      "correctAnswer": "pedir"
+    }
+  ]
+}

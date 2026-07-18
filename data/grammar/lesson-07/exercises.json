@@ -1,0 +1,67 @@
+{
+  "lessonId": "lesson-07",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Complete correctly: '___ padres viven en Madrid.' (my)",
+      "options": ["Mi", "Mis", "Mío", "Míos"],
+      "correctAnswer": "Mis"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Es un amigo ___. (mine — use the long form after the noun)",
+      "correctAnswer": "mío"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Me lavo mis manos antes de comer.",
+      "correctSentence": "Me lavo las manos antes de comer."
+    },
+    {
+      "id": "ex-4",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct long-form possessive:",
+      "word": "casa",
+      "options": ["nuestro", "nuestra"],
+      "correctAnswer": "nuestra",
+      "note": "Long-form possessives agree in gender and number with the thing possessed — casa is feminine, so nuestro becomes nuestra."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite to remove the ambiguity of su, specifying that the book belongs to her:",
+      "originalSentence": "Es su libro.",
+      "instruction": "replace su with de + the correct prepositional pronoun",
+      "correctAnswer": "Es el libro de ella."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each short-form possessive to its long-form equivalent:",
+      "pairs": [
+        { "left": "mi", "right": "mío" },
+        { "left": "tu", "right": "tuyo" },
+        { "left": "su", "right": "suyo" },
+        { "left": "nuestra (before or after the noun)", "right": "nuestra — same word both ways" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct possessive:",
+      "passage": "{0} hermana vive con {1} marido en Sevilla. La casa es {2}, no de sus padres.",
+      "blanks": ["Mi", "su", "suya"]
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["mía", "tuya", "es", "Esta", "no", "chaqueta"],
+      "correctOrder": ["Esta", "chaqueta", "es", "mía", "no", "tuya"]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "lessonId": "lesson-33",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Nosotros ___ paella este fin de semana. (comer)",
+      "options": ["comeremos", "comemos", "comíamos", "comamos"],
+      "correctAnswer": "comeremos"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ellos no ___ (tener) tiempo mañana.",
+      "correctAnswer": "tendrán"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the future of poner (to put):",
+      "verb": "poner",
+      "givenForms": { "yo": "pondré", "nosotros": "pondremos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "pondrás", "él/ella/usted": "pondrá", "vosotros": "pondréis", "ellos/ellas/ustedes": "pondrán" }
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an irregular stem regularized by mistake:",
+      "incorrectSentence": "Él tenerá que estudiar más.",
+      "correctSentence": "Él tendrá que estudiar más."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "¿Qué hora es? No sé, ___ las tres. (a guess about right now, not a future statement)",
+      "options": ["será", "es", "fue", "sería"],
+      "correctAnswer": "será"
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular future stem:",
+      "pairs": [
+        { "left": "tener", "right": "tendr-" },
+        { "left": "poner", "right": "pondr-" },
+        { "left": "salir", "right": "saldr-" },
+        { "left": "decir", "right": "dir-" },
+        { "left": "hacer", "right": "har-" },
+        { "left": "poder", "right": "podr-" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using the futuro simple instead of ir a + infinitivo:",
+      "originalSentence": "Voy a estudiar esta noche.",
+      "instruction": "replace ir a + infinitivo with the futuro simple",
+      "correctAnswer": "Estudiaré esta noche."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct future-tense form:",
+      "passage": "El próximo verano nosotros {0} (hacer) un viaje largo. Yo {1} (salir) el primero de julio y no {2} (volver) hasta agosto.",
+      "blanks": ["haremos", "saldré", "volveré"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["viernes", "el", "informe", "el", "Entregaré"],
+      "correctOrder": ["Entregaré", "el", "informe", "el", "viernes"]
+    }
+  ]
+}

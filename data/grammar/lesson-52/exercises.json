@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-52",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Aunque ___ (llover) ahora mismo — lo veo por la ventana — voy a salir a correr. Choose the correct form:",
+      "options": ["llueve", "llueva", "llovía", "lloverá"],
+      "correctAnswer": "llueve"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Te llamaré cuando ___ (llegar) al aeropuerto. Choose the correct form:",
+      "options": ["llego", "llegue", "llegué", "llegaba"],
+      "correctAnswer": "llegue"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Te doy la llave para que tú ___ (entrar) solo.",
+      "correctAnswer": "entres"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Cuando ___ (llegar) a casa, siempre ceno con mi familia.",
+      "correctAnswer": "llego"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the speaker doesn't know whether it will rain tomorrow, so this is a hypothetical concession, not a known fact:",
+      "incorrectSentence": "Aunque llueve mañana, iremos a la playa.",
+      "correctSentence": "Aunque llueva mañana, iremos a la playa."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this causal conjunction cannot open the sentence:",
+      "incorrectSentence": "Porque no tenía dinero, no fui a la fiesta.",
+      "correctSentence": "Como no tenía dinero, no fui a la fiesta."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite so the purpose clause has a different subject (tú), using para que and the subjunctive:",
+      "originalSentence": "Trabajo para ganar dinero.",
+      "instruction": "rewrite with para que and a different subject (tú)",
+      "correctAnswer": "Trabajo para que tú ganes dinero."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each conjunction to its rule or meaning:",
+      "pairs": [
+        { "left": "porque", "right": "because (indicative, follows the main clause)" },
+        { "left": "como", "right": "because (indicative, must open the sentence)" },
+        { "left": "para que", "right": "so that (always subjunctive)" },
+        { "left": "aunque", "right": "although/even if (indicative for known fact, subjunctive for hypothetical)" },
+        { "left": "cuando", "right": "when (indicative for habitual, subjunctive for future)" },
+        { "left": "ya que", "right": "since/given that (formal register)" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present-tense form (indicative or subjunctive):",
+      "passage": "Aunque {0} (hacer) frío mañana, iremos de excursión porque ya {1} (tener) los billetes. Cuando {2} (llegar) al pueblo, comeremos algo.",
+      "blanks": ["haga", "tenemos", "lleguemos"]
+    }
+  ]
+}

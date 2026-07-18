@@ -1,0 +1,87 @@
+{
+  "lessonId": "lesson-48",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Estudio mucho ___ aprender bien el español. Choose the correct preposition:",
+      "options": ["por", "para", "de", "en"],
+      "correctAnswer": "para"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Vamos a quedarnos en Sevilla ___ tres días. Choose the correct preposition:",
+      "options": ["por", "para", "en", "a"],
+      "correctAnswer": "por"
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "La cena todavía ___ hacer — no hemos empezado a cocinar. Choose the phrase that best completes 'dinner still needs to be made':",
+      "options": ["está por", "está para", "es por", "es para"],
+      "correctAnswer": "está por"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this gift is intended for a specific person (recipient), not a reason:",
+      "incorrectSentence": "Este regalo es por ti.",
+      "correctSentence": "Este regalo es para ti."
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this describes movement through a space, not a destination:",
+      "incorrectSentence": "Caminamos para el parque todas las mañanas.",
+      "correctSentence": "Caminamos por el parque todas las mañanas."
+    },
+    {
+      "id": "ex-6",
+      "type": "fill-blank",
+      "prompt": "Te doy veinte euros ___ ese libro.",
+      "correctAnswer": "por"
+    },
+    {
+      "id": "ex-7",
+      "type": "fill-blank",
+      "prompt": "Sinceramente, ___ mí, este examen es bastante difícil.",
+      "correctAnswer": "para"
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each fixed expression to its meaning:",
+      "pairs": [
+        { "left": "por fin", "right": "finally, at last" },
+        { "left": "por supuesto", "right": "of course" },
+        { "left": "por ejemplo", "right": "for example" },
+        { "left": "para siempre", "right": "forever" },
+        { "left": "para nada", "right": "not at all" },
+        { "left": "para variar", "right": "for a change" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with por or para:",
+      "passage": "Salgo {0} Madrid mañana {1} la mañana. Voy a quedarme allí {2} una semana {3} visitar a mi familia. El regalo que llevo es {4} mi abuela — se lo compré {5} cincuenta euros en el mercado.",
+      "blanks": ["para", "por", "por", "para", "para", "por"]
+    },
+    {
+      "id": "ex-10",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["viajar", "para", "Estudio", "España.", "español", "a"],
+      "correctOrder": ["Estudio", "español", "para", "viajar", "a", "España."]
+    },
+    {
+      "id": "ex-11",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as a passive-voice sentence using ser + participle + por to name the agent:",
+      "originalSentence": "Ingenieros franceses construyeron el puente.",
+      "instruction": "rewrite in passive voice, naming the agent with por",
+      "correctAnswer": "El puente fue construido por ingenieros franceses."
+    }
+  ]
+}

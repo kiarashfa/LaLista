@@ -1,0 +1,75 @@
+{
+  "lessonId": "lesson-03",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct article: '___ estudiante llegó tarde' (referring to a male student):",
+      "options": ["el", "la", "los", "las"],
+      "correctAnswer": "el"
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct article for the singular form:",
+      "word": "agua",
+      "options": ["el", "la"],
+      "correctAnswer": "el",
+      "note": "Agua is feminine, but takes el in the singular to avoid two stressed 'ah' sounds in a row — the euphonic a-/ha- rule."
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Vamos ___ cine esta noche. (a + el)",
+      "correctAnswer": "al"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Mi padre es un médico.",
+      "correctSentence": "Mi padre es médico."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Add the missing contractions:",
+      "originalSentence": "Voy a el parque de el pueblo.",
+      "instruction": "add the missing contractions",
+      "correctAnswer": "Voy al parque del pueblo."
+    },
+    {
+      "id": "ex-6",
+      "type": "cloze-passage",
+      "prompt": "Fill in each blank with the correct article or contraction:",
+      "passage": "Normalmente, {0} agua del grifo es potable. {1} domingos, mi padre juega {2} fútbol y mi madre toca {3} piano.",
+      "blanks": ["el", "Los", "al", "el"]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each expression to its meaning:",
+      "pairs": [
+        { "left": "por la mañana", "right": "in the morning" },
+        { "left": "jugar al fútbol", "right": "to play soccer" },
+        { "left": "tocar la guitarra", "right": "to play guitar" },
+        { "left": "a la derecha", "right": "to the right" },
+        { "left": "lo importante", "right": "the important thing" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct completion: '___ difícil de este examen es la gramática.'",
+      "options": ["El", "La", "Lo", "Los"],
+      "correctAnswer": "Lo"
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["agua", "El", "es", "muy", "fría"],
+      "correctOrder": ["El", "agua", "es", "muy", "fría"]
+    }
+  ]
+}

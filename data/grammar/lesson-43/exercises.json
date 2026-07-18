@@ -1,0 +1,77 @@
+{
+  "lessonId": "lesson-43",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Salió de la habitación ___ (llorar).",
+      "options": ["llorar", "llorando", "llora", "llorado"],
+      "correctAnswer": "llorando"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Which sentence correctly expresses \"Reading is relaxing\"?",
+      "options": ["Leyendo es relajante.", "Leer es relajante.", "El leyendo es relajante.", "Está leyendo relajante."],
+      "correctAnswer": "Leer es relajante."
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Aprendió español ___ (vivir) en Madrid.",
+      "correctAnswer": "viviendo"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "___ (pedir) permiso, entró en la oficina.",
+      "correctAnswer": "Pidiendo"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — Spanish never lets a gerund act as a noun:",
+      "incorrectSentence": "Nadando es muy divertido en verano.",
+      "correctSentence": "Nadar es muy divertido en verano."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Mi pasión es viajando por el mundo.",
+      "correctSentence": "Mi pasión es viajar por el mundo."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Combine into one sentence using an adverbial gerund of manner:",
+      "originalSentence": "Llegó a casa. Corría.",
+      "instruction": "combine using a manner gerund",
+      "correctAnswer": "Llegó a casa corriendo."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each sentence to what its gerund is expressing:",
+      "pairs": [
+        { "left": "Llegó corriendo.", "right": "Manner" },
+        { "left": "Estudiaba escuchando música.", "right": "Simultaneity" },
+        { "left": "Aprendió español viviendo en Madrid.", "right": "Means/Cause" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["corriendo.", "casa", "Llegó", "a"],
+      "correctOrder": ["Llegó", "a", "casa", "corriendo."]
+    },
+    {
+      "id": "ex-10",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct gerund:",
+      "passage": "Ahorró dinero {0} (trabajar) los fines de semana, y aprendió mucho {1} (viajar) por el mundo.",
+      "blanks": ["trabajando", "viajando"]
+    }
+  ]
+}

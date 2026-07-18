@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-38",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Espero que tú ___ (venir) a la fiesta.",
+      "options": ["vienes", "venga", "vengas", "vendrás"],
+      "correctAnswer": "vengas"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Creo que ella ___ razón. (tener)",
+      "options": ["tiene", "tenga", "tuvo", "tenía"],
+      "correctAnswer": "tiene"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "No creo que ella ___ (tener) razón.",
+      "correctAnswer": "tenga"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an unknown-antecedent adjective clause:",
+      "incorrectSentence": "Busco un empleado que habla inglés.",
+      "correctSentence": "Busco un empleado que hable inglés."
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an indirect command:",
+      "incorrectSentence": "Que pasa el siguiente.",
+      "correctSentence": "Que pase el siguiente."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as 'Me gusta que...' using the present subjunctive:",
+      "originalSentence": "Tú me escuchas.",
+      "instruction": "rewrite with Me gusta que and the present subjunctive",
+      "correctAnswer": "Me gusta que me escuches."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each trigger phrase to its WEIRDO category:",
+      "pairs": [
+        { "left": "Espero que", "right": "Wishes" },
+        { "left": "Me alegro de que", "right": "Emotion" },
+        { "left": "Es necesario que", "right": "Impersonal expressions" },
+        { "left": "Recomiendo que", "right": "Recommendations" },
+        { "left": "Dudo que", "right": "Doubt" },
+        { "left": "Ojalá que", "right": "Ojalá" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present-tense form (indicative or subjunctive):",
+      "passage": "Creo que Ana {0} (llegar) mañana. Ojalá que {1} (traer) el regalo. Es importante que nosotros {2} (estar) listos a tiempo.",
+      "blanks": ["llega", "traiga", "estemos"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["que", "inglés.", "hable", "Busco", "empleado", "un"],
+      "correctOrder": ["Busco", "un", "empleado", "que", "hable", "inglés."]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "lessonId": "lesson-16",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Este café es para ___. (me)",
+      "options": ["yo", "mí", "me", "ti"],
+      "correctAnswer": "mí"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "No puedo vivir sin ___. (you — tú)",
+      "correctAnswer": "ti"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — con never combines with mí the ordinary way:",
+      "incorrectSentence": "Quiere venir con mí a la fiesta.",
+      "correctSentence": "Quiere venir conmigo a la fiesta."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — que introduces a clause, not a true preposition:",
+      "incorrectSentence": "Corre más rápido que mí.",
+      "correctSentence": "Corre más rápido que yo."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite to remove the ambiguity of su, specifying that the house belongs to him:",
+      "originalSentence": "Es su casa.",
+      "instruction": "replace su with de + the correct prepositional pronoun (his)",
+      "correctAnswer": "Es la casa de él."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each subject pronoun (or con + pronoun) to its correct form:",
+      "pairs": [
+        { "left": "yo", "right": "mí" },
+        { "left": "tú", "right": "ti" },
+        { "left": "con + yo", "right": "conmigo" },
+        { "left": "con + tú", "right": "contigo" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "fill-blank",
+      "prompt": "Todos vinieron excepto ___. (me — excepto takes a subject pronoun, not mí)",
+      "correctAnswer": "yo"
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct prepositional pronoun or fused form:",
+      "passage": "A {0} me encanta el cine, así que le pregunté a Ana si quería venir {1}. Entre tú y yo, no esperaba que aceptara, pero según {2}, será una buena tarde para las dos.",
+      "blanks": ["mí", "conmigo", "ella"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["mí", "es", "regalo", "Este", "para"],
+      "correctOrder": ["Este", "regalo", "es", "para", "mí"]
+    }
+  ]
+}

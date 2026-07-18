@@ -1,0 +1,79 @@
+{
+  "lessonId": "lesson-22",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present-tense conjugation of hablar (to talk):",
+      "verb": "hablar",
+      "givenForms": { "yo": "hablo", "nosotros": "hablamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "hablas", "él/ella/usted": "habla", "vosotros": "habláis", "ellos/ellas/ustedes": "hablan" }
+    },
+    {
+      "id": "ex-2",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present-tense conjugation of comer (to eat):",
+      "verb": "comer",
+      "givenForms": { "yo": "como", "nosotros": "comemos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "comes", "él/ella/usted": "come", "vosotros": "coméis", "ellos/ellas/ustedes": "comen" }
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present-tense conjugation of vivir (to live):",
+      "verb": "vivir",
+      "givenForms": { "yo": "vivo", "nosotros": "vivimos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "vives", "él/ella/usted": "vive", "vosotros": "vivís", "ellos/ellas/ustedes": "viven" }
+    },
+    {
+      "id": "ex-4",
+      "type": "multiple-choice",
+      "prompt": "Nosotros ___ (aprender) español todos los días.",
+      "options": ["aprendo", "aprendemos", "aprendéis", "aprenden"],
+      "correctAnswer": "aprendemos"
+    },
+    {
+      "id": "ex-5",
+      "type": "fill-blank",
+      "prompt": "Ellos ___ (escribir) cartas a sus abuelos.",
+      "correctAnswer": "escriben"
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Yo comes pizza los viernes.",
+      "correctSentence": "Yo como pizza los viernes."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["al", "Mañana", "médico", "voy"],
+      "correctOrder": ["Mañana", "voy", "al", "médico"]
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its yo-form in the present tense:",
+      "pairs": [
+        { "left": "hablar", "right": "hablo" },
+        { "left": "comer", "right": "como" },
+        { "left": "vivir", "right": "vivo" },
+        { "left": "trabajar", "right": "trabajo" },
+        { "left": "leer", "right": "leo" },
+        { "left": "escribir", "right": "escribo" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present-tense form:",
+      "passage": "Todos los días, yo {0} (vivir) en Madrid y {1} (trabajar) en una oficina. Mi hermana {2} (comer) con nosotros los domingos.",
+      "blanks": ["vivo", "trabajo", "come"]
+    }
+  ]
+}

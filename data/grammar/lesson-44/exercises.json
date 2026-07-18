@@ -1,0 +1,69 @@
+{
+  "lessonId": "lesson-44",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "fill-blank",
+      "prompt": "Ya he ___ (poner) la mesa.",
+      "correctAnswer": "puesto"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Choose the correctly agreeing form: 'Las ventanas están ___.' (romper)",
+      "options": ["roto", "rota", "rotos", "rotas"],
+      "correctAnswer": "rotas"
+    },
+    {
+      "id": "ex-3",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form to complete: 'Los documentos están ___' (firmar — used as a plain adjective describing the documents, not inside a haber construction)",
+      "word": "firmado",
+      "options": ["firmado", "firmada", "firmados", "firmadas"],
+      "correctAnswer": "firmados",
+      "note": "Documentos is masculine plural, so the participle-as-adjective must agree — contrast with the frozen, invariant firmado inside a haber construction."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Los libros están abierto en la mesa.",
+      "correctSentence": "Los libros están abiertos en la mesa."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite to describe the resulting state with estar + participle (agreeing with 'la tienda'):",
+      "originalSentence": "Alguien ha cerrado la tienda.",
+      "instruction": "describe the resulting state with estar + participle",
+      "correctAnswer": "La tienda está cerrada."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular past participle:",
+      "pairs": [
+        { "left": "volver", "right": "vuelto" },
+        { "left": "morir", "right": "muerto" },
+        { "left": "abrir", "right": "abierto" },
+        { "left": "cubrir", "right": "cubierto" },
+        { "left": "descubrir", "right": "descubierto" },
+        { "left": "devolver", "right": "devuelto" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order (an absolute construction):",
+      "words": ["todos", "fueron.", "la", "Terminada", "se", "reunión,"],
+      "correctOrder": ["Terminada", "la", "reunión,", "todos", "se", "fueron."]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form of the participle in parentheses — pay attention to whether it needs to agree:",
+      "passage": "La puerta estaba {0} (abrir) cuando llegamos. Las cartas, ya {1} (escribir), estaban sobre la mesa. {2} (Terminar) el trabajo, nos fuimos a casa. Nunca hemos {3} (romper) una promesa así.",
+      "blanks": ["abierta", "escritas", "Terminado", "roto"]
+    }
+  ]
+}

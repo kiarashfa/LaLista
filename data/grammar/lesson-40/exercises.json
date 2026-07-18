@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-40",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present subjunctive of haber (used to form the presente perfecto de subjuntivo):",
+      "verb": "haber",
+      "givenForms": { "yo": "haya", "nosotros": "hayamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "hayas", "él/ella/usted": "haya", "vosotros": "hayáis", "ellos/ellas/ustedes": "hayan" }
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Dudaba que ellos ya ___ (llegar).",
+      "correctAnswer": "hubieran llegado"
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "Esperaba que ellos ___ (llegar) a tiempo.",
+      "options": ["hayan llegado", "hubieran llegado", "llegaran", "llegan"],
+      "correctAnswer": "hubieran llegado"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the main clause is present tense, so the sequence-of-tense rule calls for the presente perfecto de subjuntivo:",
+      "incorrectSentence": "Espero que hubieras terminado el trabajo.",
+      "correctSentence": "Espero que hayas terminado el trabajo."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Express this as a regret using Ojalá + the pluperfect subjunctive:",
+      "originalSentence": "No salí antes y me perdí el principio de la película.",
+      "instruction": "rewrite as a wish beginning with Ojalá...",
+      "correctAnswer": "Ojalá hubiera salido antes."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each sentence to the compound subjunctive job it performs:",
+      "pairs": [
+        { "left": "Espero que hayas comido.", "right": "presente perfecto de subjuntivo" },
+        { "left": "Me alegro de que hayan ganado.", "right": "presente perfecto de subjuntivo" },
+        { "left": "Dudaba que hubieran salido ya.", "right": "pluscuamperfecto de subjuntivo — past trigger" },
+        { "left": "Ojalá hubiera llegado a tiempo.", "right": "pluscuamperfecto de subjuntivo — regret" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct compound subjunctive form:",
+      "passage": "Espero que ya {0} (terminar/tú) la tarea. Ayer esperaba que la {1} (terminar/tú) antes de las ocho, pero seguías trabajando.",
+      "blanks": ["hayas terminado", "hubieras terminado"]
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["antes.", "hubiera", "Ojalá", "salido"],
+      "correctOrder": ["Ojalá", "hubiera", "salido", "antes."]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Sabía que ya ___ (salir) él.",
+      "options": ["hubiera salido", "había salido", "haya salido", "saliera"],
+      "correctAnswer": "había salido"
+    }
+  ]
+}

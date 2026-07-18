@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-51",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Fernando ___ Isabel unificaron España. Choose the correct conjunction:",
+      "options": ["y", "e", "o", "u"],
+      "correctAnswer": "e"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Compramos nieve ___ hielo para la fiesta de invierno. Choose the correct conjunction:",
+      "options": ["y", "e"],
+      "correctAnswer": "y"
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "Necesito siete ___ ocho euros para el autobús. Choose the correct conjunction:",
+      "options": ["o", "u"],
+      "correctAnswer": "u"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "No tengo mucho dinero, ___ soy feliz. (pero or sino)",
+      "correctAnswer": "pero"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the second word directly replaces the rejected first one:",
+      "incorrectSentence": "No quiero café, pero té.",
+      "correctSentence": "No quiero café, sino té."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the replacement clause has its own conjugated verb:",
+      "incorrectSentence": "No fue a la playa, sino se quedó en casa.",
+      "correctSentence": "No fue a la playa, sino que se quedó en casa."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Combine into one sentence using ni...ni:",
+      "originalSentence": "No tengo tiempo. No tengo dinero.",
+      "instruction": "combine both negatives with ni...ni",
+      "correctAnswer": "No tengo ni tiempo ni dinero."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each conjunction to its rule or meaning:",
+      "pairs": [
+        { "left": "y → e", "right": "used before a word starting with an i-/hi- sound" },
+        { "left": "o → u", "right": "used before a word starting with an o-/ho- sound" },
+        { "left": "pero", "right": "but (adds a contrasting fact)" },
+        { "left": "sino", "right": "but rather (replaces what was just denied)" },
+        { "left": "sino que", "right": "but rather, when the replacement has its own conjugated verb" },
+        { "left": "ni...ni", "right": "neither...nor" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct conjunction:",
+      "passage": "Ana {0} Isabel llegaron temprano. Ana no quiere café, {1} té. Necesitamos comprar siete {2} ocho tazas más.",
+      "blanks": ["e", "sino", "u"]
+    }
+  ]
+}

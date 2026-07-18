@@ -1,0 +1,65 @@
+{
+  "lessonId": "lesson-13",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "___ escribo un correo a mi jefe. (I'm writing my boss an email.) Which pronoun fits?",
+      "options": ["me", "te", "le", "les"],
+      "correctAnswer": "le"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "A los estudiantes ___ interesa la historia. (The students are interested in history.)",
+      "options": ["le", "les", "lo", "los"],
+      "correctAnswer": "les"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "A los niños ___ encanta el parque. (The kids love the park.)",
+      "correctAnswer": "les"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the fronted indirect object is missing its required pronoun:",
+      "incorrectSentence": "A María di el libro.",
+      "correctSentence": "A María le di el libro."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["escribo", "una", "carta", "Le", "a", "mi", "abuela."],
+      "correctOrder": ["Le", "escribo", "una", "carta", "a", "mi", "abuela."]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as an affirmative tú command, attaching the pronoun:",
+      "originalSentence": "Le das el mensaje.",
+      "instruction": "make it an affirmative tú command with the pronoun attached",
+      "correctAnswer": "Dale el mensaje."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each Spanish sentence to its English meaning:",
+      "pairs": [
+        { "left": "Le compré un regalo a mi madre.", "right": "I bought my mother a gift." },
+        { "left": "A mí me gusta el café.", "right": "I like coffee." },
+        { "left": "Les mandé una invitación.", "right": "I sent them an invitation." },
+        { "left": "Le hablo a ella, no a él.", "right": "I'm talking to her, not to him." }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with le or les:",
+      "passage": "A mi hermano {0} encanta el fútbol, así que siempre {1} regalo entradas para los partidos. A mis padres también {2} gusta ir a verlo con él.",
+      "blanks": ["le", "le", "les"]
+    }
+  ]
+}

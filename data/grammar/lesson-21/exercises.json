@@ -1,0 +1,76 @@
+{
+  "lessonId": "lesson-21",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Mi madre ___ profesora. Choose the correct verb:",
+      "options": ["es", "está", "eres", "estás"],
+      "correctAnswer": "es"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "¿Por qué ___ tan cansado hoy? Choose the correct verb:",
+      "options": ["eres", "estás", "es", "está"],
+      "correctAnswer": "estás"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present-tense conjugation of estar:",
+      "verb": "estar",
+      "givenForms": { "yo": "estoy", "nosotros": "estamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "estás", "él/ella/usted": "está", "vosotros": "estáis", "ellos/ellas/ustedes": "están" }
+    },
+    {
+      "id": "ex-4",
+      "type": "conjugation-grid",
+      "prompt": "Complete the present-tense conjugation of ser:",
+      "verb": "ser",
+      "givenForms": { "yo": "soy", "nosotros": "somos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "eres", "él/ella/usted": "es", "vosotros": "sois", "ellos/ellas/ustedes": "son" }
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an event's location needs ser, not estar:",
+      "incorrectSentence": "La fiesta está en mi casa este sábado.",
+      "correctSentence": "La fiesta es en mi casa este sábado."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each phrase to its meaning:",
+      "pairs": [
+        { "left": "es lista", "right": "she's clever" },
+        { "left": "está lista", "right": "she's ready" },
+        { "left": "es aburrido", "right": "it's boring" },
+        { "left": "está aburrido", "right": "he's bored" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "fill-blank",
+      "prompt": "Mi primo es abogado, pero ahora mismo ___ de camarero mientras busca trabajo.",
+      "correctAnswer": "está"
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite so the sentence describes a temporary state (she's tired right now) rather than a permanent trait:",
+      "originalSentence": "Ana es cansada.",
+      "instruction": "change ser to estar to express a current, temporary state",
+      "correctAnswer": "Ana está cansada."
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with ser or estar, conjugated correctly:",
+      "passage": "Mi hermana {0} médica y normalmente {1} en el hospital, pero hoy {2} de vacaciones porque {3} muy cansada.",
+      "blanks": ["es", "está", "está", "está"]
+    }
+  ]
+}

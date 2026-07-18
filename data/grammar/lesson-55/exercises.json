@@ -1,0 +1,75 @@
+{
+  "lessonId": "lesson-55",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "A 23-year-old barista is serving a customer around her own age in a casual café in Madrid. Which register is most natural today?",
+      "options": ["tú", "usted", "vosotros", "vos"],
+      "correctAnswer": "tú"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "You're writing a formal email to your electricity company to dispute a charge. Even though the phone agent chatted with you informally last time, which register belongs in the written complaint?",
+      "options": ["tú", "usted", "vosotros", "ustedes"],
+      "correctAnswer": "usted"
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "In an Argentine song you hear the line 'Vos sabés que te quiero.' In Castellano Spanish, vos here corresponds to which pronoun?",
+      "options": ["tú", "usted", "vosotros", "ustedes"],
+      "correctAnswer": "tú"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the pronoun and the verb ending don't agree in formality:",
+      "incorrectSentence": "Usted tienes una llamada, señor Ruiz.",
+      "correctSentence": "Usted tiene una llamada, señor Ruiz."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite this question for a customer you've just met, using the formal register:",
+      "originalSentence": "¿Quieres un café?",
+      "instruction": "make it formal (usted)",
+      "correctAnswer": "¿Quiere usted un café?"
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite this casual request as a formal written request suitable for an email to a manager you don't know personally:",
+      "originalSentence": "Oye, ¿me pasas el informe?",
+      "instruction": "rewrite as a polite, formal written request using usted",
+      "correctAnswer": "¿Podría usted pasarme el informe?"
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each situation to the pronoun that fits it best:",
+      "pairs": [
+        { "left": "A group of close friends in Madrid", "right": "vosotros" },
+        { "left": "The same group of friends, but in Mexico City", "right": "ustedes" },
+        { "left": "A conversation with a friend in Buenos Aires", "right": "vos" },
+        { "left": "A formal letter to a government office", "right": "usted" },
+        { "left": "Friends chatting in the Canary Islands", "right": "ustedes" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form of tener for each register:",
+      "passage": "Estimada señora López: Le escribo para preguntarle si {0} un momento esta tarde para hablar de mi proyecto. Muchas gracias.\n\nHola Carla, ¿{1} un momento esta tarde para ayudarme con el proyecto?\n\nHola chicas, ¿{2} un momento esta tarde para ayudarme con el proyecto?",
+      "blanks": ["tiene", "tienes", "tenéis"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["ayudarle", "Puedo", "con", "eso,", "señor."],
+      "correctOrder": ["Puedo", "ayudarle", "con", "eso,", "señor."]
+    }
+  ]
+}

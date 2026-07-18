@@ -1,0 +1,7 @@
+{
+  "title": "Telling Time & Dates",
+  "level": "A2",
+  "topics": ["time", "dates", "numbers"],
+  "prerequisites": ["lesson-09"],
+  "summary": "Constructing clock time and dates in Spanish, from the es la una/son las tres exception to day-month-year date order and the decimal comma."
+}

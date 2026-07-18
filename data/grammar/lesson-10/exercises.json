@@ -1,0 +1,71 @@
+{
+  "lessonId": "lesson-10",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "fill-blank",
+      "prompt": "___ la una de la tarde. (Fill in the correct form of ser)",
+      "correctAnswer": "Es"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "___ las tres y cuarto de la tarde. (Fill in the correct form of ser)",
+      "correctAnswer": "Son"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Son la una de la mañana.",
+      "correctSentence": "Es la una de la mañana."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Hoy es el segundo de mayo.",
+      "correctSentence": "Hoy es el dos de mayo."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order to form a date:",
+      "words": ["de", "3", "el", "2024", "mayo", "de"],
+      "correctOrder": ["el", "3", "de", "mayo", "de", "2024"]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite this 24-hour time in the everyday 12-hour form with a time-of-day marker:",
+      "originalSentence": "El tren sale a las 18:45.",
+      "instruction": "convert to 12-hour time",
+      "correctAnswer": "El tren sale a las siete menos cuarto de la tarde."
+    },
+    {
+      "id": "ex-7",
+      "type": "multiple-choice",
+      "prompt": "Which decimal notation is correct for 'three and a half' as written in Spain?",
+      "options": ["3.5", "3,5", "3'5", "3-5"],
+      "correctAnswer": "3,5"
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each time expression to its meaning:",
+      "pairs": [
+        { "left": "en punto", "right": "on the dot" },
+        { "left": "medianoche", "right": "midnight" },
+        { "left": "mediodía", "right": "noon" },
+        { "left": "menos cuarto", "right": "quarter to" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct forms:",
+      "passage": "La fiesta es el {0} de junio de {1}. Empieza {2} las ocho {3} media de la noche.",
+      "blanks": ["quince", "dos mil veinticinco", "a", "y"]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-56",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Elena estudió muchísimo. ___, suspendió el examen. Choose the connector that fits a genuine contradiction, not a result:",
+      "options": ["Por lo tanto", "Sin embargo", "Además", "Es decir"],
+      "correctAnswer": "Sin embargo"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Estábamos cenando tranquilamente. ___, alguien llamó a la puerta. Choose the connector for a sudden, unexpected turn in a story:",
+      "options": ["De repente", "Al final", "Es decir", "Además"],
+      "correctAnswer": "De repente"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "No tenía dinero para el autobús. ___ tuve que ir andando. (Fill in the consequence connector.)",
+      "correctAnswer": "Por lo tanto"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a discourse connector needs its own sentence, not just a comma:",
+      "incorrectSentence": "No estudié, por lo tanto suspendí el examen.",
+      "correctSentence": "No estudié. Por lo tanto, suspendí el examen."
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this connector signals contradiction, but the second half is actually a direct result of the first:",
+      "incorrectSentence": "Estudié mucho, sin embargo aprobé el examen.",
+      "correctSentence": "Estudié mucho. Por lo tanto, aprobé el examen."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Combine into one connected pair of sentences using es decir to restate the first idea:",
+      "originalSentence": "Vive de forma muy frugal. No gasta casi nada en lujos.",
+      "instruction": "combine using es decir",
+      "correctAnswer": "Vive de forma muy frugal, es decir, no gasta casi nada en lujos."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each connector to the function it serves:",
+      "pairs": [
+        { "left": "sin embargo", "right": "contrast" },
+        { "left": "por lo tanto", "right": "consequence" },
+        { "left": "además", "right": "addition" },
+        { "left": "es decir", "right": "clarification" },
+        { "left": "mientras tanto", "right": "narrative simultaneity" },
+        { "left": "al final", "right": "narrative closure" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the connector that best fits each gap:",
+      "passage": "Mi hermano quería aprender a tocar la guitarra este año. {0}, no tenía tiempo para practicar entre semana. {1}, se apuntó a clases los sábados por la mañana. Al principio le costó mucho. {2}, después de unos meses, tocaba canciones enteras. {3}, decidió organizar un pequeño concierto para sus amigos.",
+      "blanks": ["Sin embargo", "Por lo tanto", "No obstante", "Al final"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["vive", "Madrid.", "Mi", "en", "hermano,", "cambio,", "en"],
+      "correctOrder": ["Mi", "hermano,", "en", "cambio,", "vive", "en", "Madrid."]
+    }
+  ]
+}

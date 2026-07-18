@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-35",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Para las ocho, ya ___ (terminar) la tarea.",
+      "options": ["habré terminado", "habría terminado", "he terminado", "terminaré"],
+      "correctAnswer": "habré terminado"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ella ___ (llamar) antes, pero se le olvidó el teléfono.",
+      "correctAnswer": "habría llamado"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the futuro compuesto of salir (to leave):",
+      "verb": "salir",
+      "givenForms": { "yo": "habré salido", "nosotros": "habremos salido" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "habrás salido", "él/ella/usted": "habrá salido", "vosotros": "habréis salido", "ellos/ellas/ustedes": "habrán salido" }
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the participle should never agree, even here:",
+      "incorrectSentence": "Ellas habrán terminadas el proyecto.",
+      "correctSentence": "Ellas habrán terminado el proyecto."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "No contesta el teléfono. ___ ya. (a guess that the leaving has already happened)",
+      "options": ["Habrá salido", "Salió", "Saldrá", "Habría salido"],
+      "correctAnswer": "Habrá salido"
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each example to what it expresses:",
+      "pairs": [
+        { "left": "Para las cinco, ya habré terminado.", "right": "completed future action" },
+        { "left": "Habría ido, pero tuve que trabajar.", "right": "unrealized past hypothetical" },
+        { "left": "Habrá salido ya.", "right": "conjecture about a completed action" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using the futuro compuesto to show completion by a deadline:",
+      "originalSentence": "Terminaré el proyecto antes del viernes.",
+      "instruction": "recast so the deadline is 'para el viernes' and the action is already complete by then",
+      "correctAnswer": "Para el viernes, ya habré terminado el proyecto."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct compound future or conditional form:",
+      "passage": "Para el lunes, ya {0} (entregar) el informe. Yo {1} (ir) a la reunión, pero tuve un imprevisto.",
+      "blanks": ["habré entregado", "habría ido"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["proyecto", "habré", "el", "terminado", "Ya"],
+      "correctOrder": ["Ya", "habré", "terminado", "el", "proyecto"]
+    }
+  ]
+}

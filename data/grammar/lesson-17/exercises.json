@@ -1,0 +1,80 @@
+{
+  "lessonId": "lesson-17",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Choose the correct relative pronoun: 'La chica con ___ hablé ayer es mi vecina.'",
+      "options": ["que", "quien", "cuyo", "donde"],
+      "correctAnswer": "quien",
+      "note": "A preposition + a person requires quien, not que."
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form to complete 'la razón por la ___ llegué tarde':",
+      "word": "razón",
+      "options": ["el cual", "la cual", "los cuales", "las cuales"],
+      "correctAnswer": "la cual",
+      "note": "El cual agrees in gender and number with its antecedent — razón is feminine singular."
+    },
+    {
+      "id": "ex-3",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of cuyo, agreeing with the noun that follows it ('el hombre ___ hijos viven en Francia'):",
+      "word": "hijos",
+      "options": ["cuyo", "cuya", "cuyos", "cuyas"],
+      "correctAnswer": "cuyos",
+      "note": "Cuyo agrees with the thing possessed (hijos, masculine plural), never with the possessor (el hombre)."
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "La ciudad ___ nací es muy pequeña. (donde)",
+      "correctAnswer": "donde"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "La mujer cuya perro ladra mucho vive al lado.",
+      "correctSentence": "La mujer cuyo perro ladra mucho vive al lado.",
+      "note": "Cuyo must agree with perro (masculine), not with mujer."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "El amigo de que te hablé llega mañana.",
+      "correctSentence": "El amigo del que te hablé llega mañana.",
+      "note": "A bare que after a preposition referring to a person is awkward — del que (or de quien) is needed."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Combine the two sentences into one using que:",
+      "originalSentence": "Tengo un libro. El libro es muy interesante.",
+      "instruction": "combine into one sentence using que",
+      "correctAnswer": "Tengo un libro que es muy interesante."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each relative pronoun to its typical use:",
+      "pairs": [
+        { "left": "que", "right": "default choice, people or things" },
+        { "left": "quien/quienes", "right": "people only, especially after a preposition" },
+        { "left": "donde", "right": "place" },
+        { "left": "cuyo", "right": "possession, agrees with the thing possessed" },
+        { "left": "el cual", "right": "formal register, after longer prepositions" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in each blank with the correct relative pronoun:",
+      "passage": "El profesor {0} enseña historia es muy exigente. Los estudiantes {1} llegan tarde no pueden entrar. La razón por la {2} llegan tarde casi siempre es el tráfico.",
+      "blanks": ["que", "que", "cual"]
+    }
+  ]
+}

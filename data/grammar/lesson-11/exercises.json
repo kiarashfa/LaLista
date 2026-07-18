@@ -1,0 +1,66 @@
+{
+  "lessonId": "lesson-11",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "You're checking in a stranger at a hotel reception in Madrid. Which subject pronoun fits the relationship?",
+      "options": ["tú", "usted", "vosotros", "vos"],
+      "correctAnswer": "usted"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "You're texting a group of close friends in Spain to ask if they're coming tonight. Which pronoun would you use for \"you all\"?",
+      "options": ["ustedes", "vosotros", "ellos", "nosotros"],
+      "correctAnswer": "vosotros"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Complete with the pronoun needed to keep the contrast clear: 'Mi madre y mi padre cocinan juntos, pero ___ elige siempre el vino.' (...but he always chooses the wine)",
+      "correctAnswer": "él"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this sentence reads like a direct, unnatural translation from English:",
+      "incorrectSentence": "Yo soy estudiante y yo vivo en Barcelona y yo estudio arquitectura.",
+      "correctSentence": "Soy estudiante y vivo en Barcelona y estudio arquitectura."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite to add emphasis, answering the question '¿Quién preparó la cena?' (Who made dinner?):",
+      "originalSentence": "Preparé la cena.",
+      "instruction": "add the subject pronoun to emphasize that it was you, specifically",
+      "correctAnswer": "Yo preparé la cena."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["vive", "pero", "trabaja", "Sevilla,", "ella", "en", "él", "en", "Madrid"],
+      "correctOrder": ["él", "vive", "en", "Sevilla,", "pero", "ella", "trabaja", "en", "Madrid"]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each subject pronoun to its correct present-tense form of hablar (to speak):",
+      "pairs": [
+        { "left": "yo", "right": "hablo" },
+        { "left": "tú", "right": "hablas" },
+        { "left": "nosotras", "right": "hablamos" },
+        { "left": "vosotros", "right": "habláis" },
+        { "left": "ellos", "right": "hablan" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct subject pronoun (some blanks are required for contrast or ambiguity; do not add a pronoun where the context already makes it clear):",
+      "passage": "Mi hermano y mi hermana viven juntos. {0} trabaja en un banco; {1} todavía estudia. {2} nos visitamos cada domingo.",
+      "blanks": ["Él", "ella", "Nosotros"]
+    }
+  ]
+}

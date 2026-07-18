@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-41",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Si ___ (llover) mañana, no saldré.",
+      "options": ["llueve", "lloviera", "llovería", "ha llovido"],
+      "correctAnswer": "llueve"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Si tuviera más tiempo, ___ (aprender) a tocar la guitarra.",
+      "correctAnswer": "aprendería"
+    },
+    {
+      "id": "ex-3",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as a hypothetical-present condition (something not currently true):",
+      "originalSentence": "Si tengo dinero, viajo más.",
+      "instruction": "shift both clauses into the hypothetical-present pattern",
+      "correctAnswer": "Si tuviera dinero, viajaría más."
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as a hypothetical-past si-clause expressing regret:",
+      "originalSentence": "No estudié más y no aprobé el examen.",
+      "instruction": "combine into one si-clause sentence using the hypothetical-past pattern",
+      "correctAnswer": "Si hubiera estudiado más, habría aprobado el examen."
+    },
+    {
+      "id": "ex-5",
+      "type": "matching-pairs",
+      "prompt": "Match each sentence to its si-clause type:",
+      "pairs": [
+        { "left": "Si llueve, no salgo.", "right": "real/possible" },
+        { "left": "Si tuviera dinero, viajaría más.", "right": "hypothetical present" },
+        { "left": "Si hubiera estudiado más, habría aprobado el examen.", "right": "hypothetical past" },
+        { "left": "Si hubiera estudiado, ahora tendría un buen trabajo.", "right": "mixed-time" }
+      ]
+    },
+    {
+      "id": "ex-6",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form for each si-clause type:",
+      "passage": "Si {0} (tener/yo) más vacaciones, {1} (viajar/yo) por toda España. Si {2} (ahorrar/yo) más dinero el año pasado, ahora {3} (poder/yo) hacerlo.",
+      "blanks": ["tuviera", "viajaría", "hubiera ahorrado", "podría"]
+    },
+    {
+      "id": "ex-7",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a hypothetical-present si-clause needs a conditional, not a present indicative, in the main clause:",
+      "incorrectSentence": "Si tuviera dinero, viajo más.",
+      "correctSentence": "Si tuviera dinero, viajaría más."
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["salgo.", "Si", "no", "llueve,"],
+      "correctOrder": ["Si", "llueve,", "no", "salgo."]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Si hubiera estudiado, ahora ___ (tener) un buen trabajo.",
+      "options": ["tendría", "habría tenido", "tenga", "tuviera"],
+      "correctAnswer": "tendría"
+    }
+  ]
+}

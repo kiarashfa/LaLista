@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-39",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "conjugation-grid",
+      "prompt": "Complete the imperfect subjunctive of hablar (-ra form):",
+      "verb": "hablar",
+      "givenForms": { "yo": "hablara", "nosotros": "habláramos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "hablaras", "él/ella/usted": "hablara", "vosotros": "hablarais", "ellos/ellas/ustedes": "hablaran" }
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Quería que (tú) ___ (venir) a la fiesta.",
+      "options": ["vengas", "vinieras", "viniste", "vienes"],
+      "correctAnswer": "vinieras"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Dudaba que ella ___ (tener) razón.",
+      "correctAnswer": "tuviera"
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the main clause's past tense requires the imperfect subjunctive, not the present:",
+      "incorrectSentence": "Quería que vengas conmigo al médico.",
+      "correctSentence": "Quería que vinieras conmigo al médico."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["una", "reservar", "Quisiera", "dos.", "mesa", "para"],
+      "correctOrder": ["Quisiera", "reservar", "una", "mesa", "para", "dos."]
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each preterite ellos-form to its imperfect subjunctive yo-form:",
+      "pairs": [
+        { "left": "tuvieron", "right": "tuviera" },
+        { "left": "fueron", "right": "fuera" },
+        { "left": "dijeron", "right": "dijera" },
+        { "left": "pidieron", "right": "pidiera" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Shift this present subjunctive sentence into the past, keeping the same trigger:",
+      "originalSentence": "Espero que ganes el partido.",
+      "instruction": "rewrite beginning with Esperaba que...",
+      "correctAnswer": "Esperaba que ganaras el partido."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct imperfect subjunctive form:",
+      "passage": "De niño, mis padres siempre querían que yo {0} (estudiar) mucho. Mi madre dudaba que {1} (ser) fácil, pero nunca dejó de insistir.",
+      "blanks": ["estudiara", "fuera"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Which form of hablar's imperfect subjunctive is more typical of Spain's formal and literary register?",
+      "options": ["hablara", "hablase", "hablaba", "hablaría"],
+      "correctAnswer": "hablase"
+    }
+  ]
+}

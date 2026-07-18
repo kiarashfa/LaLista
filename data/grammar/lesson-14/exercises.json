@@ -1,0 +1,65 @@
+{
+  "lessonId": "lesson-14",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Compré el regalo. ___ di a mi hermana. (I gave it to my sister.) Which pronoun pair fits?",
+      "options": ["Se lo", "Le lo", "Lo se", "Se la"],
+      "correctAnswer": "Se lo"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Combine into a single sentence using both pronouns: Le doy el libro. → ___ doy.",
+      "correctAnswer": "Se lo"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a forbidden l- + l- combination:",
+      "incorrectSentence": "Le lo di ayer.",
+      "correctSentence": "Se lo di ayer."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the pronouns are in the wrong order:",
+      "incorrectSentence": "Lo te doy.",
+      "correctSentence": "Te lo doy."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["dar.", "quiero", "Te", "lo"],
+      "correctOrder": ["Te", "lo", "quiero", "dar."]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as an affirmative usted command, attaching both pronouns (don't forget the accent):",
+      "originalSentence": "Me lo dice.",
+      "instruction": "make it an affirmative usted command with both pronouns attached",
+      "correctAnswer": "Dígamelo."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each pronoun pair to what it means:",
+      "pairs": [
+        { "left": "se lo", "right": "it (masc.), to him/her/you/them" },
+        { "left": "te la", "right": "it (fem.), to you" },
+        { "left": "me los", "right": "them (masc.), to me" },
+        { "left": "nos las", "right": "them (fem.), to us" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct pronoun pair:",
+      "passage": "Marta necesitaba el informe urgentemente. {0} envié por correo electrónico anoche. Después mi jefe pidió una copia también, así que {1} imprimí enseguida.",
+      "blanks": ["Se lo", "se la"]
+    }
+  ]
+}

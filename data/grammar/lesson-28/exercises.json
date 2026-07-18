@@ -1,0 +1,77 @@
+{
+  "lessonId": "lesson-28",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "¿Cuál es la forma correcta de 'vivir' en imperfecto para 'nosotros'?",
+      "options": ["vivíamos", "vivimos", "viviamos", "vivieron"],
+      "correctAnswer": "vivíamos"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Cuando era niño, ___ (jugar) en el parque todos los días.",
+      "correctAnswer": "jugaba"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the imperfect conjugation of jugar:",
+      "verb": "jugar",
+      "givenForms": { "yo": "jugaba", "nosotros": "jugábamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "jugabas", "él/ella/usted": "jugaba", "vosotros": "jugabais", "ellos/ellas/ustedes": "jugaban" }
+    },
+    {
+      "id": "ex-4",
+      "type": "conjugation-grid",
+      "prompt": "Complete the imperfect conjugation of ser (one of only three irregular verbs in this tense):",
+      "verb": "ser",
+      "givenForms": { "yo": "era", "nosotros": "éramos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "eras", "él/ella/usted": "era", "vosotros": "erais", "ellos/ellas/ustedes": "eran" }
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the imperfect never carries a present-tense stem change, even for boot verbs like pedir:",
+      "incorrectSentence": "De niña, siempre pidía permiso antes de salir.",
+      "correctSentence": "De niña, siempre pedía permiso antes de salir."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite in the imperfect to describe a childhood habit instead of a general present fact:",
+      "originalSentence": "Todos los veranos vamos a la playa.",
+      "instruction": "change the present-tense ir to the imperfect to describe a repeated past habit",
+      "correctAnswer": "Todos los veranos íbamos a la playa."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each imperfect phrase to its meaning:",
+      "pairs": [
+        { "left": "Tenía diez años", "right": "He/she was ten years old" },
+        { "left": "Eran las tres", "right": "It was three o'clock" },
+        { "left": "Quería preguntarte algo", "right": "I wanted to ask you something (a softened, polite request)" },
+        { "left": "Hacía mucho frío", "right": "It was very cold" },
+        { "left": "Llovía todos los días", "right": "It used to rain every day" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct imperfect form:",
+      "passage": "Cuando yo {0} (ser) pequeño, mi familia y yo {1} (vivir) en un pueblo pequeño. Todos los días {2} (hacer) sol y los pájaros {3} (cantar) por la mañana.",
+      "blanks": ["era", "vivíamos", "hacía", "cantaban"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["domingos.", "todos", "jugábamos", "los", "Nosotros", "al", "fútbol"],
+      "correctOrder": ["Nosotros", "jugábamos", "al", "fútbol", "todos", "los", "domingos."]
+    }
+  ]
+}

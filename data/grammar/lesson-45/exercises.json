@@ -1,0 +1,95 @@
+{
+  "lessonId": "lesson-45",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Complete with the correct form of ir a + infinitivo: Ellos ___ llegar tarde.",
+      "options": ["van a", "va a", "vamos a", "voy a"],
+      "correctAnswer": "van a"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ellos ___ (acabar) de salir.",
+      "correctAnswer": "acaban"
+    },
+    {
+      "id": "ex-3",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using volver a + infinitivo:",
+      "originalSentence": "Llamó otra vez.",
+      "instruction": "rewrite using volver a + infinitivo",
+      "correctAnswer": "Volvió a llamar."
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Llevo dos años ___ (estudiar) español.",
+      "correctAnswer": "estudiando"
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "Which construction expresses impersonal, general obligation with no specific subject?",
+      "options": ["Tengo que", "Hay que", "Debo", "Tenemos que"],
+      "correctAnswer": "Hay que"
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Yo hay que estudiar más para el examen.",
+      "correctSentence": "Yo tengo que estudiar más para el examen."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each periphrasis to its meaning:",
+      "pairs": [
+        { "left": "ir a + infinitivo", "right": "near future / plan" },
+        { "left": "acabar de + infinitivo", "right": "just did something" },
+        { "left": "volver a + infinitivo", "right": "do it again" },
+        { "left": "llevar + gerundio", "right": "ongoing duration" },
+        { "left": "hay que + infinitivo", "right": "impersonal obligation" },
+        { "left": "seguir + gerundio", "right": "uninterrupted continuation" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order (pronoun moved in front of ir a):",
+      "words": ["comprar.", "a", "Lo", "voy"],
+      "correctOrder": ["Lo", "voy", "a", "comprar."]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct periphrasis form:",
+      "passage": "Este fin de semana {0} (ir a) visitar a mis padres, porque {1} (acabar) de comprar los billetes de tren esta mañana. Todavía {2} (tener que) hacer la maleta, pero no me preocupa porque {3} (seguir) teniendo todo el día libre.",
+      "blanks": ["voy a", "acabo", "tengo que", "sigo"]
+    },
+    {
+      "id": "ex-10",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using seguir + gerundio:",
+      "originalSentence": "Trabaja todavía.",
+      "instruction": "rewrite using seguir + gerundio",
+      "correctAnswer": "Sigue trabajando."
+    },
+    {
+      "id": "ex-11",
+      "type": "multiple-choice",
+      "prompt": "What does '¡Vamos!' most naturally mean as a standalone interjection?",
+      "options": ["Come on! / Let's go!", "We are going somewhere", "I'm going", "Let's eat"],
+      "correctAnswer": "Come on! / Let's go!"
+    },
+    {
+      "id": "ex-12",
+      "type": "multiple-choice",
+      "prompt": "What does 'Debe de tener 30 años' most likely mean?",
+      "options": ["He should be 30 years old (obligation)", "He must be around 30 years old (a guess)", "He owes 30 years", "He doesn't have 30 years"],
+      "correctAnswer": "He must be around 30 years old (a guess)"
+    }
+  ]
+}

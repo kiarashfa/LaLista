@@ -1,0 +1,78 @@
+{
+  "lessonId": "lesson-19",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "fill-blank",
+      "prompt": "¿Tienes ___ que decirme? (something)",
+      "correctAnswer": "algo"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "No conozco a ___ en esta ciudad. (no one)",
+      "correctAnswer": "nadie"
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "___ nunca sabe qué va a pasar mañana.",
+      "options": ["Uno", "Se", "Tú", "Yo"],
+      "correctAnswer": "Uno",
+      "note": "The verb sabe is third-person singular and uno sits in ordinary subject position. Se would need to sit immediately before its verb (nunca se sabe), not out here in subject position."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "¿Están cansadas? — Sí, las están.",
+      "correctSentence": "¿Están cansadas? — Sí, lo están.",
+      "note": "Neuter lo replaces the idea/quality cansadas, not a specific noun — it never changes to la, los, or las, no matter the gender or number of what's being described."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "No entiendo ___ dijiste.",
+      "options": ["lo", "lo que", "la que", "qué"],
+      "correctAnswer": "lo que",
+      "note": "Lo que packages the whole clause 'what you said' into one noun phrase; lo alone has nothing to attach to here without que."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Replace 'que era muy difícil' with the neuter pronoun lo:",
+      "originalSentence": "Sabía que era muy difícil.",
+      "instruction": "replace que era muy difícil with the neuter pronoun lo",
+      "correctAnswer": "Lo sabía."
+    },
+    {
+      "id": "ex-7",
+      "type": "cloze-passage",
+      "prompt": "Fill in each blank:",
+      "passage": "—¿Sabes {0} sobre el examen de mañana? —No, no sé {1}. Dicen que es muy difícil, pero no {2} creo.",
+      "blanks": ["algo", "nada", "lo"]
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each pronoun to what it stands for:",
+      "pairs": [
+        { "left": "algo", "right": "an unspecified thing that exists" },
+        { "left": "nada", "right": "the nonexistence of a thing" },
+        { "left": "alguien", "right": "an unspecified person" },
+        { "left": "nadie", "right": "the nonexistence of a person" },
+        { "left": "uno", "right": "an impersonal, generic subject" },
+        { "left": "lo", "right": "an idea or quality already mentioned" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "gender-agreement",
+      "prompt": "Como mujer, ___ siempre tiene que demostrar más en este trabajo.",
+      "word": "mujer",
+      "options": ["uno", "una"],
+      "correctAnswer": "una",
+      "note": "A speaker identifying as a woman may swap in una for the impersonal pronoun instead of the default uno — though uno remains the more common choice regardless of the speaker's own gender."
+    }
+  ]
+}

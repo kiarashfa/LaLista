@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-46",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Which sentence uses Spanish's true passive voice (ser + participle)?",
+      "options": ["Se venden casas en esta calle.", "El puente fue construido por ingenieros franceses.", "Los niños se lavan las manos.", "Aquí se habla español."],
+      "correctAnswer": "El puente fue construido por ingenieros franceses."
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "La novela ___ (escribir, pretérito) por una autora catalana.",
+      "correctAnswer": "fue escrita"
+    },
+    {
+      "id": "ex-3",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct participle: 'Los documentos ___ por el comité.' (revisar, ser-passive, futuro)",
+      "word": "revisado",
+      "options": ["revisado", "revisada", "revisados", "revisadas"],
+      "correctAnswer": "revisados",
+      "note": "Documentos is masculine plural, so the ser-passive participle must agree — unlike the frozen participle inside a haber compound tense."
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite in the true passive voice:",
+      "originalSentence": "Ingenieros franceses construyeron el puente.",
+      "instruction": "convert to the ser-passive, naming the agent with por",
+      "correctAnswer": "El puente fue construido por ingenieros franceses."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["se", "En", "restaurante", "comida", "tradicional.", "este", "sirve"],
+      "correctOrder": ["En", "este", "restaurante", "se", "sirve", "comida", "tradicional."]
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Las casas fueron vendido rápidamente.",
+      "correctSentence": "Las casas fueron vendidas rápidamente."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each sentence to the construction it uses:",
+      "pairs": [
+        { "left": "Se venden casas.", "right": "passive se" },
+        { "left": "Me lavo las manos.", "right": "reflexive se" },
+        { "left": "Se lo di a mi hermano.", "right": "le → se substitution" },
+        { "left": "El puente fue construido por ingenieros.", "right": "true passive (ser + participle)" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct se-passive verb form:",
+      "passage": "En esta tienda {0} (vender) ropa artesanal. También {1} (aceptar) tarjetas de crédito, y los pedidos {2} (enviar) a toda España.",
+      "blanks": ["se vende", "se aceptan", "se envían"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Which is the most natural way to say 'My car was stolen' in everyday spoken Spanish?",
+      "options": ["Mi coche fue robado.", "Me robaron el coche.", "Mi coche es robado.", "Mi coche está robado."],
+      "correctAnswer": "Me robaron el coche."
+    }
+  ]
+}

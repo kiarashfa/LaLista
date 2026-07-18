@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-34",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Yo ___ (comer) más verduras si pudiera.",
+      "options": ["comería", "comeré", "comía", "coma"],
+      "correctAnswer": "comería"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "¿___ (poder) ayudarme con las maletas, por favor?",
+      "correctAnswer": "Podrías"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the conditional of querer (to want):",
+      "verb": "querer",
+      "givenForms": { "yo": "querría", "nosotros": "querríamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "querrías", "él/ella/usted": "querría", "vosotros": "querríais", "ellos/ellas/ustedes": "querrían" }
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — English 'would' misapplied to a repeated past habit:",
+      "incorrectSentence": "De pequeño, iría a la playa cada verano.",
+      "correctSentence": "De pequeño, iba a la playa cada verano."
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "Cuando salimos del cine, ___ las diez de la noche. (a guess about a past moment, not a real conditional)",
+      "options": ["serían", "eran", "fueron", "son"],
+      "correctAnswer": "serían"
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each example to the use of the conditional it illustrates:",
+      "pairs": [
+        { "left": "Me gustaría viajar a Chile.", "right": "hypothetical wish" },
+        { "left": "¿Podrías cerrar la ventana?", "right": "polite request" },
+        { "left": "Dijo que vendría mañana.", "right": "reported future" },
+        { "left": "Serían las tres cuando llegamos.", "right": "conjecture about the past" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Report this as indirect speech using the conditional:",
+      "originalSentence": "Ana dijo: 'Vendré mañana.'",
+      "instruction": "rewrite as reported speech introduced by 'Ana dijo que...'",
+      "correctAnswer": "Ana dijo que vendría mañana."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct conditional form:",
+      "passage": "Yo {0} (deber) llamar a mis padres más a menudo. ¿Vosotros {1} (poder) recomendarme un buen restaurante? Ella me prometió que {2} (venir) a la fiesta.",
+      "blanks": ["debería", "podríais", "vendría"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["mejor", "Sería", "salir", "temprano"],
+      "correctOrder": ["Sería", "mejor", "salir", "temprano"]
+    }
+  ]
+}

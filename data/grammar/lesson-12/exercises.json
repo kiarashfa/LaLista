@@ -1,0 +1,65 @@
+{
+  "lessonId": "lesson-12",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Compré el libro y ___ leí en un fin de semana. Which pronoun replaces 'el libro'?",
+      "options": ["lo", "la", "le", "los"],
+      "correctAnswer": "lo"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "¿___ ves? (Can you see me?)",
+      "correctAnswer": "Me"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a direct, unnatural translation from English word order:",
+      "incorrectSentence": "Veo la todos los días en el parque.",
+      "correctSentence": "La veo todos los días en el parque."
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["ver", "esta", "quiero", "noche", "la"],
+      "correctOrder": ["la", "quiero", "ver", "esta", "noche"]
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite as an affirmative command, attaching the pronoun (don't forget the accent):",
+      "originalSentence": "Comes el pan.",
+      "instruction": "make it an affirmative tú command with the pronoun attached",
+      "correctAnswer": "Cómelo."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each subject to its direct object pronoun:",
+      "pairs": [
+        { "left": "yo", "right": "me" },
+        { "left": "tú", "right": "te" },
+        { "left": "nosotros", "right": "nos" },
+        { "left": "vosotros", "right": "os" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "error-correction",
+      "prompt": "Find and fix the laísmo mistake (non-standard even in Spain):",
+      "incorrectSentence": "La dije que llegaría tarde.",
+      "correctSentence": "Le dije que llegaría tarde."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct direct object pronoun:",
+      "passage": "Tenía dos entradas para el concierto. Mi hermano me {0} pidió primero, así que se {1} di a él.",
+      "blanks": ["las", "las"]
+    }
+  ]
+}

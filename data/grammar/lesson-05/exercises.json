@@ -1,0 +1,74 @@
+{
+  "lessonId": "lesson-05",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Complete: 'Este restaurante es ___ que aquel.' (better)",
+      "options": ["más bueno", "mejor", "más mejor", "buenísimo"],
+      "correctAnswer": "mejor"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ana es tan alta ___ su hermano. (Fill in the missing word)",
+      "correctAnswer": "como"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Este examen es el más mejor de todos.",
+      "correctSentence": "Este examen es el mejor de todos."
+    },
+    {
+      "id": "ex-4",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form: 'Tengo ___ paciencia como tú.'",
+      "word": "paciencia",
+      "options": ["tanto", "tanta"],
+      "correctAnswer": "tanta",
+      "note": "Tanto agrees in gender and number with the noun it accompanies — paciencia is feminine, so it becomes tanta."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using the absolute superlative (-ísimo) instead of muy:",
+      "originalSentence": "Este café está muy rico.",
+      "instruction": "replace muy + adjective with the -ísimo form",
+      "correctAnswer": "Este café está riquísimo."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["difícil", "de", "más", "pensaba", "Es", "lo", "que"],
+      "correctOrder": ["Es", "más", "difícil", "de", "lo", "que", "pensaba"]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each suffixed word to its meaning:",
+      "pairs": [
+        { "left": "palabrota", "right": "a swear word" },
+        { "left": "ventanilla", "right": "a ticket or service window" },
+        { "left": "amorcito", "right": "sweetheart, a term of endearment" },
+        { "left": "listillo", "right": "a know-it-all, said mockingly" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks:",
+      "passage": "Mi hermano {0} es muchísimo más alto que yo, pero soy tan simpático {1} él.",
+      "blanks": ["mayor", "como"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Which sentence correctly compares a quantity of people?",
+      "options": ["Hay más que cien personas.", "Hay más de cien personas.", "Hay tan cien personas.", "Hay tanto cien personas."],
+      "correctAnswer": "Hay más de cien personas."
+    }
+  ]
+}

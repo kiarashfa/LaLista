@@ -1,0 +1,75 @@
+{
+  "lessonId": "lesson-24",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "A los niños ___ gusta el parque. (The kids like the park.)",
+      "options": ["le", "les", "lo", "los"],
+      "correctAnswer": "les"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Me ___ (gustar) los libros de misterio.",
+      "correctAnswer": "gustan"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a direct, unnatural translation from English \"I like\":",
+      "incorrectSentence": "Yo gusto el chocolate.",
+      "correctSentence": "Me gusta el chocolate."
+    },
+    {
+      "id": "ex-4",
+      "type": "conjugation-grid",
+      "prompt": "Complete the indirect-object pronoun pattern for gustar (with a singular thing liked):",
+      "verb": "gustar",
+      "givenForms": { "yo": "me gusta", "nosotros": "nos gusta" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "te gusta", "él/ella/usted": "le gusta", "vosotros": "os gusta", "ellos/ellas/ustedes": "les gusta" }
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["cine.", "A", "encanta", "ella", "el", "le"],
+      "correctOrder": ["A", "ella", "le", "encanta", "el", "cine."]
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite with a plural subject (los libros):",
+      "originalSentence": "Me gusta el libro.",
+      "instruction": "change the subject to los libros",
+      "correctAnswer": "Me gustan los libros."
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each gustar-family verb to its meaning:",
+      "pairs": [
+        { "left": "encantar", "right": "to love, be delighted by" },
+        { "left": "molestar", "right": "to bother" },
+        { "left": "faltar", "right": "to be lacking, missing" },
+        { "left": "importar", "right": "to matter" },
+        { "left": "doler", "right": "to hurt" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct gustar-family verb form:",
+      "passage": "A mi hermano le {0} (encantar) el fútbol, pero a mí no me {1} (interesar) nada. A los dos nos {2} (molestar) el mismo vecino ruidoso.",
+      "blanks": ["encanta", "interesa", "molesta"]
+    },
+    {
+      "id": "ex-9",
+      "type": "multiple-choice",
+      "prompt": "Which sentence means \"María likes me\" (not \"I like María\")?",
+      "options": ["Me gusta María.", "Yo le gusto a María.", "Yo gusto a María.", "María me gustan."],
+      "correctAnswer": "Yo le gusto a María."
+    }
+  ]
+}

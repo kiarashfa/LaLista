@@ -1,0 +1,77 @@
+{
+  "lessonId": "lesson-29",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Dormía cuando ___ (sonar) el teléfono. Choose the correct form:",
+      "options": ["sonaba", "sonó", "suena", "ha sonado"],
+      "correctAnswer": "sonó"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ayer caminaba a casa cuando ___ (empezar) a llover.",
+      "correctAnswer": "empezó"
+    },
+    {
+      "id": "ex-3",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite choosing the tense that changes the meaning to 'found out' rather than 'already knew':",
+      "originalSentence": "Yo sabía la verdad.",
+      "instruction": "change sabía to the preterite to express finding out, not already knowing",
+      "correctAnswer": "Yo supe la verdad."
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite choosing the tense that changes the meaning to meeting someone for the first time:",
+      "originalSentence": "Conocía a Marta.",
+      "instruction": "change conocía to the preterite to express meeting her for the first time",
+      "correctAnswer": "Conocí a Marta."
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — background weather description needs the imperfect, not the preterite:",
+      "incorrectSentence": "Cuando llegué a casa, llovió mucho y hizo frío.",
+      "correctSentence": "Cuando llegué a casa, llovía mucho y hacía frío."
+    },
+    {
+      "id": "ex-6",
+      "type": "multiple-choice",
+      "prompt": "Después de horas de esfuerzo, por fin ___ (poder) abrir la puerta. Choose the form that means 'I managed to (and succeeded)':",
+      "options": ["podía", "pude", "puedo", "podría"],
+      "correctAnswer": "pude"
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each form to its specific meaning:",
+      "pairs": [
+        { "left": "conocí", "right": "I met (for the first time)" },
+        { "left": "conocía", "right": "I knew / was familiar with" },
+        { "left": "supe", "right": "I found out" },
+        { "left": "sabía", "right": "I knew (a fact)" },
+        { "left": "pude", "right": "I managed to / succeeded in" },
+        { "left": "podía", "right": "I was able to (in general, whether or not I did it)" },
+        { "left": "quise", "right": "I tried to / decided to" },
+        { "left": "no quise", "right": "I refused to" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks, choosing preterite or imperfect for narrative backbone vs. background:",
+      "passage": "Ayer {0} (hacer) mucho calor. Yo {1} (caminar) por el parque cuando de repente {2} (ver) a mi amigo Pablo. Él {3} (llevar) una camiseta roja y {4} (parecer) muy contento.",
+      "blanks": ["hacía", "caminaba", "vi", "llevaba", "parecía"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["cuando", "el", "Leía", "periódico", "llover.", "empezó", "a"],
+      "correctOrder": ["Leía", "el", "periódico", "cuando", "empezó", "a", "llover."]
+    }
+  ]
+}

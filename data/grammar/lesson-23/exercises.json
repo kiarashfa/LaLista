@@ -1,0 +1,97 @@
+{
+  "lessonId": "lesson-23",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Yo ___ las llaves otra vez. (perder)",
+      "options": ["pierdo", "perdo", "piero", "pierda"],
+      "correctAnswer": "pierdo"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "Ella ___ (dormir) ocho horas cada noche.",
+      "correctAnswer": "duerme"
+    },
+    {
+      "id": "ex-3",
+      "type": "conjugation-grid",
+      "prompt": "Complete the conjugation of pedir (to ask for/order):",
+      "verb": "pedir",
+      "givenForms": { "yo": "pido", "nosotros": "pedimos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "pides", "él/ella/usted": "pide", "vosotros": "pedís", "ellos/ellas/ustedes": "piden" }
+    },
+    {
+      "id": "ex-4",
+      "type": "conjugation-grid",
+      "prompt": "Complete the conjugation of tener (to have):",
+      "verb": "tener",
+      "givenForms": { "yo": "tengo", "nosotros": "tenemos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "tienes", "él/ella/usted": "tiene", "vosotros": "tenéis", "ellos/ellas/ustedes": "tienen" }
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — an overgeneralized stem change:",
+      "incorrectSentence": "Nosotros piensamos ir al cine este fin de semana.",
+      "correctSentence": "Nosotros pensamos ir al cine este fin de semana."
+    },
+    {
+      "id": "ex-6",
+      "type": "multiple-choice",
+      "prompt": "What is the yo form of hacer?",
+      "options": ["hago", "hace", "haco", "hazo"],
+      "correctAnswer": "hago"
+    },
+    {
+      "id": "ex-7",
+      "type": "fill-blank",
+      "prompt": "Siempre ___ (coger) el autobús a las ocho.",
+      "correctAnswer": "cojo"
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["hambre", "¿Tienes", "ahora", "mismo?"],
+      "correctOrder": ["¿Tienes", "hambre", "ahora", "mismo?"]
+    },
+    {
+      "id": "ex-9",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its irregular yo form:",
+      "pairs": [
+        { "left": "tener", "right": "tengo" },
+        { "left": "salir", "right": "salgo" },
+        { "left": "hacer", "right": "hago" },
+        { "left": "conocer", "right": "conozco" },
+        { "left": "seguir", "right": "sigo" }
+      ]
+    },
+    {
+      "id": "ex-10",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite with nosotros as the subject:",
+      "originalSentence": "Ella pide un café.",
+      "instruction": "change the subject to nosotros",
+      "correctAnswer": "Nosotros pedimos un café."
+    },
+    {
+      "id": "ex-11",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct present-tense form:",
+      "passage": "Cuando yo {0} (tener) hambre, siempre {1} (pedir) lo mismo, pero mi hermano {2} (preferir) probar algo nuevo.",
+      "blanks": ["tengo", "pido", "prefiere"]
+    },
+    {
+      "id": "ex-12",
+      "type": "multiple-choice",
+      "prompt": "Which verb is fully irregular (suppletive) rather than following a stem-change pattern?",
+      "options": ["pensar", "dormir", "ir", "pedir"],
+      "correctAnswer": "ir"
+    }
+  ]
+}

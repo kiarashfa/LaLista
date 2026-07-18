@@ -1,0 +1,78 @@
+{
+  "lessonId": "lesson-32",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "cloze-passage",
+      "prompt": "Fill in each blank with the correct past tense (preterite, imperfect, or pluperfect) for the verb given:",
+      "passage": "Aquella tarde {0} (llover) mucho. Marta {1} (caminar) a casa cuando {2} (ver) a su vecino, que ya {3} (perder) el paraguas esa mañana. Los dos {4} (decidir) refugiarse en un café.",
+      "blanks": ["llovía", "caminaba", "vio", "había perdido", "decidieron"]
+    },
+    {
+      "id": "ex-2",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks, choosing between the preterite and the pluperfect:",
+      "passage": "Cuando {0} (yo/abrir) la puerta, el gato ya {1} (comer) toda la comida y {2} (romper) un jarrón.",
+      "blanks": ["abrí", "había comido", "había roto"]
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "Era una noche fría; la lluvia ___ (caer) sin parar cuando el tren llegó.",
+      "options": ["cayó", "caía", "había caído", "cae"],
+      "correctAnswer": "caía"
+    },
+    {
+      "id": "ex-4",
+      "type": "multiple-choice",
+      "prompt": "Cuando abrí la puerta, mi gato ya ___ (comer) toda la comida.",
+      "options": ["comió", "comía", "había comido", "come"],
+      "correctAnswer": "había comido"
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "Elena ___ (tener) veinte años cuando se mudó a Madrid.",
+      "options": ["tuvo", "tenía", "había tenido", "tiene"],
+      "correctAnswer": "tenía"
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a background action needs the imperfect, not the preterite:",
+      "incorrectSentence": "Mientras yo cociné, mi hermana puso la mesa.",
+      "correctSentence": "Mientras yo cocinaba, mi hermana puso la mesa."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite so that the rain started BEFORE you left the house, using the pluperfect for the rain:",
+      "originalSentence": "Cuando salí de casa, empezó a llover.",
+      "instruction": "make the rain's start happen earlier than salí, using the pluperfect",
+      "correctAnswer": "Cuando salí de casa, ya había empezado a llover."
+    },
+    {
+      "id": "ex-8",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["cuando", "Yo", "el", "teléfono", "dormía", "sonó"],
+      "correctOrder": ["Yo", "dormía", "cuando", "sonó", "el", "teléfono"]
+    },
+    {
+      "id": "ex-9",
+      "type": "matching-pairs",
+      "prompt": "Match each past tense to the job it does in a narrative:",
+      "pairs": [
+        { "left": "Pretérito", "right": "Moves the story forward — what happened next" },
+        { "left": "Imperfecto", "right": "Sets the scene — what was going on" },
+        { "left": "Pluscuamperfecto", "right": "Marks an event that happened even earlier" }
+      ]
+    },
+    {
+      "id": "ex-10",
+      "type": "fill-blank",
+      "prompt": "Antes de que llegaras, yo ya ___ (comer).",
+      "correctAnswer": "había comido"
+    }
+  ]
+}

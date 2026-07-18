@@ -1,0 +1,72 @@
+{
+  "lessonId": "lesson-01",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct article:",
+      "word": "problema",
+      "options": ["el", "la"],
+      "correctAnswer": "el",
+      "note": "Problema comes from Greek and is masculine despite ending in -a, like most -ma nouns."
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct article:",
+      "word": "mano",
+      "options": ["el", "la"],
+      "correctAnswer": "la",
+      "note": "Mano is feminine despite ending in -o — a historical exception with no deeper pattern."
+    },
+    {
+      "id": "ex-3",
+      "type": "multiple-choice",
+      "prompt": "Which of these nouns is masculine, even though it ends in -a?",
+      "options": ["mesa", "casa", "sistema", "puerta"],
+      "correctAnswer": "sistema"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "___ ciudad es muy antigua. (Fill in the article)",
+      "correctAnswer": "La"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "La problema es que no tenemos tiempo.",
+      "correctSentence": "El problema es que no tenemos tiempo."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each noun to its correct article:",
+      "pairs": [
+        { "left": "mano", "right": "la" },
+        { "left": "día", "right": "el" },
+        { "left": "foto", "right": "la" },
+        { "left": "mapa", "right": "el" },
+        { "left": "ciudad", "right": "la" },
+        { "left": "viaje", "right": "el" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "gender-agreement",
+      "prompt": "Complete with the correct article: '___ capital de España es Madrid.'",
+      "word": "capital",
+      "options": ["el", "la"],
+      "correctAnswer": "la",
+      "note": "La capital = the capital city. El capital would mean 'the funds/money' instead — a different word."
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with el or la:",
+      "passage": "{0} problema es serio: {1} sistema no funciona y {2} solución no está clara todavía.",
+      "blanks": ["El", "el", "la"]
+    }
+  ]
+}

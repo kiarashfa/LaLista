@@ -1,0 +1,75 @@
+{
+  "lessonId": "lesson-04",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of 'blanco' to complete: 'la casa ___'",
+      "word": "blanco",
+      "options": ["blanco", "blanca", "blancos", "blancas"],
+      "correctAnswer": "blanca",
+      "note": "blanca agrees with la casa — feminine singular."
+    },
+    {
+      "id": "ex-2",
+      "type": "gender-agreement",
+      "prompt": "Choose the correct form of 'español' to complete: 'unos estudiantes ___'",
+      "word": "español",
+      "options": ["español", "española", "españoles", "españolas"],
+      "correctAnswer": "españoles",
+      "note": "Nationality adjectives add -a for feminine and -es for plural; estudiantes here is masculine plural."
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Es un ___ (bueno) libro.",
+      "correctAnswer": "buen"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Fue una ___ (grande) sorpresa.",
+      "correctAnswer": "gran"
+    },
+    {
+      "id": "ex-5",
+      "type": "multiple-choice",
+      "prompt": "Which sentence means 'she is an old friend' (known a long time), NOT 'an elderly friend'?",
+      "options": ["Es una amiga vieja.", "Es una vieja amiga.", "Es una amiga muy vieja.", "Es vieja la amiga."],
+      "correctAnswer": "Es una vieja amiga."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake:",
+      "incorrectSentence": "Tengo dos amigas franceses.",
+      "correctSentence": "Tengo dos amigas francesas."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order (default post-nominal position):",
+      "words": ["nuevo", "Tengo", "coche", "un"],
+      "correctOrder": ["Tengo", "un", "coche", "nuevo"]
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each phrase to its correct meaning:",
+      "pairs": [
+        { "left": "un gran hombre", "right": "a great man" },
+        { "left": "un hombre grande", "right": "a big man" },
+        { "left": "un viejo amigo", "right": "a longtime friend" },
+        { "left": "un amigo viejo", "right": "an elderly friend" },
+        { "left": "mi antiguo jefe", "right": "my former boss" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form of the adjective in parentheses:",
+      "passage": "Mi {0} (antiguo) profesor era un {1} (grande) hombre, pero ahora vive en una casa muy {2} (viejo).",
+      "blanks": ["antiguo", "gran", "vieja"]
+    }
+  ]
+}

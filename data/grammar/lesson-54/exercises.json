@@ -1,0 +1,73 @@
+{
+  "lessonId": "lesson-54",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "___ conozco a nadie en esta ciudad.",
+      "options": ["No", "Nunca", "Nada", "Tampoco"],
+      "correctAnswer": "No"
+    },
+    {
+      "id": "ex-2",
+      "type": "fill-blank",
+      "prompt": "___ llegó nadie a la fiesta. (Fill in the missing word)",
+      "correctAnswer": "No"
+    },
+    {
+      "id": "ex-3",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — a negative word after the verb with no no:",
+      "incorrectSentence": "Llegó nadie a tiempo.",
+      "correctSentence": "No llegó nadie a tiempo."
+    },
+    {
+      "id": "ex-4",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — two negative markers stacked in the same preverbal slot:",
+      "incorrectSentence": "No nadie llegó a tiempo.",
+      "correctSentence": "Nadie llegó a tiempo."
+    },
+    {
+      "id": "ex-5",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite by fronting the negative word, dropping no:",
+      "originalSentence": "No llegó nadie.",
+      "instruction": "move nadie before the verb and drop no",
+      "correctAnswer": "Nadie llegó."
+    },
+    {
+      "id": "ex-6",
+      "type": "matching-pairs",
+      "prompt": "Match each negative word to its meaning:",
+      "pairs": [
+        { "left": "nunca", "right": "never" },
+        { "left": "nadie", "right": "no one" },
+        { "left": "tampoco", "right": "not either" },
+        { "left": "ni siquiera", "right": "not even" }
+      ]
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["a", "conozco", "nadie", "No"],
+      "correctOrder": ["No", "conozco", "a", "nadie"]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with no or the correct negative word:",
+      "passage": "{0} tengo tiempo hoy, y {1} tengo ganas de salir. {2} me llamó nadie para avisarme.",
+      "blanks": ["No", "tampoco", "No"]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-transformation",
+      "prompt": "Combine using ni...ni, keeping no since both items follow the verb:",
+      "originalSentence": "No tengo tiempo. No tengo dinero.",
+      "instruction": "combine into one sentence using ni...ni after the verb",
+      "correctAnswer": "No tengo ni tiempo ni dinero."
+    }
+  ]
+}

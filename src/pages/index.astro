@@ -1,0 +1,37 @@
+---
+/**
+ * Round 1 skeleton — verifies the data pipeline + content collections end to
+ * end. Replaced by the real landing/profile page in later rounds.
+ */
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+import words from '../content/vocabulary/words.json';
+import groups from '../content/vocabulary/groups.json';
+
+const lessons = await getCollection('grammarLessons');
+const meta = await getCollection('grammarMeta');
+const exercises = await getCollection('grammarExercises');
+const totalExercises = exercises.reduce((n, e) => n + e.data.exercises.length, 0);
+const withLL = words.filter((w) => w.audio.linguaLibre).length;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LaLista — build skeleton</title>
+  </head>
+  <body class="mx-auto max-w-2xl p-8 font-sans">
+    <h1 class="text-3xl font-bold">LaLista <span class="text-sm font-normal">(Round 1 skeleton)</span></h1>
+    <p class="mt-2">Data pipeline verification — this page is replaced in Round 2.</p>
+    <ul class="mt-6 list-disc space-y-1 pl-6">
+      <li>Vocabulary: <b>{words.length}</b> words in <b>{groups.length}</b> groups ({withLL} with Lingua Libre audio)</li>
+      <li>Grammar lessons (MDX): <b>{lessons.length}</b></li>
+      <li>Grammar meta entries: <b>{meta.length}</b></li>
+      <li>Grammar exercises: <b>{totalExercises}</b> across <b>{exercises.length}</b> workbooks</li>
+      <li>First lesson: <b>{meta.find((m) => m.id === 'lesson-01')?.data.title}</b></li>
+      <li>Last lesson: <b>{meta.find((m) => m.id === 'lesson-57')?.data.title}</b></li>
+    </ul>
+  </body>
+</html>

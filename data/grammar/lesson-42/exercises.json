@@ -1,0 +1,79 @@
+{
+  "lessonId": "lesson-42",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "multiple-choice",
+      "prompt": "Antes de ___ (salir), cerré la puerta con llave.",
+      "options": ["salir", "saliendo", "sales", "salgo"],
+      "correctAnswer": "salir"
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Quiero ___ (comer) algo antes de irme.",
+      "options": ["comer", "coma", "como", "comiendo"],
+      "correctAnswer": "comer"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Quiero que tú ___ (comer) algo antes de irte.",
+      "correctAnswer": "comas"
+    },
+    {
+      "id": "ex-4",
+      "type": "fill-blank",
+      "prompt": "Empezó ___ trabajar aquí el mes pasado. (fill in the linking preposition)",
+      "correctAnswer": "a"
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — no gerund is ever allowed after a preposition:",
+      "incorrectSentence": "Antes de saliendo, apagué las luces.",
+      "correctSentence": "Antes de salir, apagué las luces."
+    },
+    {
+      "id": "ex-6",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — the subject doesn't change here, so no que + subjunctive is needed:",
+      "incorrectSentence": "Quiero que yo termine el informe hoy.",
+      "correctSentence": "Quiero terminar el informe hoy."
+    },
+    {
+      "id": "ex-7",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite using dejar que + imperfect subjunctive instead of the infinitive-plus-object pattern:",
+      "originalSentence": "Le dejé salir.",
+      "instruction": "rewrite with dejar que and the imperfect subjunctive",
+      "correctAnswer": "Dejé que saliera."
+    },
+    {
+      "id": "ex-8",
+      "type": "matching-pairs",
+      "prompt": "Match each verb + preposition to its meaning:",
+      "pairs": [
+        { "left": "empezar a", "right": "to start doing" },
+        { "left": "dejar de", "right": "to stop doing" },
+        { "left": "tratar de", "right": "to try to" },
+        { "left": "soñar con", "right": "to dream of" },
+        { "left": "quedar en", "right": "to agree to" }
+      ]
+    },
+    {
+      "id": "ex-9",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["para", "salud.", "Fumar", "malo", "la", "es"],
+      "correctOrder": ["Fumar", "es", "malo", "para", "la", "salud."]
+    },
+    {
+      "id": "ex-10",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct form (infinitive or present subjunctive):",
+      "passage": "Quiero {0} (terminar) el informe hoy, pero mi jefe prefiere que yo lo {1} (terminar) mañana. Al {2} (llegar) a la oficina esta mañana, encendí el ordenador enseguida.",
+      "blanks": ["terminar", "termine", "llegar"]
+    }
+  ]
+}

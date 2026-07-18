@@ -1,0 +1,68 @@
+{
+  "lessonId": "lesson-31",
+  "exercises": [
+    {
+      "id": "ex-1",
+      "type": "conjugation-grid",
+      "prompt": "Complete the imperfect tense of haber (the pluperfect's auxiliary):",
+      "verb": "haber",
+      "givenForms": { "yo": "había", "nosotros": "habíamos" },
+      "blankForms": ["tú", "él/ella/usted", "vosotros", "ellos/ellas/ustedes"],
+      "correctAnswers": { "tú": "habías", "él/ella/usted": "había", "vosotros": "habíais", "ellos/ellas/ustedes": "habían" }
+    },
+    {
+      "id": "ex-2",
+      "type": "multiple-choice",
+      "prompt": "Cuando llegamos, la película ya ___ (empezar).",
+      "options": ["empezó", "empezaba", "había empezado", "habrá empezado"],
+      "correctAnswer": "había empezado"
+    },
+    {
+      "id": "ex-3",
+      "type": "fill-blank",
+      "prompt": "Ella dijo que ya ___ (terminar) el informe.",
+      "correctAnswer": "había terminado"
+    },
+    {
+      "id": "ex-4",
+      "type": "sentence-transformation",
+      "prompt": "Rewrite Elena's direct quote as reported speech using decir que:",
+      "originalSentence": "Elena dijo: 'He perdido las llaves.'",
+      "instruction": "report Elena's words with decir que, shifting the verb to the pluperfect",
+      "correctAnswer": "Elena dijo que había perdido las llaves."
+    },
+    {
+      "id": "ex-5",
+      "type": "error-correction",
+      "prompt": "Find and fix the mistake — this context calls for the indicative pluperfect, not the subjunctive:",
+      "incorrectSentence": "Cuando llegué, ya hubiera empezado la película.",
+      "correctSentence": "Cuando llegué, ya había empezado la película."
+    },
+    {
+      "id": "ex-6",
+      "type": "sentence-reorder",
+      "prompt": "Put the words in the correct order:",
+      "words": ["llamaste,", "Cuando", "ya", "había", "yo", "salido"],
+      "correctOrder": ["Cuando", "llamaste,", "yo", "ya", "había", "salido"]
+    },
+    {
+      "id": "ex-7",
+      "type": "matching-pairs",
+      "prompt": "Match each infinitive to its pluperfect yo-form:",
+      "pairs": [
+        { "left": "escribir", "right": "había escrito" },
+        { "left": "hacer", "right": "había hecho" },
+        { "left": "ver", "right": "había visto" },
+        { "left": "decir", "right": "había dicho" },
+        { "left": "poner", "right": "había puesto" }
+      ]
+    },
+    {
+      "id": "ex-8",
+      "type": "cloze-passage",
+      "prompt": "Fill in the blanks with the correct pluperfect form:",
+      "passage": "Cuando por fin llegamos al aeropuerto, el avión ya {0} (salir). Mis padres {1} (preparar) la cena antes de que yo llegara a casa.",
+      "blanks": ["había salido", "habían preparado"]
+    }
+  ]
+}
