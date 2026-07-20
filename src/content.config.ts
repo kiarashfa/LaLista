@@ -16,7 +16,7 @@ const grammarLessons = defineCollection({
   loader: glob({ pattern: 'lesson-*/lesson.mdx', base: './data/grammar', generateId: lessonFolderId }),
 });
 
-/** meta.json — schema per GRAMMAR-AUTHORING-GUIDE.md §2. */
+/** meta.json — schema per Grammar.md §2. */
 const grammarMeta = defineCollection({
   loader: glob({ pattern: 'lesson-*/meta.json', base: './data/grammar', generateId: lessonFolderId }),
   schema: z.object({

@@ -42,22 +42,31 @@ describe('graders', () => {
     expect(gradeMultipleChoice(ex, 'como')).toBe(false);
   });
 
-  it('fill-blank: accent-strict', () => {
+  it('fill-blank: tri-state — accent-only miss is forgiven but flagged', () => {
     const ex = { id: 'x', type: 'fill-blank', prompt: '', correctAnswer: 'comí' } as const;
-    expect(gradeFillBlank(ex, ' Comí ')).toBe(true);
-    expect(gradeFillBlank(ex, 'comi')).toBe(false);
+    expect(gradeFillBlank(ex, ' Comí ')).toBe('correct');
+    expect(gradeFillBlank(ex, 'comi')).toBe('accent');
+    expect(gradeFillBlank(ex, 'como')).toBe('wrong');
   });
 
-  it('error-correction: sentence-lenient compare', () => {
+  it('accent forgiveness never forgives ñ (a letter, not a tilde)', () => {
+    const ex = { id: 'x', type: 'fill-blank', prompt: '', correctAnswer: 'año' } as const;
+    expect(gradeFillBlank(ex, 'ano')).toBe('wrong');
+    const ex2 = { id: 'x', type: 'fill-blank', prompt: '', correctAnswer: 'vergüenza' } as const;
+    expect(gradeFillBlank(ex2, 'verguenza')).toBe('accent'); // diaeresis is forgiven
+  });
+
+  it('error-correction: sentence-lenient compare with accent tri-state', () => {
     const ex = {
       id: 'x',
       type: 'error-correction',
       prompt: '',
-      incorrectSentence: 'Ella comes pan.',
-      correctSentence: 'Ella come pan.',
+      incorrectSentence: 'Tu estas cansado.',
+      correctSentence: 'Tú estás cansado.',
     } as const;
-    expect(gradeErrorCorrection(ex, 'ella come pan')).toBe(true);
-    expect(gradeErrorCorrection(ex, 'Ella comes pan.')).toBe(false);
+    expect(gradeErrorCorrection(ex, 'tú estás cansado')).toBe('correct');
+    expect(gradeErrorCorrection(ex, 'Tu estas cansado.')).toBe('accent');
+    expect(gradeErrorCorrection(ex, 'Tú es cansado.')).toBe('wrong');
   });
 
   it('sentence-transformation grades like error-correction', () => {
@@ -69,10 +78,10 @@ describe('graders', () => {
       instruction: 'make negative',
       correctAnswer: 'No como carne.',
     } as const;
-    expect(gradeSentenceTransformation(ex, 'no como carne')).toBe(true);
+    expect(gradeSentenceTransformation(ex, 'no como carne')).toBe('correct');
   });
 
-  it('conjugation-grid: per-cell results, all-or-nothing overall', () => {
+  it('conjugation-grid: per-cell tri-state; accent misses forgiven, wrong cells not', () => {
     const ex = {
       id: 'x',
       type: 'conjugation-grid',
@@ -82,10 +91,13 @@ describe('graders', () => {
       blankForms: ['tú', 'vosotros'],
       correctAnswers: { 'tú': 'bebes', 'vosotros': 'bebéis' },
     } as const;
-    const partial = gradeConjugationGrid(ex, { 'tú': 'bebes', 'vosotros': 'bebeis' });
-    expect(partial.cells['tú']).toBe(true);
-    expect(partial.cells['vosotros']).toBe(false); // missing accent
-    expect(partial.correct).toBe(false);
+    const accentOnly = gradeConjugationGrid(ex, { 'tú': 'bebes', 'vosotros': 'bebeis' });
+    expect(accentOnly.cells['tú']).toBe('correct');
+    expect(accentOnly.cells['vosotros']).toBe('accent');
+    expect(accentOnly.correct).toBe(true); // forgiven
+    expect(accentOnly.accentMisses).toBe(1);
+    const withWrong = gradeConjugationGrid(ex, { 'tú': 'bebo', 'vosotros': 'bebéis' });
+    expect(withWrong.correct).toBe(false);
     expect(gradeConjugationGrid(ex, { 'tú': 'Bebes', 'vosotros': 'bebéis' }).correct).toBe(true);
   });
 
@@ -116,17 +128,21 @@ describe('graders', () => {
     expect(isMatchingPair(ex, 'comer', 'to drink')).toBe(false);
   });
 
-  it('cloze-passage: per-blank results, all-or-nothing overall', () => {
+  it('cloze-passage: per-blank tri-state, wrong blanks fail, accent blanks forgiven', () => {
     const ex = {
       id: 'x',
       type: 'cloze-passage',
       prompt: '',
       passage: 'Yo {0} y él {1}.',
-      blanks: ['como', 'come'],
+      blanks: ['comí', 'come'],
     } as const;
-    const r = gradeClozePassage(ex, ['como', 'comes']);
-    expect(r.blanks).toEqual([true, false]);
+    const r = gradeClozePassage(ex, ['comí', 'comes']);
+    expect(r.blanks).toEqual(['correct', 'wrong']);
     expect(r.correct).toBe(false);
+    const r2 = gradeClozePassage(ex, ['comi', 'come']);
+    expect(r2.blanks).toEqual(['accent', 'correct']);
+    expect(r2.correct).toBe(true);
+    expect(r2.accentMisses).toBe(1);
   });
 });
 

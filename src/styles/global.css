@@ -129,6 +129,64 @@ body {
     color 0.2s ease;
 }
 
+/* --- Scrollbars (owner refinement #3): thin, pill-shaped, token-driven so
+   they follow the light/dark theme like everything else. --- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* --- Collapsible TOC sidebars (owner improvement: vocabulary word list +
+   grammar chapter TOC absorb smoothly into the left edge). Desktop-only —
+   below lg the sidebars have their own mobile treatments. --- */
+@media (min-width: 1024px) {
+  .collapsible-grid {
+    transition: grid-template-columns 0.3s ease;
+  }
+  .collapsible-grid.closed {
+    grid-template-columns: 0px minmax(0, 1fr) !important;
+  }
+}
+.collapsible-aside {
+  min-width: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.22s ease,
+    padding 0.3s ease;
+}
+.collapsible-grid.closed .collapsible-aside {
+  opacity: 0;
+  pointer-events: none;
+  padding-left: 0;
+  padding-right: 0;
+  border-right-width: 0;
+}
+/* Static (non-React) pages show/hide the reopen handle purely via this class. */
+.collapsible-grid:not(.closed) .toc-reopen-handle {
+  display: none !important;
+}
+
 /* --- Fraunces expression presets (SPEC §7: same family, different axes) --- */
 /* Editorial — grammar headings: tighter optical size, low softness */
 .display-editorial {

@@ -11,6 +11,7 @@ import {
   applyGroupStudyAnswer,
   applySkip,
   getAllWordProgress,
+  getProfile,
   markDifficult,
   markKnown,
 } from '../../lib/storage/session';
@@ -40,9 +41,19 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
   const [current, setCurrent] = useState<QueueItem | null>(null);
   const [ended, setEnded] = useState(false);
   const [stats, setStats] = useState<SessionStats>({ studied: 0, quizzed: 0, correct: 0 });
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(
+    () => typeof localStorage === 'undefined' || localStorage.getItem('lalista:vocabSidebar') !== 'closed',
+  );
   const queueRef = useRef<SessionQueue | null>(null);
+  const studiedIds = useRef(new Set<string>());
+
+  const toggleSidebar = (open: boolean) => {
+    setSidebarOpen(open);
+    localStorage.setItem('lalista:vocabSidebar', open ? 'open' : 'closed');
+  };
 
   useEffect(() => {
+    if (!getProfile()) return; // ProfileGate overlay is up — don't start a session
     const all = getAllWordProgress();
     const map: Record<string, VocabWordProgress> = {};
     for (const w of words) map[w.id] = all[w.id] ?? newWordProgress(now);
@@ -68,7 +79,11 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
   };
 
   const handleStudyNext = (wordId: string) => {
-    setStats((s) => ({ ...s, studied: s.studied + 1 }));
+    // Only first exposures count toward the session stat (skip-revisits don't).
+    if (!studiedIds.current.has(wordId)) {
+      studiedIds.current.add(wordId);
+      setStats((s) => ({ ...s, studied: s.studied + 1 }));
+    }
     advance();
   };
 
@@ -79,6 +94,10 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
     } else if (outcome.kind === 'skip') {
       refreshWord(wordId, applySkip(wordId));
       queueRef.current!.report(wordId, 'skip');
+      // Owner improvement #2: "I don't know" returns to the word's learning
+      // card right away; the queue re-quizzes it a few cards later.
+      setCurrent({ wordId, kind: 'study' });
+      return;
     } else {
       const correct = outcome.kind === 'correct';
       refreshWord(wordId, applyGroupStudyAnswer(wordId, correct));
@@ -120,10 +139,25 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
   });
 
   return (
-    <div className="mx-auto grid w-full max-w-[1200px] flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <aside className="hidden border-r border-border px-5 py-6 lg:block">
+    <div
+      className={`collapsible-grid relative mx-auto grid w-full max-w-[1200px] flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] ${sidebarOpen ? '' : 'closed'}`}
+    >
+      <aside className="collapsible-aside hidden border-r border-border px-5 py-6 lg:block">
         <div className="mb-4">
-          <p className="m-0 mb-2 text-xs font-bold tracking-widest text-vocab uppercase">{groupTitle}</p>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <p className="m-0 truncate text-xs font-bold tracking-widest text-vocab uppercase">{groupTitle}</p>
+            <button
+              type="button"
+              aria-label="Hide word list"
+              title="Hide word list"
+              onClick={() => toggleSidebar(false)}
+              className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-sm text-ink-faint hover:bg-surface-sunken hover:text-ink"
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m15 6-6 6 6 6"></path>
+              </svg>
+            </button>
+          </div>
           <div className="h-1.5 overflow-hidden rounded-pill bg-surface-sunken">
             <div className="h-full bg-gradient-to-r from-vocab to-gold" style={{ width: `${(started / words.length) * 100}%` }} />
           </div>
@@ -133,6 +167,20 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
         </div>
         <div className="max-h-[70vh] overflow-y-auto pr-1">{wordList}</div>
       </aside>
+
+      {!sidebarOpen && (
+        <button
+          type="button"
+          aria-label="Show word list"
+          title="Show word list"
+          onClick={() => toggleSidebar(true)}
+          className="absolute top-16 left-0 z-10 hidden h-14 w-6 cursor-pointer items-center justify-center rounded-r-md border border-l-0 border-border bg-surface-raised text-ink-faint shadow-sm hover:text-vocab lg:flex"
+        >
+          <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="m9 6 6 6-6 6"></path>
+          </svg>
+        </button>
+      )}
 
       <main className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
         {/* Mobile: same word list, collapsible above the stage (SPEC §7 — same component, responsive layout) */}
@@ -165,7 +213,21 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
               </a>
             </div>
           ) : current.kind === 'study' ? (
-            <StudyCard key={`${current.wordId}-s`} word={currentWord} onNext={() => handleStudyNext(current.wordId)} />
+            <StudyCard
+              key={`${current.wordId}-s`}
+              word={currentWord}
+              difficult={progress[current.wordId].difficult}
+              onNext={() => handleStudyNext(current.wordId)}
+              onMarkDifficult={() => refreshWord(current.wordId, markDifficult(current.wordId))}
+              onMarkKnown={() => {
+                // Same as marking known from a quiz: straight to Mastered,
+                // out of this session, on to the next card.
+                refreshWord(current.wordId, markKnown(current.wordId));
+                queueRef.current!.retire(current.wordId);
+                studiedIds.current.add(current.wordId);
+                advance();
+              }}
+            />
           ) : (
             <QuizCard
               key={`${current.wordId}-q-${stats.quizzed}`}

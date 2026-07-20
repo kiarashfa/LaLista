@@ -6,7 +6,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Word } from '../../types/word';
-import { buildChoices, renderExample } from './wordUtils';
+import { buildChoices, optionFieldFor, renderExample, type QuizMode } from './wordUtils';
 import { WordAudioButtons } from './WordAudioButtons';
 import { ChoiceGrid } from '../exercises/ChoiceGrid';
 import { ConfirmDialog } from './ConfirmDialog';
@@ -23,6 +23,8 @@ interface Props {
   /** Group Study only: show mark-difficult / mark-known icons. */
   showMarkActions: boolean;
   allowSkip: boolean;
+  /** Direction/listening mode (owner improvement #6). Group Study stays en-es. */
+  mode?: QuizMode;
   /** Caption under the card, e.g. stage name. */
   caption?: string;
   onDone: (outcome: QuizOutcome) => void;
@@ -31,12 +33,21 @@ interface Props {
 
 const AUTO_ADVANCE_MS = 2500;
 
-export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, caption, onDone, onMarkDifficult }: Props) {
+const PROMPT_LABEL: Record<QuizMode, string> = {
+  'en-es': 'Translate to Spanish',
+  'es-en': 'Translate to English',
+  'listen-es': 'What do you hear?',
+  'listen-en': 'What does it mean?',
+};
+
+export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, mode = 'en-es', caption, onDone, onMarkDifficult }: Props) {
   const [answered, setAnswered] = useState<null | boolean>(null);
   const [confirmKnown, setConfirmKnown] = useState(false);
   const [flaggedNow, setFlaggedNow] = useState(false);
   const answeredAt = useRef(0);
-  const options = useMemo(() => buildChoices(word, pool, choiceCount), [word, pool, choiceCount]);
+  const field = optionFieldFor(mode);
+  const listening = mode.startsWith('listen');
+  const options = useMemo(() => buildChoices(word, pool, choiceCount, field), [word, pool, choiceCount, field]);
 
   const finish = (kind: QuizOutcome['kind']) => onDone({ kind });
 
@@ -70,10 +81,25 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
       <div className="relative overflow-hidden rounded-lg bg-surface-raised px-6 py-8 shadow-lg sm:px-9">
         <span className="font-display pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 text-[15rem] leading-none font-light text-vocab opacity-5 select-none" aria-hidden="true">¿</span>
 
-        <p className="relative m-0 mb-2 text-center text-xs font-bold tracking-widest text-ink-faint uppercase">Translate to Spanish</p>
-        <p className="display-friendly relative m-0 text-center text-3xl font-bold text-ink">{word.english}</p>
+        <p className="relative m-0 mb-2 text-center text-xs font-bold tracking-widest text-ink-faint uppercase">{PROMPT_LABEL[mode]}</p>
+        {mode === 'en-es' && <p className="display-friendly relative m-0 text-center text-3xl font-bold text-ink">{word.english}</p>}
+        {mode === 'es-en' && (
+          <div className="relative text-center">
+            <p className="display-friendly m-0 text-3xl font-bold text-ink">{word.spanish}</p>
+            {word.phonetics && <p className="m-0 mt-1 text-sm text-ink-faint">{word.phonetics}</p>}
+            <div className="mt-2 flex justify-center">
+              <WordAudioButtons word={word} />
+            </div>
+          </div>
+        )}
+        {listening && (
+          <div className="relative mt-2 flex justify-center">
+            {/* Auto-plays the default voice; the chips replay or switch voices. */}
+            <WordAudioButtons word={word} autoPlayFirst />
+          </div>
+        )}
 
-        {word.disambiguationNote && answered === null && (
+        {word.disambiguationNote && answered === null && mode === 'en-es' && (
           <div className="relative mx-auto mt-4 flex max-w-[440px] gap-2 rounded-md border border-gold bg-gold-bg px-4 py-3 text-left text-sm text-ink-soft">
             <span aria-hidden="true">💡</span>
             <span>
@@ -85,9 +111,8 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
         <div className="relative mt-6">
           <ChoiceGrid
             options={options}
-            correct={word.spanish}
+            correct={word[field]}
             accent="vocab"
-            columns={choiceCount > 3 ? 2 : 1}
             onGraded={(ok) => {
               answeredAt.current = Date.now();
               setAnswered(ok);
@@ -99,9 +124,14 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
           <div className="relative mt-5 rounded-md bg-surface-sunken px-4 py-3 text-center">
             <p className="m-0 flex items-center justify-center gap-3 text-[0.95rem] font-semibold text-ink">
               {word.spanish}
+              <span className="font-normal text-ink-faint">— {word.english}</span>
               {word.phonetics && <span className="font-normal text-ink-faint">{word.phonetics}</span>}
-              <WordAudioButtons word={word} />
+              {/* Auto-pronounce on a CORRECT answer (owner refinement #2); listening modes already played it. */}
+              <WordAudioButtons word={word} autoPlayFirst={answered === true && !listening} />
             </p>
+            {word.disambiguationNote && mode !== 'en-es' && (
+              <p className="m-0 mt-2 text-xs text-ink-soft">💡 {word.disambiguationNote}</p>
+            )}
             <p className="m-0 mt-2 text-sm text-ink-soft">{renderExample(word.example)}</p>
             {answered && <p className="m-0 mt-2 text-xs text-ink-faint">advancing… or press ↵</p>}
             {!answered && (

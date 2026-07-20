@@ -15,6 +15,6 @@ const { group } = Astro.props;
 const words = (allWords as unknown as Word[]).filter((w) => w.group === group.slug);
 ---
 
-<BaseLayout section="vocabulary" title={`${group.title} — LaLista Vocabulary`} description={`Study the ${group.count} words of ${group.title} with spaced repetition and audio.`}>
+<BaseLayout requireProfile section="vocabulary" title={`${group.title} — LaLista Vocabulary`} description={`Study the ${group.count} words of ${group.title} with spaced repetition and audio.`}>
   <GroupStudyApp client:only="react" groupTitle={group.title} words={words} vocabularyUrl={withBase('/vocabulary/')} />
 </BaseLayout>

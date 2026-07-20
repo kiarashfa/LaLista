@@ -30,12 +30,31 @@ export const GENDER_LABEL: Record<Exclude<Word['gender'], null>, string> = {
 };
 
 /**
- * 4/6/3 answer choices (SPEC §8): the correct Spanish + distractors drawn
- * from the same topic group, preferring the same part of speech. Words whose
- * English matches the target are excluded — a synonym would create a second
- * right answer.
+ * Quiz direction/mode (owner improvement #6). Group Study stays 'en-es';
+ * Review and Test let the user choose, including the two listening modes.
  */
-export function buildChoices(word: Word, pool: Word[], count: number, rng: () => number = Math.random): string[] {
+export type QuizMode = 'en-es' | 'es-en' | 'listen-es' | 'listen-en';
+
+export const MODE_INFO: Record<QuizMode, { title: string; desc: string }> = {
+  'en-es': { title: 'EN → ES', desc: 'See the English, pick the Spanish.' },
+  'es-en': { title: 'ES → EN', desc: 'See the Spanish, pick the meaning.' },
+  'listen-es': { title: '🔊 Listen → ES', desc: 'Hear the word, pick the Spanish spelling.' },
+  'listen-en': { title: '🔊 Listen → EN', desc: 'Hear the word, pick the meaning.' },
+};
+
+/** Which word field the answer options are drawn from for a given mode. */
+export function optionFieldFor(mode: QuizMode): 'spanish' | 'english' {
+  return mode.endsWith('-es') ? 'spanish' : 'english';
+}
+
+/**
+ * 4/6/3 answer choices (SPEC §8): the correct answer + distractors drawn
+ * from the same topic group, preferring the same part of speech. Candidates
+ * sharing the target's Spanish OR normalized English are excluded — a twin
+ * or synonym would create a second right answer (critical for listening
+ * modes, where e.g. both senses of "claro" sound identical).
+ */
+export function buildChoices(word: Word, pool: Word[], count: number, field: 'spanish' | 'english' = 'spanish'): string[] {
   const targetEnglish = normalizeEnglish(word.english);
   const usable = pool.filter(
     (w) => w.id !== word.id && w.spanish !== word.spanish && normalizeEnglish(w.english) !== targetEnglish,
@@ -47,10 +66,8 @@ export function buildChoices(word: Word, pool: Word[], count: number, rng: () =>
   for (const source of [shuffle(samePos), shuffle(rest)]) {
     for (const w of source) {
       if (picked.length >= count - 1) break;
-      if (!picked.includes(w.spanish)) picked.push(w.spanish);
+      if (!picked.includes(w[field]) && w[field] !== word[field]) picked.push(w[field]);
     }
   }
-  const options = [word.spanish, ...picked];
-  // Deterministic-ish shuffle position for the correct answer
-  return shuffle(options);
+  return shuffle([word[field], ...picked]);
 }

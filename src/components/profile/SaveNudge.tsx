@@ -7,7 +7,7 @@ import { withBase } from '../../lib/paths';
 import { useSave } from './useSave';
 
 export default function SaveNudge() {
-  const { profile, dirty, status, save } = useSave();
+  const { profile, dirty, status, save, overlay } = useSave();
 
   if (!profile) {
     return (
@@ -24,6 +24,7 @@ export default function SaveNudge() {
 
   return (
     <p className="m-0 mt-3 text-sm">
+      {overlay}
       {status ? (
         <span className="font-semibold text-success">{status}</span>
       ) : (

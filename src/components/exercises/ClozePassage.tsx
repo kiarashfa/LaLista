@@ -41,18 +41,27 @@ export function ClozePassage({ exercise, onGraded }: { exercise: Ex; onGraded: (
                 aria-label={`Blank ${idx + 1}`}
                 className={[
                   'mx-1 rounded-sm border-b-2 bg-surface-raised px-2 py-0.5 text-center font-semibold outline-none',
-                  ok === true
+                  ok === 'correct'
                     ? 'border-success bg-success-bg text-success'
-                    : ok === false
-                      ? 'border-error bg-error-bg text-error'
-                      : 'border-border text-ink focus:border-grammar',
+                    : ok === 'accent'
+                      ? 'border-warning bg-gold-bg text-warning'
+                      : ok === 'wrong'
+                        ? 'border-error bg-error-bg text-error'
+                        : 'border-border text-ink focus:border-grammar',
                 ].join(' ')}
               />
-              {ok === false && <span className="text-xs font-semibold text-success">{exercise.blanks[idx]}</span>}
+              {ok === 'wrong' && <span className="text-xs font-semibold text-success">{exercise.blanks[idx]}</span>}
+              {ok === 'accent' && <span className="text-xs font-semibold text-warning">{exercise.blanks[idx]}</span>}
             </span>
           );
         })}
       </p>
+      {answered && result.accentMisses > 0 && (
+        <p className="m-0 mt-3 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
+          <b className="text-warning">{result.accentMisses === 1 ? 'One blank' : `${result.accentMisses} blanks`}</b> had
+          the right word but a missing tilde — counted as correct, exact spelling shown in amber.
+        </p>
+      )}
       <div className="mt-3 flex items-start justify-between gap-4">
         <CharPalette disabled={answered} />
         {!answered && <SubmitButton disabled={!allFilled} />}

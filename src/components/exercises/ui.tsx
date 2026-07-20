@@ -1,14 +1,6 @@
 /** Shared UI primitives for the workbook exercise components. */
 import type { ReactNode } from 'react';
 
-export function KbdBadge({ children }: { children: ReactNode }) {
-  return (
-    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] bg-surface-sunken text-[0.72rem] font-bold text-ink-faint">
-      {children}
-    </span>
-  );
-}
-
 export function SubmitButton({ children = 'Check', disabled = false }: { children?: ReactNode; disabled?: boolean }) {
   return (
     <button

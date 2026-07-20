@@ -24,7 +24,7 @@ const nextId = number < 57 ? toLessonId(number + 1) : null;
 const nextTitle = nextId ? (allMetas.find((m) => m.id === nextId)?.data.title ?? null) : null;
 ---
 
-<BaseLayout section="grammar" title={`Workbook: ${meta.data.title} — LaLista`}>
+<BaseLayout requireProfile section="grammar" title={`Workbook: ${meta.data.title} — LaLista`}>
   <main class="mx-auto w-full max-w-[720px] flex-1 px-4 py-10 sm:px-8">
     <a href={withBase(`/grammar/${id}/`)} class="text-sm font-semibold text-grammar no-underline">← Chapter {number}</a>
     <p class="mt-5 mb-1 text-sm font-bold tracking-wider text-grammar uppercase">Workbook · Chapter {number}</p>

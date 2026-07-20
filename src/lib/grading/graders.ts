@@ -24,6 +24,33 @@ export function normalizeAnswer(text: string): string {
 }
 
 /**
+ * Strips the ´ (acute) and ¨ (diaeresis) marks ONLY — for tilde-forgiveness
+ * (owner refinement: "Estas" for "Estás" is the right conjugation with a
+ * spelling slip, not a wrong answer). The ñ is deliberately NOT stripped:
+ * it's a distinct letter, not an accent (año ≠ ano).
+ */
+export function stripSpanishAccents(text: string): string {
+  return text.normalize('NFD').replace(/[\u0301\u0308]/g, '').normalize('NFC');
+}
+
+/**
+ * Tri-state grade for typed answers:
+ *  - 'correct' — exact (case/whitespace-lenient, accents right)
+ *  - 'accent'  — right answer except acute/diaeresis marks (forgiven, taught)
+ *  - 'wrong'   — anything else
+ */
+export type TypedGrade = 'correct' | 'accent' | 'wrong';
+
+export function gradeTyped(expected: string, actual: string, sentence = false): TypedGrade {
+  const eq = sentence
+    ? sentenceEquals
+    : (a: string, b: string) => normalizeAnswer(a) === normalizeAnswer(b);
+  if (eq(expected, actual)) return 'correct';
+  if (eq(stripSpanishAccents(expected), stripSpanishAccents(actual))) return 'accent';
+  return 'wrong';
+}
+
+/**
  * Sentence comparison: normalized equality, additionally forgiving a missing
  * trailing period. Question/exclamation marks are NOT forgiven — ¿…? / ¡…!
  * pairs are real Spanish punctuation grammar, not decoration.
@@ -40,30 +67,37 @@ export function gradeMultipleChoice(ex: MultipleChoiceExercise | GenderAgreement
   return selected === ex.correctAnswer;
 }
 
-export function gradeFillBlank(ex: FillBlankExercise, answer: string): boolean {
-  return normalizeAnswer(ex.correctAnswer) === normalizeAnswer(answer);
+export function gradeFillBlank(ex: FillBlankExercise, answer: string): TypedGrade {
+  return gradeTyped(ex.correctAnswer, answer);
 }
 
-export function gradeErrorCorrection(ex: ErrorCorrectionExercise, answer: string): boolean {
-  return sentenceEquals(ex.correctSentence, answer);
+export function gradeErrorCorrection(ex: ErrorCorrectionExercise, answer: string): TypedGrade {
+  return gradeTyped(ex.correctSentence, answer, true);
 }
 
-export function gradeSentenceTransformation(ex: SentenceTransformationExercise, answer: string): boolean {
-  return sentenceEquals(ex.correctAnswer, answer);
+export function gradeSentenceTransformation(ex: SentenceTransformationExercise, answer: string): TypedGrade {
+  return gradeTyped(ex.correctAnswer, answer, true);
 }
 
 export interface GridResult {
-  cells: Record<string, boolean>;
+  cells: Record<string, TypedGrade>;
+  /** No cell wrong — accent-only misses are forgiven (and taught in the UI). */
   correct: boolean;
+  accentMisses: number;
 }
 
-/** All blanks must be right for the exercise to count (complete-the-grid). */
+/** All blanks must be at least accent-close for the exercise to count. */
 export function gradeConjugationGrid(ex: ConjugationGridExercise, answers: Record<string, string>): GridResult {
-  const cells: Record<string, boolean> = {};
+  const cells: Record<string, TypedGrade> = {};
   for (const pronoun of ex.blankForms) {
-    cells[pronoun] = normalizeAnswer(ex.correctAnswers[pronoun] ?? '') === normalizeAnswer(answers[pronoun] ?? '');
+    cells[pronoun] = gradeTyped(ex.correctAnswers[pronoun] ?? '', answers[pronoun] ?? '');
   }
-  return { cells, correct: Object.values(cells).every(Boolean) };
+  const values = Object.values(cells);
+  return {
+    cells,
+    correct: values.every((v) => v !== 'wrong'),
+    accentMisses: values.filter((v) => v === 'accent').length,
+  };
 }
 
 /** Exact order, exact strings (validator guarantees words/correctOrder are the same multiset). */
@@ -77,11 +111,17 @@ export function isMatchingPair(ex: MatchingPairsExercise, left: string, right: s
 }
 
 export interface ClozeResult {
-  blanks: boolean[];
+  blanks: TypedGrade[];
+  /** No blank wrong — accent-only misses are forgiven (and taught in the UI). */
   correct: boolean;
+  accentMisses: number;
 }
 
 export function gradeClozePassage(ex: ClozePassageExercise, answers: string[]): ClozeResult {
-  const blanks = ex.blanks.map((expected, i) => normalizeAnswer(expected) === normalizeAnswer(answers[i] ?? ''));
-  return { blanks, correct: blanks.every(Boolean) };
+  const blanks = ex.blanks.map((expected, i) => gradeTyped(expected, answers[i] ?? ''));
+  return {
+    blanks,
+    correct: blanks.every((b) => b !== 'wrong'),
+    accentMisses: blanks.filter((b) => b === 'accent').length,
+  };
 }

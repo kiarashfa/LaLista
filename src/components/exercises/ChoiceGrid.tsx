@@ -1,27 +1,28 @@
 /**
- * Answer-choice grid shared by multiple-choice and gender-agreement (and the
- * pattern Round 4's trainer reuses). Implements SPEC §8's rules: number-key
- * selection with visible kbd badges; on a wrong pick, the mistake highlights
- * red *simultaneously* with the correct answer highlighting green.
- * Tactile bottom border strengthened per §7 punch list.
+ * Answer-choice list shared by every multiple-choice surface (grammar
+ * workbook, Group Study, Review, Test). Owner-picked design (refinement #5,
+ * proposal B): flat full-width rows on the sunken surface with a left accent
+ * bar that slides in on hover; the keyboard number sits quietly at the right
+ * edge. Keeps SPEC §8's rules: number-key selection, and on a wrong pick the
+ * mistake highlights red *simultaneously* with the correct answer going green.
  */
 import { useEffect, useState } from 'react';
-import { KbdBadge } from './ui';
 
 interface Props {
   options: string[];
   correct: string;
   onGraded: (correct: boolean, selected: string) => void;
-  /** Grid columns on desktop; stacks on mobile regardless. */
-  columns?: 1 | 2;
   /** Section accent for hover states — plum (grammar) or coral (vocabulary). */
   accent?: 'grammar' | 'vocab';
 }
 
-export function ChoiceGrid({ options, correct, onGraded, columns = 2, accent = 'grammar' }: Props) {
-  const hoverClass = accent === 'vocab' ? 'hover:border-vocab hover:bg-vocab-soft' : 'hover:border-grammar hover:bg-grammar-soft';
+export function ChoiceGrid({ options, correct, onGraded, accent = 'grammar' }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const answered = selected !== null;
+  const hoverClass =
+    accent === 'vocab'
+      ? 'hover:border-l-vocab hover:bg-vocab-soft hover:pl-6'
+      : 'hover:border-l-grammar hover:bg-grammar-soft hover:pl-6';
 
   const pick = (option: string) => {
     if (answered) return;
@@ -44,7 +45,7 @@ export function ChoiceGrid({ options, correct, onGraded, columns = 2, accent = '
   });
 
   return (
-    <div className={`grid gap-3 ${columns === 2 ? 'sm:grid-cols-2' : ''}`}>
+    <div className="flex flex-col gap-2">
       {options.map((option, i) => {
         const isCorrect = answered && option === correct;
         const isWrongPick = answered && selected === option && option !== correct;
@@ -55,18 +56,26 @@ export function ChoiceGrid({ options, correct, onGraded, columns = 2, accent = '
             onClick={() => pick(option)}
             disabled={answered}
             className={[
-              'flex cursor-pointer items-center gap-3 rounded-md border-2 border-b-4 px-4 py-3 text-left font-body text-[1.02rem] font-bold transition-all duration-100',
+              'flex items-center justify-between gap-3 rounded-sm border-l-[3px] px-4 py-3 text-left font-body text-[1.02rem] font-semibold transition-all duration-150',
               isCorrect
-                ? 'border-success bg-success-bg text-success'
+                ? 'border-l-success bg-success-bg text-success'
                 : isWrongPick
-                  ? 'border-error bg-error-bg text-error'
+                  ? 'border-l-error bg-error-bg text-error'
                   : answered
-                    ? 'border-border bg-surface-raised text-ink opacity-60'
-                    : `border-border bg-surface-raised text-ink ${hoverClass} active:border-b-2 active:translate-y-[2px]`,
+                    ? 'border-l-transparent bg-surface-sunken text-ink opacity-50'
+                    : `cursor-pointer border-l-transparent bg-surface-sunken text-ink ${hoverClass}`,
             ].join(' ')}
           >
-            <KbdBadge>{i + 1}</KbdBadge>
-            {option}
+            <span className="min-w-0">{option}</span>
+            <span
+              className={[
+                'shrink-0 text-[0.72rem] font-bold',
+                isCorrect ? 'text-success' : isWrongPick ? 'text-error' : 'text-ink-faint',
+              ].join(' ')}
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
           </button>
         );
       })}

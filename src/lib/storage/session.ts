@@ -6,7 +6,7 @@
 import type { GrammarLessonProgress, SessionState, VocabWordProgress } from '../../types/progress';
 import { EMPTY_LESSON_PROGRESS, newWordProgress } from '../../types/progress';
 import type { ProfileInfo, SaveFile } from '../../types/profile';
-import { nextDueAt, freshness } from '../srs/scheduling';
+import { nextDueAt } from '../srs/scheduling';
 import { DIFFICULT_MISS_THRESHOLD, MASTERED, stageAfterCorrect, stageAfterWrong, type Stage } from '../srs/stages';
 import { sessionFromSaveFile } from './saveFile';
 import { emptyStreak, touchStreak } from './streak';
@@ -186,10 +186,6 @@ export function refreshReinforced(wordId: string, now = Date.now()): VocabWordPr
   return withWord(wordId, now, (p) => {
     p.lastReinforced = now;
   }, { activity: true });
-}
-
-export function wordFreshness(wordId: string, now = Date.now()): number {
-  return freshness(getWordProgress(wordId, now).lastReinforced, now);
 }
 
 /** Records a Test score; returns which boards it beat (SPEC §9: all-time + today). */

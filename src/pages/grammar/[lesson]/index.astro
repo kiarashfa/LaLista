@@ -40,6 +40,19 @@ const partIds = Array.from({ length: part.to - part.from + 1 }, (_, i) => lesson
 const prevId = number > 1 ? lessonId(number - 1) : null;
 const nextId = number < 57 ? lessonId(number + 1) : null;
 
+// H2 section headings for every chapter in this Part — powers the expandable
+// TOC (owner refinement #4). The current chapter starts expanded.
+const partToc = await Promise.all(
+  partIds.map(async (pid) => {
+    const entry = await getEntry('grammarLessons', pid);
+    const rendered = entry ? await render(entry) : null;
+    return {
+      pid,
+      sections: (rendered?.headings ?? []).filter((h) => h.depth === 2),
+    };
+  }),
+);
+
 const components = {
   BootTable,
   ExampleSentence,
@@ -50,26 +63,87 @@ const components = {
 };
 ---
 
-<BaseLayout section="grammar" title={`${meta.data.title} — LaLista Grammar`} description={meta.data.summary}>
-  <div class="mx-auto grid w-full max-w-[1100px] flex-1 grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)]">
-    <aside class="hidden border-r border-border px-6 py-10 lg:block">
-      <nav class="sticky top-6">
-        <p class="mb-3 text-xs font-bold tracking-widest text-grammar uppercase">Part {part.numeral} · {part.title}</p>
+<BaseLayout requireProfile section="grammar" title={`${meta.data.title} — LaLista Grammar`} description={meta.data.summary}>
+  <div id="lesson-grid" class="collapsible-grid relative mx-auto grid w-full max-w-[1100px] flex-1 grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)]">
+    <aside class="collapsible-aside hidden border-r border-border px-6 py-10 lg:block">
+      <nav class="sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto pr-1">
+        <div class="mb-3 flex items-center justify-between gap-2">
+          <p class="m-0 truncate text-xs font-bold tracking-widest text-grammar uppercase">Part {part.numeral} · {part.title}</p>
+          <button
+            type="button"
+            id="toc-close"
+            aria-label="Hide chapter list"
+            title="Hide chapter list"
+            class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-sm text-ink-faint hover:bg-surface-sunken hover:text-ink"
+          >
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m15 6-6 6 6 6"></path>
+            </svg>
+          </button>
+        </div>
         {
-          partIds.map((pid) => (
-            <a
-              href={withBase(`/grammar/${pid}/`)}
-              class:list={[
-                'block border-l-2 py-2 pl-3 text-[0.92rem] no-underline',
-                pid === id ? 'border-grammar font-semibold text-grammar' : 'border-transparent text-ink-faint hover:text-ink',
-              ]}
-            >
-              {lessonNumber(pid)} · {titleOf(pid)}
-            </a>
+          partToc.map(({ pid, sections }) => (
+            <details open={pid === id} class="toc-chapter group">
+              <summary class="flex cursor-pointer list-none items-start gap-1 select-none [&::-webkit-details-marker]:hidden">
+                <svg
+                  class="toc-chevron mt-2.5 h-3 w-3 shrink-0 text-ink-faint transition-transform duration-150 group-open:rotate-90"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m9 6 6 6-6 6"></path>
+                </svg>
+                <a
+                  href={withBase(`/grammar/${pid}/`)}
+                  class:list={[
+                    'block flex-1 border-l-2 py-2 pl-2.5 text-[0.92rem] no-underline',
+                    pid === id ? 'border-grammar font-semibold text-grammar' : 'border-transparent text-ink-faint hover:text-ink',
+                  ]}
+                >
+                  {lessonNumber(pid)} · {titleOf(pid)}
+                </a>
+              </summary>
+              {sections.length > 0 && (
+                <ul class="m-0 mb-1 list-none p-0 pl-7">
+                  {sections.map((s) => (
+                    <li>
+                      <a
+                        href={withBase(`/grammar/${pid}/#${s.slug}`)}
+                        class="block border-l border-border py-1 pl-3 text-[0.8rem] leading-snug text-ink-faint no-underline hover:border-grammar hover:text-grammar"
+                      >
+                        {s.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </details>
           ))
         }
       </nav>
     </aside>
+
+    <button
+      type="button"
+      id="toc-reopen"
+      aria-label="Show chapter list"
+      title="Show chapter list"
+      class="toc-reopen-handle absolute top-16 left-0 z-10 hidden h-14 w-6 cursor-pointer items-center justify-center rounded-r-md border border-l-0 border-border bg-surface-raised text-ink-faint shadow-sm hover:text-grammar lg:flex"
+    >
+      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </button>
+    <script is:inline>
+      // Apply the stored collapse state before first paint (no flash/animation).
+      if (localStorage.getItem('lalista:lessonToc') === 'closed') {
+        document.getElementById('lesson-grid')?.classList.add('closed');
+      }
+    </script>
 
     <article class="w-full max-w-[720px] px-6 py-12 sm:px-10">
       <header class="relative">
@@ -130,4 +204,17 @@ const components = {
       </nav>
     </article>
   </div>
+
+  <script>
+    const grid = document.getElementById('lesson-grid');
+    const KEY = 'lalista:lessonToc';
+    document.getElementById('toc-close')?.addEventListener('click', () => {
+      grid?.classList.add('closed');
+      localStorage.setItem(KEY, 'closed');
+    });
+    document.getElementById('toc-reopen')?.addEventListener('click', () => {
+      grid?.classList.remove('closed');
+      localStorage.setItem(KEY, 'open');
+    });
+  </script>
 </BaseLayout>

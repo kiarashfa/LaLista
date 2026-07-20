@@ -1,5 +1,5 @@
 /**
- * The 9 workbook exercise types (GRAMMAR-AUTHORING-GUIDE.md §4).
+ * The 9 workbook exercise types (Grammar.md §4).
  * Field sets verified against all 528 authored exercises — `note` appears on
  * multiple-choice, error-correction and gender-agreement.
  */

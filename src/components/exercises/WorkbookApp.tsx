@@ -5,7 +5,7 @@
  * first-timers, zero friction for returning readers (SPEC §6).
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getLessonProgress, recordWorkbookAttempt } from '../../lib/storage/session';
+import { getLessonProgress, getProfile, recordWorkbookAttempt } from '../../lib/storage/session';
 import { BAND_LABEL, scoreBand, type ScoreBand } from '../../lib/grading/thresholds';
 import type { Exercise } from '../../types/exercises';
 import type { WorkbookBest } from '../../types/progress';
@@ -16,6 +16,7 @@ import { MatchingPairs } from './MatchingPairs';
 import { GenderAgreement, MultipleChoice } from './MultipleChoice';
 import { SentenceReorder } from './SentenceReorder';
 import { ErrorCorrection, FillBlank, SentenceTransformation } from './TextExercises';
+import LoadingBar from '../ui/LoadingBar';
 import SaveNudge from '../profile/SaveNudge';
 
 interface Props {
@@ -27,7 +28,7 @@ interface Props {
   nextTitle: string | null;
 }
 
-type Phase = 'loading' | 'locked' | 'running' | 'done';
+type Phase = 'loading' | 'prep' | 'locked' | 'running' | 'done';
 
 const BAND_COLOR: Record<ScoreBand, string> = {
   none: 'text-ink-faint',
@@ -81,9 +82,13 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
   const [graded, setGraded] = useState<boolean | null>(null);
   const [outcome, setOutcome] = useState<{ best: WorkbookBest; improved: boolean } | null>(null);
   const gradedAt = useRef(0);
+  const prepTarget = useRef<Phase>('locked');
 
   useEffect(() => {
-    setPhase(getLessonProgress(lessonId).readAt ? 'running' : 'locked');
+    if (!getProfile()) return; // ProfileGate overlay is up — stay in 'loading'
+    // Brief prep moment before the workbook appears (owner improvement #5).
+    prepTarget.current = getLessonProgress(lessonId).readAt ? 'running' : 'locked';
+    setPhase('prep');
   }, [lessonId]);
 
   const exercise = exercises[index];
@@ -119,6 +124,10 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
   }, [phase, graded, next]);
 
   if (phase === 'loading') return null;
+
+  if (phase === 'prep') {
+    return <LoadingBar label="Preparing exercises…" accent="grammar" onDone={() => setPhase(prepTarget.current)} />;
+  }
 
   if (phase === 'locked') {
     return (
@@ -216,7 +225,16 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
                 Correct answer: <b>{revealFor(exercise)}</b>
               </p>
             )}
-            {exercise.note && <p className="m-0 mt-2 border-t border-current/20 pt-2 text-ink-soft">{exercise.note}</p>}
+            {exercise.note && <p className="m-0 mt-2 border-t border-current/20 pt-2 text-ink-soft">💡 {exercise.note}</p>}
+            {!graded && (
+              /* Owner final-touch #3: the universal "why" pointer — the chapter
+                 IS the explanation, one click away, exercise kept in place. */
+              <p className="m-0 mt-2 border-t border-current/20 pt-2 text-xs">
+                <a href={lessonUrl} className="font-semibold text-grammar underline">
+                  Want the why? Re-read Chapter {lessonNumber} →
+                </a>
+              </p>
+            )}
           </div>
         )}
 

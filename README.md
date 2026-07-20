@@ -41,5 +41,6 @@ button. Leave it unset for anything public.
 - `public/audio/` — `<wordId>_<n>.mp3`; `*_1.mp3` are personal-use only and
   gitignored (SPEC §14).
 - `scripts/` — permanent pipeline tooling. `scratch/` — gitignored scratch space.
-- `SPEC.md` / `GRAMMAR-AUTHORING-GUIDE.md` — the project contract; read before
-  changing behavior.
+- The product spec (`SPEC.md`) and grammar-content contract (`Grammar.md`)
+  are maintained privately alongside this repo (gitignored) — behavior
+  decisions live there, not in this README.

@@ -3,6 +3,7 @@
  * surfaces (Dashboard + Profile), honestly framed: files, never accounts.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { withBase } from '../../lib/paths';
 import { openWithPicker, readInputFile, supportsFileSystemAccess } from '../../lib/storage/fileAccess';
 import { parseSaveFile, SAVE_ERROR_MESSAGES } from '../../lib/storage/saveFile';
 import { applyLoadedSaveFile, closeSession, createProfile, loadSession, setNotepad } from '../../lib/storage/session';
@@ -12,6 +13,7 @@ import { STAGE_NAMES } from '../../lib/srs/stages';
 import type { SessionState } from '../../types/progress';
 import { ConfirmDialog } from '../trainer/ConfirmDialog';
 import { AvatarPicker, AvatarView } from './AvatarPicker';
+import TransferOverlay from './TransferOverlay';
 import { useSave } from './useSave';
 import type { Avatar } from '../../types/profile';
 
@@ -56,7 +58,8 @@ export default function ProgressApp({ groups, parts }: Props) {
   const [confirm, setConfirm] = useState<'close' | 'load' | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const notepadTimer = useRef<ReturnType<typeof setTimeout>>(null);
-  const { dirty, fsa, status, save, refresh } = useSave();
+  const [loadTransfer, setLoadTransfer] = useState<null | { done: boolean; name: string }>(null);
+  const { dirty, fsa, status, save, refresh, overlay: saveOverlay } = useSave();
 
   const reload = () => setState(loadSession());
   useEffect(reload, []);
@@ -69,12 +72,25 @@ export default function ProgressApp({ groups, parts }: Props) {
       setLoadError(`${fileName}: ${SAVE_ERROR_MESSAGES[parsed.error]}`);
       return;
     }
-    applyLoadedSaveFile(parsed.file);
     setLoadError(null);
-    setNotice(`Welcome back, ${parsed.file.profile.name} — progress loaded.`);
-    refresh();
-    reload();
+    // Loading theater (owner refinement #9): apply immediately, reveal after.
+    setLoadTransfer({ done: false, name: parsed.file.profile.name });
+    applyLoadedSaveFile(parsed.file);
+    setTimeout(() => setLoadTransfer((t) => (t ? { ...t, done: true } : t)), 350);
   };
+
+  const loadOverlay = loadTransfer ? (
+    <TransferOverlay
+      mode="load"
+      done={loadTransfer.done}
+      onFinished={() => {
+        setNotice(`Welcome back, ${loadTransfer.name} — progress loaded.`);
+        setLoadTransfer(null);
+        refresh();
+        reload();
+      }}
+    />
+  ) : null;
 
   const startLoad = async () => {
     setLoadError(null);
@@ -95,6 +111,7 @@ export default function ProgressApp({ groups, parts }: Props) {
   if (!state.profile) {
     return (
       <div className="mx-auto max-w-[560px]">
+        {loadOverlay}
         <input ref={fileInput} type="file" accept=".json,application/json" hidden onChange={async (e) => {
           const f = e.target.files?.[0];
           if (f) applyText((await readInputFile(f)).text, f.name);
@@ -178,6 +195,8 @@ export default function ProgressApp({ groups, parts }: Props) {
 
   return (
     <div className="mx-auto max-w-[900px]">
+      {loadOverlay}
+      {saveOverlay}
       {notice && <p className="mb-6 rounded-md border border-success bg-success-bg px-4 py-3 text-sm font-semibold text-success">{notice}</p>}
 
       <header className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-surface-raised p-6 shadow-md">
@@ -201,7 +220,17 @@ export default function ProgressApp({ groups, parts }: Props) {
           <button type="button" onClick={() => (dirty ? setConfirm('load') : void startLoad())} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint">
             Load a different file
           </button>
-          <button type="button" onClick={() => (dirty ? setConfirm('close') : (closeSession(), reload(), refresh()))} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint">
+          <button
+            type="button"
+            onClick={() => {
+              if (dirty) setConfirm('close');
+              else {
+                closeSession();
+                window.location.assign(withBase('/')); // owner refinement #10
+              }
+            }}
+            className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint"
+          >
             Done for now
           </button>
         </div>
@@ -305,34 +334,55 @@ export default function ProgressApp({ groups, parts }: Props) {
         </ul>
       </section>
 
-      {/* ---- Dashboard: all 57 grammar chapters, two signals each (SPEC §9) ---- */}
+      {/* ---- Dashboard: all 57 grammar chapters as Part cards, two signals each (SPEC §9) ---- */}
       <section className="mt-8">
         <h2 className="mb-3 border-b border-border pb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">All grammar chapters</h2>
-        <p className="m-0 mb-3 text-xs text-ink-faint">✓ = read · color = best workbook score (gray not attempted, red &lt;50%, yellow 50–79%, green ≥80%)</p>
-        {parts.map((part) => (
-          <div key={part.numeral} className="mb-3">
-            <p className="m-0 mb-1.5 text-xs font-bold text-grammar">
-              {part.numeral} · <span className="text-ink-faint">{part.title}</span>
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {part.lessons.map((l) => {
-                const p = grammar[l.id];
-                const band: ScoreBand = p?.best ? scoreBand(p.best.correct, p.best.total) : 'none';
-                return (
-                  <a
-                    key={l.id}
-                    href={l.url}
-                    title={`${l.number} · ${l.title}${p?.best ? ` — best ${p.best.correct}/${p.best.total}` : ''}${p?.readAt ? ' · read' : ''}`}
-                    className={`flex h-8 min-w-8 items-center justify-center gap-0.5 rounded-sm border px-1.5 text-xs font-bold no-underline ${BAND_CHIP[band]}`}
-                  >
-                    {l.number}
-                    {p?.readAt && <span aria-label="read">✓</span>}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+        <p className="m-0 mb-3 text-xs text-ink-faint">
+          Bar = chapters read · square color = best workbook score (gray not attempted, red &lt;50%, yellow 50–79%, green ≥80%) · dot = read
+        </p>
+        <ul className="m-0 grid list-none gap-2 p-0 sm:grid-cols-2 lg:grid-cols-3">
+          {parts.map((part) => {
+            const readInPart = part.lessons.filter((l) => grammar[l.id]?.readAt).length;
+            return (
+              <li key={part.numeral}>
+                <div className="flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 shadow-sm">
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span className="truncate text-sm font-semibold text-ink">
+                      <span className="font-display mr-1 text-grammar italic">{part.numeral}</span>
+                      {part.title}
+                    </span>
+                    <span className="shrink-0 text-xs font-semibold text-ink-faint">
+                      {readInPart}/{part.lessons.length}
+                    </span>
+                  </span>
+                  <span className="mt-2 block h-1.5 overflow-hidden rounded-pill bg-surface-sunken">
+                    <span
+                      className="block h-full rounded-pill bg-gradient-to-r from-grammar to-gold"
+                      style={{ width: `${(readInPart / part.lessons.length) * 100}%` }}
+                    />
+                  </span>
+                  <span className="mt-2.5 flex flex-wrap gap-1">
+                    {part.lessons.map((l) => {
+                      const p = grammar[l.id];
+                      const band: ScoreBand = p?.best ? scoreBand(p.best.correct, p.best.total) : 'none';
+                      return (
+                        <a
+                          key={l.id}
+                          href={l.url}
+                          title={`${l.number} · ${l.title}${p?.best ? ` — best ${p.best.correct}/${p.best.total}` : ''}${p?.readAt ? ' · read' : ''}`}
+                          className={`relative flex h-6 w-7 items-center justify-center rounded-[5px] border text-[0.68rem] font-bold no-underline ${BAND_CHIP[band]}`}
+                        >
+                          {l.number}
+                          {p?.readAt && <span className="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 rounded-pill bg-success" aria-label="read" />}
+                        </a>
+                      );
+                    })}
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       {confirm && (
@@ -350,8 +400,7 @@ export default function ProgressApp({ groups, parts }: Props) {
               setConfirm(null);
               if (confirm === 'close') {
                 closeSession();
-                reload();
-                refresh();
+                window.location.assign(withBase('/'));
               } else {
                 void startLoad();
               }
@@ -371,8 +420,7 @@ export default function ProgressApp({ groups, parts }: Props) {
                 setConfirm(null);
                 if (action === 'close') {
                   closeSession();
-                  reload();
-                  refresh();
+                  window.location.assign(withBase('/'));
                 } else {
                   void startLoad();
                 }

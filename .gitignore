@@ -25,9 +25,15 @@ pnpm-debug.log*
 
 # LaLista-specific
 SPEC.md
-GRAMMAR-AUTHORING-GUIDE.md
+Grammar.md
 data/vocabulary/master.xlsx
 scratch/
-public/audio/*_1.mp3
 .env*
 lalista-progress-*.json
+
+# local/dev-only artifacts — kept for testing/diagnosis, never published
+docs/proposals/
+coverage/
+*.tsbuildinfo
+Thumbs.db
+Desktop.ini

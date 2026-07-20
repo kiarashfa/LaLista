@@ -58,14 +58,17 @@ export function ConjugationGrid({ exercise, onGraded }: { exercise: Ex; onGraded
                       aria-label={`${exercise.verb}, ${pronoun}`}
                       className={[
                         'w-32 rounded-sm border-2 px-2 py-1 text-right font-display text-[1.02rem] font-semibold outline-none',
-                        cellOk === true
+                        cellOk === 'correct'
                           ? 'border-success bg-success-bg text-success'
-                          : cellOk === false
-                            ? 'border-error bg-error-bg text-error'
-                            : 'border-border bg-surface-base text-ink focus:border-grammar',
+                          : cellOk === 'accent'
+                            ? 'border-warning bg-gold-bg text-warning'
+                            : cellOk === 'wrong'
+                              ? 'border-error bg-error-bg text-error'
+                              : 'border-border bg-surface-base text-ink focus:border-grammar',
                       ].join(' ')}
                     />
-                    {cellOk === false && <span className="mt-0.5 text-xs font-semibold text-success">{exercise.correctAnswers[pronoun]}</span>}
+                    {cellOk === 'wrong' && <span className="mt-0.5 text-xs font-semibold text-success">{exercise.correctAnswers[pronoun]}</span>}
+                    {cellOk === 'accent' && <span className="mt-0.5 text-xs font-semibold text-warning">{exercise.correctAnswers[pronoun]}</span>}
                   </span>
                 ) : (
                   <span className="font-display text-[1.02rem] font-semibold text-ink">{given}</span>
@@ -75,6 +78,13 @@ export function ConjugationGrid({ exercise, onGraded }: { exercise: Ex; onGraded
           })}
         </div>
       </div>
+      {answered && result.accentMisses > 0 && (
+        <p className="m-0 mt-3 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
+          <b className="text-warning">{result.accentMisses === 1 ? 'One form' : `${result.accentMisses} forms`}</b> had the
+          right conjugation but a missing tilde — counted as correct, exact spelling shown in amber. Accents are part of
+          the word.
+        </p>
+      )}
       <div className="mt-3 flex items-start justify-between gap-4">
         <CharPalette disabled={answered} />
         {!answered && <SubmitButton disabled={!allFilled} />}

@@ -4,6 +4,7 @@
  * the active-link accent flexes — coral for vocabulary, plum for grammar).
  */
 import '../styles/global.css';
+import ProfileGate from '../components/profile/ProfileGate';
 import SaveButton from '../components/profile/SaveButton';
 import { withBase } from '../lib/paths';
 
@@ -12,9 +13,11 @@ interface Props {
   description?: string;
   /** Which nav item is active — drives the accent color of that pill only. */
   section?: 'vocabulary' | 'grammar' | 'progress' | null;
+  /** Study surfaces require a loaded profile (owner refinement #1). */
+  requireProfile?: boolean;
 }
 
-const { title, description, section = null } = Astro.props;
+const { title, description, section = null, requireProfile = false } = Astro.props;
 
 const navItems = [
   { key: 'vocabulary', label: 'Vocabulary', short: 'Vocab', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
@@ -84,6 +87,7 @@ const navItems = [
       </div>
     </nav>
 
+    {requireProfile && <ProfileGate client:load />}
     <slot />
 
     <footer class="mt-auto border-t border-border px-8 py-6 text-center text-xs text-ink-faint">

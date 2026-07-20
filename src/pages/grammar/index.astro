@@ -1,59 +1,86 @@
 ---
-/** Grammar hub — the 57 chapters grouped by the 13 Parts (SPEC §6). */
+/**
+ * Grammar hub — two ways into the same 57 chapters (owner refinement #6):
+ * the Part-grouped cards (server-rendered, SEO surface) and a filterable,
+ * sortable index, toggled inside the GrammarBrowser island.
+ */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { GRAMMAR_PARTS, lessonId, lessonNumber } from '../../lib/grammarParts';
+import GrammarBrowser from '../../components/grammar/GrammarBrowser';
+import { GRAMMAR_PARTS, lessonId, lessonNumber, partOf } from '../../lib/grammarParts';
 import { withBase } from '../../lib/paths';
 
 const metas = await getCollection('grammarMeta');
 const byId = new Map(metas.map((m) => [m.id, m.data]));
+
+const lessonRows = metas
+  .map((m) => {
+    const part = partOf(m.id);
+    return {
+      id: m.id,
+      number: lessonNumber(m.id),
+      title: m.data.title,
+      summary: m.data.summary,
+      level: m.data.level,
+      topics: m.data.topics,
+      partNumeral: part.numeral,
+      partTitle: part.title,
+      url: withBase(`/grammar/${m.id}/`),
+    };
+  })
+  .sort((a, b) => a.number - b.number);
 ---
 
 <BaseLayout
+  requireProfile
   section="grammar"
   title="Grammar — LaLista"
   description="A complete Spanish (Castellano) grammar reference: 57 chapters, each covering one grammatical topic end-to-end, with interactive workbooks."
 >
   <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-12 sm:px-8">
-    <header class="relative mb-12">
+    <header class="relative mb-10">
       <span class="font-display pointer-events-none absolute -top-8 -left-2 z-0 text-[9rem] leading-none font-light text-grammar opacity-[0.07] select-none" aria-hidden="true">¡</span>
       <h1 class="display-editorial relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">Grammar</h1>
-      <p class="relative z-10 mt-4 max-w-[600px] text-lg leading-relaxed text-ink-soft">
+      <p class="relative z-10 mt-4 text-lg leading-relaxed text-ink-soft">
         A topic-based reference, not a leveled course: each chapter covers one grammatical topic completely, from its A1 core
         to wherever it naturally extends. Read them in any order — prerequisites are suggestions, never gates.
       </p>
     </header>
 
-    {
-      GRAMMAR_PARTS.map((part) => (
-        <section class="mb-10">
-          <h2 class="mb-4 flex items-baseline gap-3 border-b border-border pb-2">
-            <span class="font-display text-lg text-grammar italic">Part {part.numeral}</span>
-            <span class="text-sm font-semibold tracking-wide text-ink-soft uppercase">{part.title}</span>
-          </h2>
-          <ul class="m-0 grid list-none gap-2 p-0 sm:grid-cols-2">
-            {Array.from({ length: part.to - part.from + 1 }, (_, i) => {
-              const id = lessonId(part.from + i);
-              const meta = byId.get(id)!;
-              return (
-                <li>
-                  <a
-                    href={withBase(`/grammar/${id}/`)}
-                    class="group flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 no-underline shadow-sm transition-colors hover:border-grammar"
-                  >
-                    <span class="flex items-baseline gap-2">
-                      <span class="text-xs font-bold text-grammar tabular-nums">{String(lessonNumber(id)).padStart(2, '0')}</span>
-                      <span class="font-semibold text-ink group-hover:text-grammar">{meta.title}</span>
-                      <span class="ml-auto shrink-0 rounded-pill bg-surface-sunken px-2 py-0.5 text-[0.65rem] font-bold text-ink-faint">{meta.level}</span>
-                    </span>
-                    <span class="mt-1 line-clamp-2 text-[0.82rem] leading-snug text-ink-faint">{meta.summary}</span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ))
-    }
+    <GrammarBrowser client:load lessons={lessonRows}>
+      <div>
+        {
+          GRAMMAR_PARTS.map((part) => (
+            <section class="mb-10">
+              <h2 class="mb-4 flex items-baseline gap-3 border-b border-border pb-2">
+                <span class="font-display text-lg text-grammar italic">Part {part.numeral}</span>
+                <span class="text-sm font-semibold tracking-wide text-ink-soft uppercase">{part.title}</span>
+              </h2>
+              <ul class="m-0 grid list-none gap-2 p-0 sm:grid-cols-2">
+                {Array.from({ length: part.to - part.from + 1 }, (_, i) => {
+                  const id = lessonId(part.from + i);
+                  const meta = byId.get(id)!;
+                  return (
+                    <li>
+                      <a
+                        href={withBase(`/grammar/${id}/`)}
+                        class="group flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 no-underline shadow-sm transition-colors hover:border-grammar"
+                      >
+                        <span class="flex items-baseline gap-2">
+                          <span class="text-xs font-bold text-grammar tabular-nums">{String(lessonNumber(id)).padStart(2, '0')}</span>
+                          <span class="font-semibold text-ink group-hover:text-grammar">{meta.title}</span>
+                          <span class="ml-auto shrink-0 rounded-pill bg-surface-sunken px-2 py-0.5 text-[0.65rem] font-bold text-ink-faint">{meta.level}</span>
+                        </span>
+                        <span class="mt-1 line-clamp-2 text-[0.82rem] leading-snug text-ink-faint">{meta.summary}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </GrammarBrowser>
   </main>
 </BaseLayout>

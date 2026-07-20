@@ -1,12 +1,31 @@
 ---
-/** Vocabulary hub — the 27 topic groups + the Review/Test modes (SPEC §8). */
+/**
+ * Vocabulary hub — Review/Test entries plus two ways into the 27 topic
+ * groups (owner improvement #4): the card grid and a searchable index whose
+ * search reaches inside every group's words.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import VocabularyBrowser from '../../components/trainer/VocabularyBrowser';
 import { withBase } from '../../lib/paths';
 import groups from '../../content/vocabulary/groups.json';
 import words from '../../content/vocabulary/words.json';
+
+const groupRows = groups.map((group, i) => {
+  const groupWords = words.filter((w) => w.group === group.slug);
+  return {
+    slug: group.slug,
+    title: group.title,
+    count: group.count,
+    url: withBase(`/vocabulary/${group.slug}/`),
+    index: i + 1,
+    preview: groupWords.slice(0, 4).map((w) => w.spanish).join(' · ') + ' …',
+    blob: `${group.title} ${groupWords.map((w) => `${w.spanish} ${w.english}`).join(' ')}`.toLowerCase(),
+  };
+});
 ---
 
 <BaseLayout
+  requireProfile
   section="vocabulary"
   title="Vocabulary — LaLista"
   description="2001 Spanish (Castellano) words across 27 topic groups, each with native and TTS pronunciation."
@@ -15,7 +34,7 @@ import words from '../../content/vocabulary/words.json';
     <header class="relative mb-10">
       <span class="font-display pointer-events-none absolute -top-8 -left-2 z-0 text-[9rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
       <h1 class="display-friendly relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">Vocabulary</h1>
-      <p class="relative z-10 mt-4 max-w-[600px] text-lg leading-relaxed text-ink-soft">
+      <p class="relative z-10 mt-4 text-lg leading-relaxed text-ink-soft">
         {words.length} words in {groups.length} topic groups, every one with audio. Pick a group to study — or drill
         what you've already mastered.
       </p>
@@ -25,30 +44,34 @@ import words from '../../content/vocabulary/words.json';
       <a href={withBase('/vocabulary/review/')} class="group rounded-lg border border-border bg-surface-raised p-5 no-underline shadow-md transition-shadow hover:shadow-lg">
         <p class="m-0 text-xs font-bold tracking-widest text-success uppercase">Review</p>
         <p class="m-0 mt-1 text-lg font-bold text-ink group-hover:text-success">Keep it bright</p>
-        <p class="m-0 mt-1 text-sm text-ink-soft">Relaxed reinforcement of your Mastered words. Six choices, no clock.</p>
+        <p class="m-0 mt-1 text-sm text-ink-soft">Relaxed reinforcement of your Mastered words — pick a direction, even listening.</p>
       </a>
       <a href={withBase('/vocabulary/test/')} class="group rounded-lg border border-border bg-surface-raised p-5 no-underline shadow-md transition-shadow hover:shadow-lg">
         <p class="m-0 text-xs font-bold tracking-widest text-vocab uppercase">Test</p>
         <p class="m-0 mt-1 text-lg font-bold text-ink group-hover:text-vocab">Race the clock</p>
-        <p class="m-0 mt-1 text-sm text-ink-soft">Timed recall, five lives, high scores. Mastered words only.</p>
+        <p class="m-0 mt-1 text-sm text-ink-soft">Timed recall, five lives, high scores — any direction, listening included.</p>
       </a>
     </div>
 
-    <h2 class="mb-4 border-b border-border pb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">Topic groups</h2>
-    <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        groups.map((group) => (
-          <li>
-            <a
-              href={withBase(`/vocabulary/${group.slug}/`)}
-              class="group flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 no-underline shadow-sm transition-colors hover:border-vocab"
-            >
-              <span class="font-semibold text-ink group-hover:text-vocab">{group.title}</span>
-              <span class="mt-1 text-sm text-ink-faint">{group.count} words</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <VocabularyBrowser client:load groups={groupRows}>
+      <div>
+        <h2 class="mb-4 border-b border-border pb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">Topic groups</h2>
+        <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            groups.map((group) => (
+              <li>
+                <a
+                  href={withBase(`/vocabulary/${group.slug}/`)}
+                  class="group flex h-full flex-col rounded-md border border-border bg-surface-raised px-4 py-3 no-underline shadow-sm transition-colors hover:border-vocab"
+                >
+                  <span class="font-semibold text-ink group-hover:text-vocab">{group.title}</span>
+                  <span class="mt-1 text-sm text-ink-faint">{group.count} words</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </VocabularyBrowser>
   </main>
 </BaseLayout>

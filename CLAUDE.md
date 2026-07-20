@@ -24,7 +24,7 @@ Consult these guides before working on related tasks:
 ## LaLista project notes
 
 - **Contract docs**: SPEC.md (product decisions — nothing there is a default to
-  second-guess) and GRAMMAR-AUTHORING-GUIDE.md (grammar content format). Read
+  second-guess) and Grammar.md (grammar content format). Read
   before changing behavior. Owner-confirmed additions: site name is **LaLista**
   (not ListO), Test timers 7s/question + 90s pool, workbook thresholds 80/50.
 - **Data flow**: `data/` is human-edited source of truth; `src/content/vocabulary/`

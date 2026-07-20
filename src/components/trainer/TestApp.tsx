@@ -8,12 +8,14 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { shuffle } from '../../lib/shuffle';
-import { getAllWordProgress, loadSession, recordTestScore, refreshReinforced } from '../../lib/storage/session';
+import { getAllWordProgress, getProfile, loadSession, recordTestScore, refreshReinforced } from '../../lib/storage/session';
 import type { TestScores } from '../../types/progress';
 import type { Word } from '../../types/word';
 import words from '../../content/vocabulary/words.json';
-import { buildChoices } from './wordUtils';
+import { buildChoices, MODE_INFO, optionFieldFor, type QuizMode } from './wordUtils';
+import { WordAudioButtons } from './WordAudioButtons';
 import { ChoiceGrid } from '../exercises/ChoiceGrid';
+import LoadingBar from '../ui/LoadingBar';
 import SaveNudge from '../profile/SaveNudge';
 
 const ALL_WORDS = words as unknown as Word[];
@@ -26,7 +28,10 @@ const FLASH_MS = 350;
 const TICK_MS = 100;
 
 type TimerStyle = 'perQuestion' | 'totalPool';
-type Phase = 'loading' | 'empty' | 'setup' | 'running' | 'done';
+type Phase = 'loading' | 'prep' | 'empty' | 'setup' | 'running' | 'done';
+
+const MODE_KEY = 'lalista:testMode';
+const MODES: QuizMode[] = ['en-es', 'es-en', 'listen-es', 'listen-en'];
 
 interface EndState {
   score: number;
@@ -38,6 +43,7 @@ interface EndState {
 export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   const [phase, setPhase] = useState<Phase>('loading');
   const [style, setStyle] = useState<TimerStyle>('perQuestion');
+  const [qmode, setQmode] = useState<QuizMode>('en-es');
   const [pool, setPool] = useState<Word[]>([]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -62,11 +68,15 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   }, []);
 
   useEffect(() => {
+    if (!getProfile()) return; // ProfileGate overlay is up — stay in 'loading'
     const progress = getAllWordProgress();
     const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6);
     setPool(mastered);
     setBests(loadSession().testScores);
-    setPhase(mastered.length < 3 ? 'empty' : 'setup');
+    const stored = localStorage.getItem(MODE_KEY) as QuizMode | null;
+    if (stored && MODES.includes(stored)) setQmode(stored);
+    // Brief prep moment before the setup screen (owner improvement #5).
+    setPhase(mastered.length < 3 ? 'empty' : 'prep');
   }, []);
 
   const finish = useCallback((reason: 'time' | 'lives') => {
@@ -78,6 +88,16 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
     setEnd({ score: s, reason, newAllTime, newToday });
     setPhase('done');
   }, []);
+
+  const word = pool.length > 0 ? pool[index % pool.length] : null;
+  // MEMOIZED per question — computing choices inline in render was the
+  // owner-reported bug: every 100 ms timer tick re-render reshuffled the
+  // option labels under the user's cursor.
+  const options = useMemo(
+    () => (word ? buildChoices(word, groupPools.get(word.group) ?? ALL_WORDS, 3, optionFieldFor(qmode)) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [word?.id, index, qmode, groupPools],
+  );
 
   const start = (chosen: TimerStyle) => {
     setStyle(chosen);
@@ -141,6 +161,10 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
 
   if (phase === 'loading') return null;
 
+  if (phase === 'prep') {
+    return <LoadingBar label="Shuffling the deck…" accent="vocab" onDone={() => setPhase('setup')} />;
+  }
+
   if (phase === 'empty') {
     return (
       <div className="rounded-lg border border-border bg-surface-raised px-8 py-10 text-center shadow-md">
@@ -160,11 +184,27 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   if (phase === 'setup') {
     return (
       <div className="rounded-lg border border-border bg-surface-raised px-8 py-8 shadow-md">
-        <h2 className="m-0 text-center text-xl font-bold text-ink">Choose your clock</h2>
+        <h2 className="m-0 text-center text-xl font-bold text-ink">Direction, then your clock</h2>
         <p className="m-0 mt-1 text-center text-sm text-ink-soft">
           {pool.length} Mastered words in the pool · 5 lives · 5 in a row wins one back
         </p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="mt-5 flex flex-wrap justify-center gap-2">
+          {MODES.map((m) => (
+            <button
+              key={m}
+              type="button"
+              title={MODE_INFO[m].desc}
+              onClick={() => {
+                setQmode(m);
+                localStorage.setItem(MODE_KEY, m);
+              }}
+              className={`cursor-pointer rounded-pill border-2 px-4 py-1.5 text-sm font-bold ${qmode === m ? 'border-vocab bg-vocab-soft text-vocab' : 'border-border text-ink-soft hover:border-ink-faint'}`}
+            >
+              {MODE_INFO[m].title}
+            </button>
+          ))}
+        </div>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <button
             type="button"
             onClick={() => start('perQuestion')}
@@ -244,7 +284,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   }
 
   // --- running ---
-  const word = pool[index % pool.length];
+  if (!word) return null;
   const totalMs = style === 'perQuestion' ? PER_QUESTION_MS : TOTAL_POOL_MS;
   const timerPct = Math.max(0, (timeLeft / totalMs) * 100);
 
@@ -274,14 +314,21 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
       </div>
 
       <div className="rounded-lg bg-surface-raised px-6 py-7 shadow-lg sm:px-9">
-        <p className="m-0 mb-2 text-center text-xs font-bold tracking-widest text-ink-faint uppercase">Translate to Spanish</p>
-        <p className="display-friendly m-0 mb-6 text-center text-3xl font-bold text-ink">{word.english}</p>
+        <p className="m-0 mb-2 text-center text-xs font-bold tracking-widest text-ink-faint uppercase">
+          {qmode === 'en-es' ? 'Translate to Spanish' : qmode === 'es-en' ? 'Translate to English' : 'What do you hear?'}
+        </p>
+        {qmode === 'en-es' && <p className="display-friendly m-0 mb-6 text-center text-3xl font-bold text-ink">{word.english}</p>}
+        {qmode === 'es-en' && <p className="display-friendly m-0 mb-6 text-center text-3xl font-bold text-ink">{word.spanish}</p>}
+        {qmode.startsWith('listen') && (
+          <div key={`audio-${index}`} className="mb-6 flex justify-center">
+            <WordAudioButtons word={word} autoPlayFirst />
+          </div>
+        )}
         <ChoiceGrid
           key={`${word.id}-${index}`}
-          options={buildChoices(word, groupPools.get(word.group) ?? ALL_WORDS, 3)}
-          correct={word.spanish}
+          options={options}
+          correct={word[optionFieldFor(qmode)]}
           accent="vocab"
-          columns={1}
           onGraded={(ok) => {
             if (answeredRef.current || endedRef.current) return;
             answeredRef.current = true;

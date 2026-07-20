@@ -7,11 +7,12 @@ import { AvatarView } from './AvatarPicker';
 import { useSave } from './useSave';
 
 export default function SaveButton() {
-  const { profile, dirty, status, save } = useSave();
+  const { profile, dirty, status, save, overlay } = useSave();
   if (!profile) return null;
 
   return (
     <span className="flex items-center gap-2">
+      {overlay}
       <a href={withBase('/progress/')} title={`${profile.name} — open Progress`} className="hidden items-center no-underline sm:flex">
         <AvatarView avatar={profile.avatar} size={32} />
       </a>
