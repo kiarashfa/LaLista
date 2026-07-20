@@ -31,8 +31,10 @@ scratch/
 .env*
 lalista-progress-*.json
 
-# local/dev-only artifacts — kept for testing/diagnosis, never published
-docs/proposals/
+# local/dev-only artifacts
+.claude
+CLAUDE.md
+docs/
 coverage/
 *.tsbuildinfo
 Thumbs.db

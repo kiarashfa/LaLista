@@ -25,12 +25,14 @@ tests + data validation, then an Astro build published to GitHub Pages at
 CI; local dev stays at `/`. To test a based build locally:
 `DEPLOY_BASE=1 npx astro build`.
 
-## Personal WordReference audio (SPEC §14)
+## Audio voices
 
-The `public/audio/*_1.mp3` files are personal-use only: gitignored, never
-deployed. To hear them locally, create a `.env` file (also gitignored) with
-`PUBLIC_PERSONAL_AUDIO=true` — the trainer then offers a third "WR" play
-button. Leave it unset for anything public.
+Each word offers up to three pronunciations, in this priority order:
+`<id>_1.mp3` (WordReference — the default voice, published by owner decision
+2026-07-20, overriding the earlier personal-use rule), `<id>_2.mp3`
+(Lingua Libre, CC BY 4.0), and `<id>_3.mp3` (Piper TTS, present for every
+word). The first available voice is the big play button and the auto-play
+target; the others are one click away.
 
 ## Layout
 
@@ -38,8 +40,7 @@ button. Leave it unset for anything public.
   `data/vocabulary/master.xlsx` is **gitignored**; see `data/vocabulary/README.md`.
 - `src/content/vocabulary/` — **generated** by `npm run data:convert`; committed
   (CI can't see the workbook). Never hand-edit.
-- `public/audio/` — `<wordId>_<n>.mp3`; `*_1.mp3` are personal-use only and
-  gitignored (SPEC §14).
+- `public/audio/` — `<wordId>_<n>.mp3`, all three voices committed and deployed.
 - `scripts/` — permanent pipeline tooling. `scratch/` — gitignored scratch space.
 - The product spec (`SPEC.md`) and grammar-content contract (`Grammar.md`)
   are maintained privately alongside this repo (gitignored) — behavior

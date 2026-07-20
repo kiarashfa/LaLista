@@ -1,13 +1,12 @@
 /**
- * One play button per audio file that exists (SPEC §14). The WordReference
- * voice is personal-use only: offered solely when PUBLIC_PERSONAL_AUDIO is
- * set at build time (the files themselves are gitignored and never deploy).
+ * One play button per audio file that exists. Owner decision (2026-07-20,
+ * overriding the original SPEC §14 rule): the WordReference recordings
+ * (`<id>_1.mp3`) are published and are the DEFAULT voice — the big button
+ * and the auto-play target. Lingua Libre and TTS remain one click away.
  */
 import { useEffect, useRef } from 'react';
 import { audioUrl } from '../../lib/paths';
 import type { Word } from '../../types/word';
-
-const PERSONAL_AUDIO = import.meta.env.PUBLIC_PERSONAL_AUDIO === 'true';
 
 interface Voice {
   file: string;
@@ -15,11 +14,12 @@ interface Voice {
   title: string;
 }
 
+/** Priority order: WordReference → Lingua Libre → TTS (first = default). */
 export function voicesFor(word: Word): Voice[] {
   const voices: Voice[] = [];
+  if (word.audio.wordreference) voices.push({ file: word.audio.wordreference, label: 'WR', title: 'WordReference recording' });
   if (word.audio.linguaLibre) voices.push({ file: word.audio.linguaLibre, label: 'Native', title: 'Lingua Libre volunteer recording' });
   voices.push({ file: word.audio.tts, label: 'TTS', title: 'Piper text-to-speech (Castilian)' });
-  if (PERSONAL_AUDIO && word.audio.wordreference) voices.push({ file: word.audio.wordreference, label: 'WR', title: 'WordReference (personal use)' });
   return voices;
 }
 
