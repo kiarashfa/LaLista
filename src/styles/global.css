@@ -28,15 +28,15 @@
   --error: #c24b4b;
   --error-bg: #fbebea;
 
-  /* --- Vocabulary accent (coral — full saturation here) --- */
-  --vocab-accent: #e85d4c;
-  --vocab-accent-soft: #fbe4e0;
-  --vocab-accent-hover: #d14c3c;
+  /* --- Vocabulary accent (amber — full saturation here) --- */
+  --vocab-accent: #c47f25;
+  --vocab-accent-soft: #f7ede0;
+  --vocab-accent-hover: #a1681e;
 
-  /* --- Grammar accent (plum — same warm hue-family, calmer/muted) --- */
-  --grammar-accent: #8b4a6b;
-  --grammar-accent-soft: #f1e4eb;
-  --grammar-accent-hover: #733a57;
+  /* --- Grammar accent (sage teal — cool counterpart, calmer/muted usage) --- */
+  --grammar-accent: #4b9c8b;
+  --grammar-accent-soft: #e6f1ef;
+  --grammar-accent-hover: #3e8072;
 
   /* --- Achievement / mastered (shared, used sparingly) --- */
   --gold: #b8912e;
@@ -63,13 +63,13 @@
   --error: #d9756f;
   --error-bg: #3a2020;
 
-  --vocab-accent: #f0725f;
-  --vocab-accent-soft: #3a2420;
-  --vocab-accent-hover: #f58671;
+  --vocab-accent: #cc9144;
+  --vocab-accent-soft: #43342a;
+  --vocab-accent-hover: #d5a362;
 
-  --grammar-accent: #b87ca0;
-  --grammar-accent-soft: #2e2130;
-  --grammar-accent-hover: #c892b2;
+  --grammar-accent: #64aa9b;
+  --grammar-accent-soft: #293b40;
+  --grammar-accent-hover: #7db8ab;
 
   --gold: #d4af5c;
   --gold-bg: #332c18;
