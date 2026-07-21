@@ -158,7 +158,7 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
         <span className={['truncate text-[0.88rem] font-medium', isCurrent ? 'font-bold text-vocab' : 'text-ink-faint'].join(' ')}>
           {w.spanish}
         </span>
-        <StageDots stage={p.stage as Stage} freshness={freshness(p.lastReinforced, now)} difficult={p.difficult} accent={isCurrent} />
+        <StageDots stage={p.stage as Stage} freshness={freshness(p.lastReinforced, now)} difficult={p.difficult} excluded={p.excluded} accent={isCurrent} />
       </button>
     );
   });
