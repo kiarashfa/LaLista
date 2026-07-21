@@ -1,5 +1,5 @@
 /**
- * Vocabulary hub dual view (owner improvement #4) — the coral sibling of
+ * Vocabulary hub dual view — the coral sibling of
  * GrammarBrowser: ▦ Groups (the server-rendered topic cards, passed as
  * children) / ☰ Index (ledger rows with ghosted numbers, sortable headers,
  * search). Search reaches INSIDE groups: typing "rojo" finds Colors.

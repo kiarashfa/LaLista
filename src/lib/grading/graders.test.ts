@@ -146,7 +146,7 @@ describe('graders', () => {
   });
 });
 
-describe('scoreBand (owner-confirmed 80/50)', () => {
+describe('scoreBand (80/50 thresholds)', () => {
   it('bands correctly at the boundaries', () => {
     expect(scoreBand(8, 10)).toBe('good');
     expect(scoreBand(7, 10)).toBe('fair');

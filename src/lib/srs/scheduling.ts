@@ -1,6 +1,6 @@
 /**
  * Scheduling (date-gated re-eligibility) + the cosmetic freshness axis
- * (SPEC §3/§8). Pure functions over VocabWordProgress.
+ * Pure functions over VocabWordProgress.
  */
 import type { VocabWordProgress } from '../../types/progress';
 import { STAGE_INTERVAL_DAYS, type Stage } from './stages';
@@ -9,8 +9,8 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 /**
  * When a word becomes quiz-eligible again after being answered while at
- * `stage`. Difficult words resurface at half the interval — SPEC §3's
- * "resurface more often regardless of stage".
+ * `stage`. Difficult words resurface at half the interval, so they show up
+ * more often regardless of stage.
  */
 export function nextDueAt(stage: Stage, answeredAt: number, difficult: boolean): number {
   const days = STAGE_INTERVAL_DAYS[stage] * (difficult ? 0.5 : 1);

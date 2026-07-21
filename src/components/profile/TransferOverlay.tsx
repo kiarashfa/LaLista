@@ -1,5 +1,5 @@
 /**
- * Save/load progress theater (owner refinement #9). The real operations are
+ * Save/load progress theater. The real operations are
  * near-instant; this gives them a perceptible, elegant moment: a bar that
  * eases to ~90% while the work happens, snaps to 100% on completion, shows a
  * check, then hands control back. If the operation ends in cancel/error the

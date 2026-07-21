@@ -8,7 +8,7 @@ const DAY = 24 * 60 * 60 * 1000;
 // Noon avoids any DST-edge weirdness in local-date math.
 const NOON = new Date(2026, 6, 18, 12, 0, 0).getTime();
 
-describe('streak (SPEC §9)', () => {
+describe('streak', () => {
   it('first activity starts a 1-day streak', () => {
     const s = touchStreak(emptyStreak(), NOON);
     expect(s.current).toBe(1);
@@ -48,7 +48,7 @@ function demoState(): SessionState {
   };
 }
 
-describe('save file (SPEC §5)', () => {
+describe('save file', () => {
   it('build → serialize → parse → apply roundtrips losslessly', () => {
     const file = buildSaveFile(demoState(), NOON);
     const parsed = parseSaveFile(JSON.stringify(file));

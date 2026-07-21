@@ -1,5 +1,5 @@
 /**
- * The lesson-end CTA implementing SPEC §6's read gate: a manual "I've read
+ * The lesson-end CTA implementing the read gate: a manual "I've read
  * this" action (deliberately bypassable — a speed bump, not enforcement).
  * Returning users with the lesson already read see zero friction.
  */

@@ -1,17 +1,16 @@
 /**
- * The Progress page island — SPEC §5's load/save surface plus §9's two
+ * The Progress page island — the load/save surface plus the two
  * surfaces (Dashboard + Profile), honestly framed: files, never accounts.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { withBase } from '../../lib/paths';
-import { openWithPicker, readInputFile, supportsFileSystemAccess } from '../../lib/storage/fileAccess';
+import { forgetHandle, openWithPicker, readInputFile, supportsFileSystemAccess, type SaveOutcome } from '../../lib/storage/fileAccess';
 import { parseSaveFile, SAVE_ERROR_MESSAGES } from '../../lib/storage/saveFile';
 import { applyLoadedSaveFile, closeSession, createProfile, loadSession, setNotepad } from '../../lib/storage/session';
 import { effectiveStreak, localDateString } from '../../lib/storage/streak';
 import { scoreBand, type ScoreBand } from '../../lib/grading/thresholds';
 import { STAGE_NAMES } from '../../lib/srs/stages';
 import type { SessionState } from '../../types/progress';
-import { ConfirmDialog } from '../trainer/ConfirmDialog';
 import { AvatarPicker, AvatarView } from './AvatarPicker';
 import TransferOverlay from './TransferOverlay';
 import { useSave } from './useSave';
@@ -41,6 +40,9 @@ interface Props {
   parts: PartSection[];
 }
 
+/** A save outcome that actually wrote the user's progress to a file. */
+const persisted = (o: SaveOutcome) => o === 'saved-in-place' || o === 'saved-as' || o === 'downloaded';
+
 const BAND_CHIP: Record<ScoreBand, string> = {
   none: 'border-border bg-surface-sunken text-ink-faint',
   poor: 'border-error bg-error-bg text-error',
@@ -55,7 +57,6 @@ export default function ProgressApp({ groups, parts }: Props) {
   const [avatar, setAvatar] = useState<Avatar>({ kind: 'emoji', value: '🦊' });
   const [loadError, setLoadError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const [confirm, setConfirm] = useState<'close' | 'load' | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const notepadTimer = useRef<ReturnType<typeof setTimeout>>(null);
   const [loadTransfer, setLoadTransfer] = useState<null | { done: boolean; name: string }>(null);
@@ -73,7 +74,7 @@ export default function ProgressApp({ groups, parts }: Props) {
       return;
     }
     setLoadError(null);
-    // Loading theater (owner refinement #9): apply immediately, reveal after.
+    // Loading theater: apply immediately, reveal after.
     setLoadTransfer({ done: false, name: parsed.file.profile.name });
     applyLoadedSaveFile(parsed.file);
     setTimeout(() => setLoadTransfer((t) => (t ? { ...t, done: true } : t)), 350);
@@ -102,12 +103,32 @@ export default function ProgressApp({ groups, parts }: Props) {
     }
   };
 
+  // "Done for now" — save first when there's unsaved progress (save before
+  // closing rather than dropping the work), then close. If the
+  // save is cancelled/fails, stay put so nothing is lost. Closing also forgets
+  // the file handle, so the NEXT profile isn't written onto this profile's file
+  // — the stale-handle bug that saved a freshly-created user under the previous
+  // user's filename.
+  const doneForNow = async () => {
+    if (dirty && !persisted(await save())) return;
+    await forgetHandle();
+    closeSession();
+    window.location.assign(withBase('/'));
+  };
+
+  // "Load a different file" — same save-first safety, then open the picker
+  // (which binds a fresh handle to the newly chosen file).
+  const loadDifferent = async () => {
+    if (dirty && !persisted(await save())) return;
+    void startLoad();
+  };
+
   if (!state) return null;
 
   const anonymousProgress =
     !state.profile && (Object.keys(state.vocabulary).length > 0 || Object.keys(state.grammar).length > 0);
 
-  // ---------- No profile: the SPEC §5 landing flow ----------
+  // ---------- No profile: the landing flow ----------
   if (!state.profile) {
     return (
       <div className="mx-auto max-w-[560px]">
@@ -146,9 +167,13 @@ export default function ProgressApp({ groups, parts }: Props) {
         ) : (
           <form
             className="rounded-lg border border-border bg-surface-raised p-6 shadow-md"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               if (!name.trim()) return;
+              // A brand-new profile isn't bound to any file yet — drop any handle
+              // left over from a previous profile so its first save prompts for a
+              // fresh location (fixes saving a new user under an old user's file).
+              await forgetHandle();
               createProfile({ name: name.trim(), avatar, createdAt: new Date().toISOString() });
               reload();
               refresh();
@@ -217,18 +242,12 @@ export default function ProgressApp({ groups, parts }: Props) {
           <button type="button" onClick={() => void save()} className="cursor-pointer rounded-pill bg-success px-5 py-2.5 text-sm font-bold text-white hover:opacity-90">
             {status ?? (dirty ? 'Save changes' : 'Save')}
           </button>
-          <button type="button" onClick={() => (dirty ? setConfirm('load') : void startLoad())} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint">
+          <button type="button" onClick={() => void loadDifferent()} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint">
             Load a different file
           </button>
           <button
             type="button"
-            onClick={() => {
-              if (dirty) setConfirm('close');
-              else {
-                closeSession();
-                window.location.assign(withBase('/')); // owner refinement #10
-              }
-            }}
+            onClick={() => void doneForNow()}
             className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint"
           >
             Done for now
@@ -334,7 +353,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         </ul>
       </section>
 
-      {/* ---- Dashboard: all 57 grammar chapters as Part cards, two signals each (SPEC §9) ---- */}
+      {/* ---- Dashboard: all 57 grammar chapters as Part cards, two signals each ---- */}
       <section className="mt-8">
         <h2 className="mb-3 border-b border-border pb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">All grammar chapters</h2>
         <p className="m-0 mb-3 text-xs text-ink-faint">
@@ -384,53 +403,6 @@ export default function ProgressApp({ groups, parts }: Props) {
           })}
         </ul>
       </section>
-
-      {confirm && (
-        <div className="relative">
-          <ConfirmDialog
-            title="Unsaved progress"
-            body={
-              confirm === 'close'
-                ? 'You have progress that isn’t in your file yet. Save before closing this session?'
-                : 'You have progress that isn’t in your file yet. Save before loading a different file?'
-            }
-            confirmLabel="Save first"
-            onConfirm={async () => {
-              await save();
-              setConfirm(null);
-              if (confirm === 'close') {
-                closeSession();
-                window.location.assign(withBase('/'));
-              } else {
-                void startLoad();
-              }
-            }}
-            onCancel={() => {
-              // "Cancel" = proceed WITHOUT saving would be dangerous as a cancel.
-              // Cancel just closes the dialog; a separate explicit link skips saving.
-              setConfirm(null);
-            }}
-          />
-          <p className="absolute right-0 -bottom-6 text-xs">
-            <button
-              type="button"
-              className="cursor-pointer text-ink-faint underline"
-              onClick={() => {
-                const action = confirm;
-                setConfirm(null);
-                if (action === 'close') {
-                  closeSession();
-                  window.location.assign(withBase('/'));
-                } else {
-                  void startLoad();
-                }
-              }}
-            >
-              continue without saving
-            </button>
-          </p>
-        </div>
-      )}
     </div>
   );
 }

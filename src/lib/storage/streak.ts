@@ -1,5 +1,5 @@
 /**
- * Daily streak (SPEC §9): consecutive days with any study activity.
+ * Daily streak: consecutive days with any study activity.
  * Qualifying activity (the spec's "reasonable default", revisit after use):
  * a Group Study answer, a Review/Test answer, a finished workbook attempt,
  * or marking a lesson read — the storage layer calls touch() on each.

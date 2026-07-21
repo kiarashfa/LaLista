@@ -1,5 +1,5 @@
 /**
- * Post-session save reminder (SPEC §5's deliberate exception to the
+ * Post-session save reminder (a deliberate exception to the
  * don't-nag philosophy — unsaved progress loss is the one high-cost
  * failure mode worth a nudge). Dropped into session-complete screens.
  */

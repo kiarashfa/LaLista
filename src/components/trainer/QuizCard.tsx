@@ -1,12 +1,12 @@
 /**
  * Quiz card for Group Study (4 choices, hints, action icons) and Review
- * (6 choices, hints, skip only). Implements SPEC §8's interaction spec:
+ * (6 choices, hints, skip only). Implements the interaction spec:
  * number keys, Esc = skip, proactive disambiguation hint, simultaneous
  * red/green feedback, auto-advance ~2.5s on correct OR Enter immediately.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Word } from '../../types/word';
-import { buildChoices, optionFieldFor, renderExample, type QuizMode } from './wordUtils';
+import { buildChoices, GENDER_LABEL, optionFieldFor, POS_LABEL, renderExample, type QuizMode } from './wordUtils';
 import { WordAudioButtons } from './WordAudioButtons';
 import { ChoiceGrid } from '../exercises/ChoiceGrid';
 import { ConfirmDialog } from './ConfirmDialog';
@@ -23,7 +23,9 @@ interface Props {
   /** Group Study only: show mark-difficult / mark-known icons. */
   showMarkActions: boolean;
   allowSkip: boolean;
-  /** Direction/listening mode (owner improvement #6). Group Study stays en-es. */
+  /** Show the word's part-of-speech / gender / level tags (as the study card does). */
+  showTags?: boolean;
+  /** Direction/listening mode. Group Study stays en-es. */
   mode?: QuizMode;
   /** Caption under the card, e.g. stage name. */
   caption?: string;
@@ -40,7 +42,7 @@ const PROMPT_LABEL: Record<QuizMode, string> = {
   'listen-en': 'What does it mean?',
 };
 
-export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, mode = 'en-es', caption, onDone, onMarkDifficult }: Props) {
+export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, showTags = true, mode = 'en-es', caption, onDone, onMarkDifficult }: Props) {
   const [answered, setAnswered] = useState<null | boolean>(null);
   const [confirmKnown, setConfirmKnown] = useState(false);
   const [flaggedNow, setFlaggedNow] = useState(false);
@@ -99,6 +101,15 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
           </div>
         )}
 
+        {showTags && (
+          <div className="relative mx-auto mt-3 flex max-w-[440px] flex-wrap items-center justify-center gap-2">
+            <span className="rounded-pill bg-surface-sunken px-2.5 py-0.5 text-xs font-semibold text-ink-soft">{POS_LABEL[word.partOfSpeech]}</span>
+            {word.gender && <span className="rounded-pill bg-surface-sunken px-2.5 py-0.5 text-xs font-semibold text-ink-soft">{GENDER_LABEL[word.gender]}</span>}
+            <span className="rounded-pill bg-surface-sunken px-2.5 py-0.5 text-xs font-semibold text-ink-faint">{word.cefr}</span>
+            {word.registerNote && <span className="rounded-pill bg-gold-bg px-2.5 py-0.5 text-xs font-semibold text-gold">{word.registerNote}</span>}
+          </div>
+        )}
+
         {word.disambiguationNote && answered === null && mode === 'en-es' && (
           <div className="relative mx-auto mt-4 flex max-w-[440px] gap-2 rounded-md border border-gold bg-gold-bg px-4 py-3 text-left text-sm text-ink-soft">
             <span aria-hidden="true">💡</span>
@@ -126,7 +137,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
               {word.spanish}
               <span className="font-normal text-ink-faint">— {word.english}</span>
               {word.phonetics && <span className="font-normal text-ink-faint">{word.phonetics}</span>}
-              {/* Auto-pronounce on a CORRECT answer (owner refinement #2); listening modes already played it. */}
+              {/* Auto-pronounce on a CORRECT answer; listening modes already played it. */}
               <WordAudioButtons word={word} autoPlayFirst={answered === true && !listening} />
             </p>
             {word.disambiguationNote && mode !== 'en-es' && (

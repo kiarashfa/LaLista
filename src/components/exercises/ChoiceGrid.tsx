@@ -1,9 +1,8 @@
 /**
  * Answer-choice list shared by every multiple-choice surface (grammar
- * workbook, Group Study, Review, Test). Owner-picked design (refinement #5,
- * proposal B): flat full-width rows on the sunken surface with a left accent
- * bar that slides in on hover; the keyboard number sits quietly at the right
- * edge. Keeps SPEC §8's rules: number-key selection, and on a wrong pick the
+ * workbook, Group Study, Review, Test): flat full-width rows on the sunken
+ * surface with a left accent bar that slides in on hover; the keyboard number
+ * sits quietly at the right edge. Number-key selection, and on a wrong pick the
  * mistake highlights red *simultaneously* with the correct answer going green.
  */
 import { useEffect, useState } from 'react';

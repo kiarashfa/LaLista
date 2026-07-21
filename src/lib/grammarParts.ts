@@ -1,5 +1,5 @@
 /**
- * The 13 Roman-numeral Parts (SPEC §6) — pure navigation/SEO grouping.
+ * The 13 Roman-numeral Parts — pure navigation/SEO grouping.
  * Chapters within a Part are NOT ordered by difficulty; prerequisites in
  * meta.json are courtesy pointers only.
  */

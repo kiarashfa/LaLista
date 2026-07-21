@@ -1,10 +1,10 @@
 /**
  * Shared save action + dirty tracking for SaveButton / ProgressApp / SaveNudge.
- * Successful saves play the TransferOverlay animation (owner refinement #9) —
+ * Successful saves play the TransferOverlay animation —
  * consumers must render the returned `overlay` node.
  */
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import { saveProgressFile, supportsFileSystemAccess } from '../../lib/storage/fileAccess';
+import { saveProgressFile, supportsFileSystemAccess, type SaveOutcome } from '../../lib/storage/fileAccess';
 import { buildSaveFile } from '../../lib/storage/saveFile';
 import { hasUnsavedChanges, loadSession, markSavedNow } from '../../lib/storage/session';
 import { saveFileName, type ProfileInfo } from '../../types/profile';
@@ -15,7 +15,8 @@ export interface SaveHook {
   dirty: boolean;
   fsa: boolean;
   status: string | null;
-  save: () => Promise<void>;
+  /** Persist to the user's file; resolves with what actually happened. */
+  save: () => Promise<SaveOutcome>;
   refresh: () => void;
   /** Render this — it's the animated saving overlay (null when idle). */
   overlay: ReactNode;
@@ -41,10 +42,10 @@ export function useSave(): SaveHook {
   }, [refresh]);
 
   const saving = useRef(false);
-  const save = useCallback(async () => {
-    if (saving.current) return; // one save at a time — a picker may be open
+  const save = useCallback(async (): Promise<SaveOutcome> => {
+    if (saving.current) return 'cancelled'; // one save at a time — a picker may be open
     const state = loadSession();
-    if (!state.profile) return;
+    if (!state.profile) return 'cancelled';
     saving.current = true;
     setTransfer({ done: false, message: '' });
     const outcome = await saveProgressFile(
@@ -66,6 +67,7 @@ export function useSave(): SaveHook {
     }
     saving.current = false;
     refresh();
+    return outcome;
   }, [refresh]);
 
   const overlay = transfer ? (

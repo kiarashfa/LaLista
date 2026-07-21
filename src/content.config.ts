@@ -1,5 +1,5 @@
 /**
- * Content collections — resolves SPEC §11's open question: Astro's content
+ * Content collections — Astro's content
  * layer (glob loader) points directly at /data/grammar, no copy/symlink step.
  *
  * Three parallel collections share the lesson folder name as their entry id
@@ -16,7 +16,7 @@ const grammarLessons = defineCollection({
   loader: glob({ pattern: 'lesson-*/lesson.mdx', base: './data/grammar', generateId: lessonFolderId }),
 });
 
-/** meta.json — schema per Grammar.md §2. */
+/** meta.json — the lesson metadata schema. */
 const grammarMeta = defineCollection({
   loader: glob({ pattern: 'lesson-*/meta.json', base: './data/grammar', generateId: lessonFolderId }),
   schema: z.object({
@@ -30,7 +30,7 @@ const grammarMeta = defineCollection({
 
 /**
  * exercises.json — kept loose here; the full per-type discriminated union is
- * enforced by scripts/validate-grammar.ts and will live with the graders (Round 3).
+ * enforced by scripts/validate-grammar.ts.
  */
 const grammarExercises = defineCollection({
   loader: glob({ pattern: 'lesson-*/exercises.json', base: './data/grammar', generateId: lessonFolderId }),

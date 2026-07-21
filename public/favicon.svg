@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- LaLista mark: the brand ¡ in coral (docs/mockups/tokens.css values) -->
+  <!-- LaLista mark: the brand ¡ in coral -->
   <rect width="64" height="64" rx="14" fill="#E85D4C"/>
   <text x="32" y="51" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="bold" text-anchor="middle" fill="#FAFAF7">¡</text>
 </svg>

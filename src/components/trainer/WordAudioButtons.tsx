@@ -1,6 +1,5 @@
 /**
- * One play button per audio file that exists. Owner decision (2026-07-20,
- * overriding the original SPEC §14 rule): the WordReference recordings
+ * One play button per audio file that exists. The WordReference recordings
  * (`<id>_1.mp3`) are published and are the DEFAULT voice — the big button
  * and the auto-play target. Lingua Libre and TTS remain one click away.
  */

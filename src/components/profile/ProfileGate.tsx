@@ -1,5 +1,5 @@
 /**
- * Owner refinement #1: study sections require a loaded profile. This overlay
+ * Study sections require a loaded profile. This overlay
  * blocks the Vocabulary/Grammar surfaces until a save file is loaded or a
  * fresh profile created. Purely client-side — the static content underneath
  * still exists for crawlers; the study islands additionally refuse to start

@@ -1,6 +1,6 @@
 ---
 /**
- * Six-cell pronoun grid with an auto-computed "boot" outline (guide §3).
+ * Six-cell pronoun grid with an auto-computed "boot" outline.
  * The outline is NEVER authored — it's detected from the forms:
  *
  *  - Reference stem = longest common prefix of nosotros + vosotros (the row
@@ -12,7 +12,7 @@
  *  - Recognized clusters: the classic 4-cell boot (yo/tú/él/ellos) or a
  *    lone irregular yo. Anything else — fully regular verbs, uniform
  *    irregular stems (tuve…), non-verb sets like possessives — renders as a
- *    plain grid, by design (SPEC §15).
+ *    plain grid, by design.
  */
 const PRONOUNS = ['yo', 'tú', 'él/ella/usted', 'nosotros', 'vosotros', 'ellos/ellas/ustedes'] as const;
 type Pronoun = (typeof PRONOUNS)[number];

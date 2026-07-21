@@ -2,6 +2,14 @@
  * Match left↔right: select a left item, then a right item. Correct matches
  * lock in green; a wrong attempt flashes red and counts as a mistake.
  * The exercise scores correct only with zero mistakes.
+ *
+ * The right column may legitimately repeat values — e.g. "match each noun to
+ * its article" has three el's and three la's. Those repeats are one reusable
+ * option each (a category, not a consumable pairing), so the right side is
+ * de-duplicated and never locks; otherwise matching one noun to "la" would
+ * mark every "la" done and strand the rest (the bug this fixes). When the
+ * right values are all distinct it behaves as a classic one-to-one pairing:
+ * each right is consumed as it's matched.
  */
 import { useMemo, useRef, useState } from 'react';
 import { isMatchingPair } from '../../lib/grading/graders';
@@ -9,8 +17,11 @@ import { shuffle } from '../../lib/shuffle';
 import type { MatchingPairsExercise as Ex } from '../../types/exercises';
 
 export function MatchingPairs({ exercise, onGraded }: { exercise: Ex; onGraded: (correct: boolean) => void }) {
-  const rights = useMemo(() => shuffle(exercise.pairs.map((p) => p.right)), [exercise]);
   const lefts = exercise.pairs.map((p) => p.left);
+  // Distinct right values. Fewer distinct than pairs ⇒ repeated categories:
+  // each option is reusable and must never lock when matched once.
+  const rightsReusable = new Set(exercise.pairs.map((p) => p.right)).size < exercise.pairs.length;
+  const rights = useMemo(() => shuffle([...new Set(exercise.pairs.map((p) => p.right))]), [exercise]);
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [matched, setMatched] = useState<Map<string, string>>(new Map());
   const [flash, setFlash] = useState<{ left: string; right: string } | null>(null);
@@ -65,7 +76,9 @@ export function MatchingPairs({ exercise, onGraded }: { exercise: Ex; onGraded: 
       </div>
       <div className="flex flex-col gap-2">
         {rights.map((right) => {
-          const isMatched = [...matched.values()].includes(right);
+          // A reusable (repeated-category) option never locks; a distinct
+          // option locks green once it's been consumed by a match.
+          const isMatched = !rightsReusable && [...matched.values()].includes(right);
           const isFlash = flash?.right === right;
           return (
             <button

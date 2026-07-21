@@ -1,8 +1,7 @@
 /**
- * First-exposure study card (SPEC §10): look and listen, no possibility of a
- * wrong answer. Owner final-touch #1: the mark-as-difficult / mark-as-known
- * actions now live here too, so a word you already know never has to survive
- * a quiz round first.
+ * First-exposure study card: look and listen, no possibility of a
+ * wrong answer. The mark-as-difficult / mark-as-known actions live here too,
+ * so a word you already know never has to survive a quiz round first.
  */
 import { useEffect, useState } from 'react';
 import type { Word } from '../../types/word';
@@ -13,6 +12,8 @@ import { ConfirmDialog } from './ConfirmDialog';
 interface Props {
   word: Word;
   onNext: () => void;
+  /** Eyebrow label — "New word" for first exposure, "Review" when revisited via the TOC. */
+  eyebrow?: string;
   /** Already in the difficult bucket (renders the flag filled). */
   difficult?: boolean;
   onMarkDifficult?: () => void;
@@ -20,7 +21,7 @@ interface Props {
   onMarkKnown?: () => void;
 }
 
-export function StudyCard({ word, onNext, difficult = false, onMarkDifficult, onMarkKnown }: Props) {
+export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = false, onMarkDifficult, onMarkKnown }: Props) {
   const [confirmKnown, setConfirmKnown] = useState(false);
   const [flaggedNow, setFlaggedNow] = useState(false);
   const flagged = difficult || flaggedNow;
@@ -40,7 +41,7 @@ export function StudyCard({ word, onNext, difficult = false, onMarkDifficult, on
     <div className="relative overflow-hidden rounded-lg bg-surface-raised px-6 py-8 text-center shadow-lg sm:px-10">
       <span className="font-display pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 text-[15rem] leading-none font-light text-vocab opacity-5 select-none" aria-hidden="true">¿</span>
 
-      <p className="relative m-0 mb-3 text-xs font-bold tracking-widest text-vocab uppercase">New word</p>
+      <p className="relative m-0 mb-3 text-xs font-bold tracking-widest text-vocab uppercase">{eyebrow}</p>
       <p className="display-friendly relative m-0 text-4xl font-bold text-ink">{word.spanish}</p>
       {word.phonetics && <p className="relative m-0 mt-1 text-sm text-ink-faint">{word.phonetics}</p>}
       <p className="relative m-0 mt-2 text-xl text-ink-soft">{word.english}</p>

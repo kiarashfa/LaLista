@@ -1,4 +1,4 @@
-/** Small in-card confirm used by "Mark as known" (SPEC §8/§13). */
+/** Small in-card confirm used by "Mark as known". */
 interface Props {
   title: string;
   body: string;

@@ -30,7 +30,7 @@ export const GENDER_LABEL: Record<Exclude<Word['gender'], null>, string> = {
 };
 
 /**
- * Quiz direction/mode (owner improvement #6). Group Study stays 'en-es';
+ * Quiz direction/mode. Group Study stays 'en-es';
  * Review and Test let the user choose, including the two listening modes.
  */
 export type QuizMode = 'en-es' | 'es-en' | 'listen-es' | 'listen-en';
@@ -48,7 +48,7 @@ export function optionFieldFor(mode: QuizMode): 'spanish' | 'english' {
 }
 
 /**
- * 4/6/3 answer choices (SPEC §8): the correct answer + distractors drawn
+ * 4/6/3 answer choices: the correct answer + distractors drawn
  * from the same topic group, preferring the same part of speech. Candidates
  * sharing the target's Spanish OR normalized English are excluded — a twin
  * or synonym would create a second right answer (critical for listening

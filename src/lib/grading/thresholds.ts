@@ -1,5 +1,5 @@
 /**
- * Workbook score bands (SPEC §9, owner-confirmed 2026-07-18):
+ * Workbook score bands:
  * green ≥ 80%, yellow 50–79%, red < 50% — of the best attempt ever.
  */
 export type ScoreBand = 'none' | 'poor' | 'fair' | 'good';

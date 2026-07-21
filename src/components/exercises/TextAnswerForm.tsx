@@ -1,7 +1,7 @@
 /**
  * Free-text answer form shared by fill-blank, error-correction and
- * sentence-transformation. Implements the tilde-forgiveness flow (owner
- * improvement #3): an accent-only miss isn't wrong — it triggers ONE retry
+ * sentence-transformation. Implements the tilde-forgiveness flow: an
+ * accent-only miss isn't wrong — it triggers ONE retry
  * ("type it with the tilde", answer not revealed, so typing the accented form
  * is the learning act). Fixed on retry → full correct. Still accent-off →
  * counted correct, but the exact spelling is shown and flagged.

@@ -1,6 +1,6 @@
 /* ===== LaLista global styles ===== */
-/* Token values are the literal source of truth from docs/mockups/tokens.css
-   (owner-approved, SPEC §7) — do not re-derive or eyeball-adjust. */
+/* Token values are the literal source of truth for color, spacing, radius
+   and type — do not re-derive or eyeball-adjust. */
 
 @import 'tailwindcss';
 @import '@fontsource-variable/fraunces/full.css';
@@ -129,7 +129,7 @@ body {
     color 0.2s ease;
 }
 
-/* --- Scrollbars (owner refinement #3): thin, pill-shaped, token-driven so
+/* --- Scrollbars: thin, pill-shaped, token-driven so
    they follow the light/dark theme like everything else. --- */
 * {
   scrollbar-width: thin;
@@ -157,7 +157,7 @@ body {
   background: transparent;
 }
 
-/* --- Collapsible TOC sidebars (owner improvement: vocabulary word list +
+/* --- Collapsible TOC sidebars (vocabulary word list +
    grammar chapter TOC absorb smoothly into the left edge). Desktop-only —
    below lg the sidebars have their own mobile treatments. --- */
 @media (min-width: 1024px) {
@@ -187,7 +187,7 @@ body {
   display: none !important;
 }
 
-/* --- Fraunces expression presets (SPEC §7: same family, different axes) --- */
+/* --- Fraunces expression presets (same family, different axes) --- */
 /* Editorial — grammar headings: tighter optical size, low softness */
 .display-editorial {
   font-family: var(--font-display);
@@ -274,7 +274,7 @@ body {
     text-decoration-color: var(--grammar-accent);
   }
 
-  /* Markdown tables — same visual language as the conjugation-table mockup */
+  /* Markdown tables — same visual language as the conjugation table */
   & table {
     width: 100%;
     border-collapse: separate;

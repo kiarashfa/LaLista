@@ -1,7 +1,7 @@
 /**
- * localStorage working cache (SPEC §5): auto-saved continuously during study
+ * localStorage working cache: auto-saved continuously during study
  * for crash safety. The file-on-disk source of truth and its load/save UI
- * arrive in Round 5 and read/write through this same layer.
+ * read and write through this same layer.
  */
 import type { GrammarLessonProgress, SessionState, VocabWordProgress } from '../../types/progress';
 import { EMPTY_LESSON_PROGRESS, newWordProgress } from '../../types/progress';
@@ -51,7 +51,7 @@ export function updateSession(mutate: (state: SessionState) => void): SessionSta
   return state;
 }
 
-// ---------- Profile & save-file lifecycle (SPEC §5) ----------
+// ---------- Profile & save-file lifecycle ----------
 
 export function getProfile(): ProfileInfo | null {
   return loadSession().profile;
@@ -64,7 +64,7 @@ export function createProfile(profile: ProfileInfo): void {
   });
 }
 
-/** Populate the working cache from a loaded save file (SPEC §5 step 2). */
+/** Populate the working cache from a loaded save file. */
 export function applyLoadedSaveFile(file: SaveFile): void {
   localStorage.setItem(KEY, JSON.stringify(sessionFromSaveFile(file)));
   const now = String(Date.now());
@@ -97,7 +97,7 @@ export function setNotepad(text: string): void {
   });
 }
 
-/** Any qualifying study activity marks today for the streak (SPEC §9). */
+/** Any qualifying study activity marks today for the streak. */
 function touchActivity(state: SessionState, now: number): void {
   state.streak = touchStreak(state.streak, now);
 }
@@ -115,7 +115,7 @@ export function markLessonRead(lessonId: string): void {
   });
 }
 
-// ---------- Vocabulary (SPEC §3/§8) ----------
+// ---------- Vocabulary ----------
 
 export function getWordProgress(wordId: string, now = Date.now()): VocabWordProgress {
   return loadSession().vocabulary[wordId] ?? newWordProgress(now);
@@ -156,7 +156,7 @@ export function applyGroupStudyAnswer(wordId: string, correct: boolean, now = Da
   }, { activity: true });
 }
 
-/** Skip: resurfaces like a miss but NO difficult-bucket strike (SPEC §8). */
+/** Skip: resurfaces like a miss but NO difficult-bucket strike. */
 export function applySkip(wordId: string, now = Date.now()): VocabWordProgress {
   return withWord(wordId, now, (p) => {
     p.lastReinforced = now;
@@ -171,7 +171,7 @@ export function markDifficult(wordId: string, now = Date.now()): VocabWordProgre
   });
 }
 
-/** User-asserted override → straight to Mastered (confirm first — SPEC §8). */
+/** User-asserted override → straight to Mastered (confirm first). */
 export function markKnown(wordId: string, now = Date.now()): VocabWordProgress {
   return withWord(wordId, now, (p) => {
     p.stage = MASTERED;
@@ -188,7 +188,7 @@ export function refreshReinforced(wordId: string, now = Date.now()): VocabWordPr
   }, { activity: true });
 }
 
-/** Records a Test score; returns which boards it beat (SPEC §9: all-time + today). */
+/** Records a Test score; returns which boards it beat (all-time + today). */
 export function recordTestScore(score: number, now = Date.now()): { newAllTime: boolean; newToday: boolean } {
   const date = new Date(now).toISOString().slice(0, 10);
   let newAllTime = false;

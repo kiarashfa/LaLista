@@ -1,5 +1,5 @@
 /**
- * The on-disk save file (SPEC §5) — the SOURCE OF TRUTH for progress.
+ * The on-disk save file — the SOURCE OF TRUTH for progress.
  * localStorage is only the working cache; this file is what the user keeps.
  * One profile = one file (`lalista-progress-<name>.json`).
  *

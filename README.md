@@ -1,47 +1,32 @@
-# LaLista
+# ¡LaLista!
 
-Free, no-login, no-ad Spanish (Castellano) learning site: Memrise-style
-vocabulary trainer (2001 words, 27 topic groups, per-word audio) + a 57-chapter
-topic-based grammar reference with interactive workbooks.
+**LaLista** — Spanish for "the list" (also means "the clever one") — is a free,
 
-Static Astro site → GitHub Pages. No backend; progress lives in a save file the
-user keeps (File System Access API / download fallback).
+no-login, no-ads site for learning Spanish the way it's spoken in Spain: *Castellano*.
 
-## Develop
+Consider it your first lesson: ***la*** for grammar, and ***lista*** for vocabulary.
 
-```sh
-npm install
-npm run dev        # dev server
-npm run build      # production build
-npm run data:all   # rebuild vocabulary JSON from data/vocabulary/master.xlsx + validate everything
-npm test           # unit tests
-```
+It comes in two halves. A flashcard-style **vocabulary trainer**: 2,000+ words
+across 27 topic groups, each with real pronunciation audio and a gentle
+spaced-repetition rhythm. And a reference-style **grammar trainer**: 57 chapters, one topic
+each covered end to end, every one with its own interactive workbook.
 
-## Deploy
+No sign-up, no accounts, no tracking. Your progress lives in a small file *you*
+keep, load it when you arrive and save it when you leave. Fully static:
+Astro + React islands, no backend.
 
-Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml):
-tests + data validation, then an Astro build published to GitHub Pages at
-`https://kiarashfa.github.io/LaLista/`. The base path applies automatically on
-CI; local dev stays at `/`. To test a based build locally:
-`DEPLOY_BASE=1 npx astro build`.
 
-## Audio voices
 
-Each word offers up to three pronunciations, in this priority order:
-`<id>_1.mp3` (WordReference — the default voice, published by owner decision
-2026-07-20, overriding the earlier personal-use rule), `<id>_2.mp3`
-(Lingua Libre, CC BY 4.0), and `<id>_3.mp3` (Piper TTS, present for every
-word). The first available voice is the big play button and the auto-play
-target; the others are one click away.
+## Credits
 
-## Layout
+* Definitions informed by [WordReference](https://www.wordreference.com/) and the [RAE](https://www.rae.es/).
+* Pronunciations from [Lingua Libre](https://lingualibre.org/) volunteers (CC BY 4.0) and [Piper](https://github.com/rhasspy/piper) text-to-speech.
+* Set in Fraunces \& Figtree.
 
-- `data/` — human-edited source of truth (workbook, 57 grammar lesson folders).
-  `data/vocabulary/master.xlsx` is **gitignored**; see `data/vocabulary/README.md`.
-- `src/content/vocabulary/` — **generated** by `npm run data:convert`; committed
-  (CI can't see the workbook). Never hand-edit.
-- `public/audio/` — `<wordId>_<n>.mp3`, all three voices committed and deployed.
-- `scripts/` — permanent pipeline tooling. `scratch/` — gitignored scratch space.
-- The product spec (`SPEC.md`) and grammar-content contract (`Grammar.md`)
-  are maintained privately alongside this repo (gitignored) — behavior
-  decisions live there, not in this README.
+## About
+
+A personal, non-profit project — nothing to sign, nothing to sell. Just a quiet
+place to build real Spanish, one word and one rule at a time.
+
+Made with ❤️, and a lot of *¿* and *¡*.
+

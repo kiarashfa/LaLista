@@ -27,6 +27,10 @@ pnpm-debug.log*
 SPEC.md
 Grammar.md
 data/vocabulary/master.xlsx
+# internal working docs — kept locally, not published
+data/vocabulary/README.md
+data/vocabulary/disambiguation-drafts.md
+data/vocabulary/disambiguation-report.md
 scratch/
 .env*
 lalista-progress-*.json

@@ -1,8 +1,8 @@
 /**
- * Review island (SPEC §8): low-stakes reinforcement over MASTERED words only.
+ * Review island: low-stakes reinforcement over MASTERED words only.
  * 6 choices, untimed, forgiving. Never touches stage — refreshes
  * lastReinforced (brightness) regardless of right/wrong.
- * Owner improvement #6: the user picks a direction first — EN→ES, ES→EN, or
+ * The user picks a direction first — EN→ES, ES→EN, or
  * one of the two listening modes.
  */
 import { useEffect, useMemo, useState } from 'react';

@@ -25,7 +25,7 @@ export function normalizeAnswer(text: string): string {
 
 /**
  * Strips the ´ (acute) and ¨ (diaeresis) marks ONLY — for tilde-forgiveness
- * (owner refinement: "Estas" for "Estás" is the right conjugation with a
+ * ("Estas" for "Estás" is the right conjugation with a
  * spelling slip, not a wrong answer). The ñ is deliberately NOT stripped:
  * it's a distinct letter, not an accent (año ≠ ano).
  */

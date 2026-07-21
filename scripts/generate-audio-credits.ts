@@ -1,6 +1,6 @@
 /**
  * Regenerates the CC-BY-4.0 attribution file for the Lingua Libre recordings
- * (SPEC §12/§14: crediting the speakers is a licence condition, not a courtesy).
+ * (crediting the speakers is a licence condition, not a courtesy).
  * Output is generated content → lives beside words.json, and will back credits page
  *
  * Run: npm run data:credits

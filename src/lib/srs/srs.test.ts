@@ -5,7 +5,7 @@ import { SessionQueue } from './sessionQueue';
 
 const DAY = 24 * 60 * 60 * 1000;
 
-describe('stage transitions (SPEC §3)', () => {
+describe('stage transitions', () => {
   it('correct bumps one stage, capped at Mastered', () => {
     expect(stageAfterCorrect(0)).toBe(1);
     expect(stageAfterCorrect(5)).toBe(6);
@@ -19,7 +19,7 @@ describe('stage transitions (SPEC §3)', () => {
   });
 });
 
-describe('scheduling (SPEC §3 date gates)', () => {
+describe('scheduling (date gates)', () => {
   it('gates Familiar+ by coarse day intervals', () => {
     const t = 1_000_000;
     expect(nextDueAt(3, t, false)).toBe(t + 1 * DAY);
@@ -38,7 +38,7 @@ describe('scheduling (SPEC §3 date gates)', () => {
   });
 });
 
-describe('freshness (cosmetic axis — SPEC §8)', () => {
+describe('freshness (cosmetic axis)', () => {
   it('starts full and fades toward a floor, never zero', () => {
     expect(freshness(0, 0)).toBe(1);
     expect(freshness(0, 15 * DAY)).toBeCloseTo(1 - 0.325, 5);
@@ -55,7 +55,7 @@ describe('stage dots', () => {
   });
 });
 
-describe('SessionQueue (SPEC §10)', () => {
+describe('SessionQueue', () => {
   const drain = (q: SessionQueue, onQuiz?: (id: string, n: number) => 'correct' | 'wrong' | 'skip') => {
     const seen: { wordId: string; kind: string }[] = [];
     let quizCount = 0;

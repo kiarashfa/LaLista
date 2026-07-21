@@ -1,5 +1,5 @@
 /**
- * File System Access API with classic-download fallback (SPEC §5).
+ * File System Access API with classic-download fallback.
  * Where FSA is supported, the file handle is kept in IndexedDB so "Save"
  * writes in place from any page — no Downloads-folder clutter. Elsewhere,
  * saving downloads a fresh copy (explained in UI copy).

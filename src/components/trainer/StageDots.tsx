@@ -1,5 +1,5 @@
 /**
- * 7-dot stage indicator (SPEC §8: abstract dots — deliberately NOT a
+ * 7-dot stage indicator (abstract dots — deliberately NOT a
  * plant/growth metaphor). Filled-dot opacity carries the cosmetic freshness
  * axis: pale = not reinforced lately, never "forgotten".
  */

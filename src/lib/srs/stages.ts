@@ -1,5 +1,5 @@
 /**
- * The staged-levels SRS model (SPEC §3) — deliberately simple, not SM-2.
+ * The staged-levels SRS model — deliberately simple, not SM-2.
  *
  *   New → Learning 1 → Learning 2 → Familiar → Practiced → Known → Mastered
  *
@@ -19,7 +19,7 @@ export const MASTERED: Stage = 6;
 /**
  * Days a word must wait after being answered at (i.e. having just reached)
  * each stage before it's quiz-eligible again. New/Learning stages repeat
- * within the same session (SPEC §3).
+ * within the same session.
  */
 export const STAGE_INTERVAL_DAYS: Record<Stage, number> = {
   0: 0,
@@ -37,7 +37,7 @@ export function stageAfterCorrect(stage: Stage): Stage {
 }
 
 /**
- * Wrong answer drops one stage back — but never to zero (SPEC §3): a word
+ * Wrong answer drops one stage back — but never to zero: a word
  * that has left New can floor at Learning 1. A still-New word just stays New.
  */
 export function stageAfterWrong(stage: Stage): Stage {
@@ -47,7 +47,7 @@ export function stageAfterWrong(stage: Stage): Stage {
 
 /**
  * Misses (wrong answers in Group Study) needed to auto-flag a word as
- * difficult (SPEC §3's "regress 2+ times"). Skips never count (SPEC §8 —
+ * difficult (the "regress 2+ times" rule). Skips never count (
  * honest skipping must not be penalized like guessing).
  */
 export const DIFFICULT_MISS_THRESHOLD = 2;

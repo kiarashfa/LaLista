@@ -1,5 +1,5 @@
 /**
- * Exact-match English duplicate detection (SPEC §4).
+ * Exact-match English duplicate detection.
  * Case-insensitive, trimmed — deliberately NO fuzzy or synonym matching.
  * Used by scripts/convert-vocab.ts to auto-populate relatedWords and to
  * produce the "needs disambiguation note" report.

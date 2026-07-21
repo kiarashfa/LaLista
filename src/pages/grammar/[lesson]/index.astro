@@ -1,7 +1,7 @@
 ---
 /**
  * The lesson READ page — prose only; exercises live on the separate workbook
- * page reached via the explicit CTA (SPEC §6: two pages, not one scroll).
+ * page reached via the explicit CTA (two pages, not one scroll).
  */
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -41,7 +41,7 @@ const prevId = number > 1 ? lessonId(number - 1) : null;
 const nextId = number < 57 ? lessonId(number + 1) : null;
 
 // H2 section headings for every chapter in this Part — powers the expandable
-// TOC (owner refinement #4). The current chapter starts expanded.
+// TOC. The current chapter starts expanded.
 const partToc = await Promise.all(
   partIds.map(async (pid) => {
     const entry = await getEntry('grammarLessons', pid);
@@ -147,7 +147,7 @@ const components = {
 
     <article class="w-full max-w-[720px] px-6 py-12 sm:px-10">
       <header class="relative">
-        {/* Ghosted ¡ — anchored to the article column (not the grid), so it can't clip into the sidebar (§7 punch list) */}
+        {/* Ghosted ¡ — anchored to the article column (not the grid), so it can't clip into the sidebar */}
         <span class="font-display pointer-events-none absolute -top-6 -left-3 z-0 text-[10rem] leading-none font-light text-grammar opacity-[0.07] select-none" aria-hidden="true">¡</span>
         <p class="relative z-10 m-0 mb-3 text-sm font-bold tracking-wider text-grammar uppercase">Chapter {number} · {meta.data.level}</p>
         <h1 class="display-editorial relative z-10 m-0 mb-6 text-4xl leading-tight font-medium text-ink sm:text-[2.6rem]">{meta.data.title}</h1>

@@ -1,5 +1,5 @@
 /**
- * Building, validating and applying save files (SPEC §5). Validation is
+ * Building, validating and applying save files. Validation is
  * deliberately specific: a corrupted file, a random JSON, and a
  * newer-version save each get their own explicit error — never a silent
  * misread or crash.
@@ -60,7 +60,7 @@ export function parseSaveFile(text: string): ParseResult {
   return { ok: true, file: data as unknown as SaveFile };
 }
 
-/** Session state populated from a loaded file (SPEC §5 step 2). */
+/** Session state populated from a loaded file. */
 export function sessionFromSaveFile(file: SaveFile): SessionState {
   return {
     schemaVersion: 1,

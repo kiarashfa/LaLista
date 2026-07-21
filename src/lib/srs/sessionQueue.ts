@@ -1,5 +1,5 @@
 /**
- * Group Study session queue (SPEC §10) — a within-session pacing device,
+ * Group Study session queue — a within-session pacing device,
  * deliberately not persisted:
  *
  *  - New words are introduced in batches of 3 study cards.
@@ -79,16 +79,19 @@ export class SessionQueue {
     this.introducedThisSession = this.introducedThisSession.filter((w) => w !== wordId);
   }
 
-  /** Sidebar jump: put a specific word up next (study if never introduced+new). */
+  /**
+   * Sidebar jump: put a specific word up next. Clicking a word
+   * in the TOC always opens its learning (study) card first, never drops the
+   * user straight onto its multiple-choice quiz. That both restores the
+   * look-&-listen step and avoids the sidebar highlight spoiling the answer.
+   * A quiz card follows the study card.
+   */
   jumpTo(wordId: string, isNew: boolean): void {
     this.upcoming = this.upcoming.filter((i) => i.wordId !== wordId);
     this.newRemaining = this.newRemaining.filter((w) => w !== wordId);
+    this.upcoming.unshift({ wordId, kind: 'study' }, { wordId, kind: 'quiz' });
     if (isNew && !this.introducedThisSession.includes(wordId)) {
-      // Study card first, quiz shortly after.
-      this.upcoming.unshift({ wordId, kind: 'study' }, { wordId, kind: 'quiz' });
       this.introducedThisSession.push(wordId);
-    } else {
-      this.upcoming.unshift({ wordId, kind: 'quiz' });
     }
   }
 

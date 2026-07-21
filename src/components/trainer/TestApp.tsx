@@ -1,10 +1,10 @@
 /**
- * Test island (SPEC §8): high-pressure recall over MASTERED words only.
+ * Test island: high-pressure recall over MASTERED words only.
  * 3 choices, hints OFF, no skip/mark controls. Two user-selectable timer
- * styles (7 s/question or 90 s total pool — owner-confirmed values), both
+ * styles (7 s/question or 90 s total pool), both
  * with immediate cutoff. 5 lives; 5 correct in a row restores one (cap 5).
  * Never touches stage; refreshes lastReinforced. Scored independently as a
- * motivational layer (all-time + today's best, SPEC §9).
+ * motivational layer (all-time + today's best).
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { shuffle } from '../../lib/shuffle';
@@ -75,7 +75,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
     setBests(loadSession().testScores);
     const stored = localStorage.getItem(MODE_KEY) as QuizMode | null;
     if (stored && MODES.includes(stored)) setQmode(stored);
-    // Brief prep moment before the setup screen (owner improvement #5).
+    // Brief prep moment before the setup screen.
     setPhase(mastered.length < 3 ? 'empty' : 'prep');
   }, []);
 
@@ -91,7 +91,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
 
   const word = pool.length > 0 ? pool[index % pool.length] : null;
   // MEMOIZED per question — computing choices inline in render was the
-  // owner-reported bug: every 100 ms timer tick re-render reshuffled the
+  // this was a bug: every 100 ms timer tick re-render reshuffled the
   // option labels under the user's cursor.
   const options = useMemo(
     () => (word ? buildChoices(word, groupPools.get(word.group) ?? ALL_WORDS, 3, optionFieldFor(qmode)) : []),
@@ -134,7 +134,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
     });
   }, [finish]);
 
-  // The clock. Immediate cutoff, no grace period (SPEC §8).
+  // The clock. Immediate cutoff, no grace period.
   useEffect(() => {
     if (phase !== 'running') return;
     const interval = setInterval(() => {

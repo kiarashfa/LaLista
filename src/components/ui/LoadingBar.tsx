@@ -1,5 +1,5 @@
 /**
- * Brief, subtle prep animation (owner improvement #5) — the quiet sibling of
+ * Brief, subtle prep animation — the quiet sibling of
  * TransferOverlay: inline (no modal), ~600 ms, ease-out fill, then done.
  * Used when a workbook or vocabulary session is being "prepared".
  */

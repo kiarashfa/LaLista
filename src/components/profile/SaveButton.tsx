@@ -1,5 +1,5 @@
 /**
- * Nav save chip — the always-visible save action SPEC §5 requires ("not
+ * Nav save chip — the always-visible save action ("not
  * buried in a settings menu"). Shows nothing until a profile exists.
  */
 import { withBase } from '../../lib/paths';

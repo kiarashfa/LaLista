@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildRelatedWords, findExactDuplicates, normalizeEnglish } from './duplicateDetection';
 
 describe('normalizeEnglish', () => {
-  it('lowercases and trims only — no fuzzy matching (SPEC §4)', () => {
+  it('lowercases and trims only — no fuzzy matching', () => {
     expect(normalizeEnglish('  School ')).toBe('school');
     expect(normalizeEnglish('schools')).not.toBe('school');
   });

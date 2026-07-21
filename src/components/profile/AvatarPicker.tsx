@@ -1,4 +1,4 @@
-/** Avatar choice: emoji OR uploaded photo (SPEC §9 — offer both). */
+/** Avatar choice: emoji OR uploaded photo — offer both. */
 import { useRef, useState } from 'react';
 import type { Avatar } from '../../types/profile';
 

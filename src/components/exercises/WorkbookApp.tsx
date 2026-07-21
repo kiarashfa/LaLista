@@ -1,8 +1,8 @@
 /**
  * Workbook runner island (client:only). One exercise at a time with immediate
- * feedback; freely retakeable; best-attempt-ever persisted (SPEC §6/§9).
+ * feedback; freely retakeable; best-attempt-ever persisted.
  * Locked until the lesson is marked read — a one-time speed bump for
- * first-timers, zero friction for returning readers (SPEC §6).
+ * first-timers, zero friction for returning readers.
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getLessonProgress, getProfile, recordWorkbookAttempt } from '../../lib/storage/session';
@@ -51,6 +51,31 @@ function revealFor(ex: Exercise): string | null {
   }
 }
 
+/**
+ * The full correct answer for EVERY type, as a readable string — used when the
+ * user skips ("I don't know"), since the exercise body was never interacted
+ * with and so can't reveal its own answer inline.
+ */
+function correctAnswerText(ex: Exercise): string {
+  switch (ex.type) {
+    case 'multiple-choice':
+    case 'gender-agreement':
+    case 'fill-blank':
+    case 'sentence-transformation':
+      return ex.correctAnswer;
+    case 'error-correction':
+      return ex.correctSentence;
+    case 'sentence-reorder':
+      return ex.correctOrder.join(' ');
+    case 'conjugation-grid':
+      return ex.blankForms.map((p) => `${p} → ${ex.correctAnswers[p] ?? ''}`).join(' · ');
+    case 'matching-pairs':
+      return ex.pairs.map((p) => `${p.left} → ${p.right}`).join(' · ');
+    case 'cloze-passage':
+      return ex.blanks.map((b, i) => `${i + 1}. ${b}`).join(' · ');
+  }
+}
+
 function ExerciseBody({ exercise, onGraded }: { exercise: Exercise; onGraded: (c: boolean) => void }) {
   switch (exercise.type) {
     case 'multiple-choice':
@@ -80,13 +105,15 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<boolean[]>([]);
   const [graded, setGraded] = useState<boolean | null>(null);
+  const [skipped, setSkipped] = useState(false);
   const [outcome, setOutcome] = useState<{ best: WorkbookBest; improved: boolean } | null>(null);
   const gradedAt = useRef(0);
+  const answeredRef = useRef(false); // guards against a second grade (e.g. clicking after a skip)
   const prepTarget = useRef<Phase>('locked');
 
   useEffect(() => {
     if (!getProfile()) return; // ProfileGate overlay is up — stay in 'loading'
-    // Brief prep moment before the workbook appears (owner improvement #5).
+    // Brief prep moment before the workbook appears.
     prepTarget.current = getLessonProgress(lessonId).readAt ? 'running' : 'locked';
     setPhase('prep');
   }, [lessonId]);
@@ -94,15 +121,26 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
   const exercise = exercises[index];
   const total = exercises.length;
 
-  const onGraded = useCallback((correct: boolean) => {
+  const grade = useCallback((correct: boolean) => {
+    if (answeredRef.current) return; // already answered or skipped — ignore late grades
+    answeredRef.current = true;
     gradedAt.current = Date.now();
     setGraded(correct);
     setResults((r) => [...r, correct]);
   }, []);
 
+  // "I don't know" — reveal the answer and move on; counts as incorrect.
+  const skip = useCallback(() => {
+    if (answeredRef.current) return;
+    setSkipped(true);
+    grade(false);
+  }, [grade]);
+
   const next = useCallback(() => {
     if (graded === null) return;
     setGraded(null);
+    setSkipped(false);
+    answeredRef.current = false;
     if (index + 1 < total) {
       setIndex(index + 1);
     } else {
@@ -173,6 +211,8 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
               setIndex(0);
               setResults([]);
               setGraded(null);
+              setSkipped(false);
+              answeredRef.current = false;
               setOutcome(null);
               setPhase('running');
             }}
@@ -212,22 +252,43 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
 
       <div className="rounded-lg border border-border bg-surface-raised px-6 py-7 shadow-md sm:px-8">
         <p className="mt-0 mb-5 text-lg font-semibold text-ink">{exercise.prompt}</p>
-        <ExerciseBody key={`${exercise.id}-${attempt}`} exercise={exercise} onGraded={onGraded} />
+        <div className={graded !== null ? 'pointer-events-none' : ''}>
+          <ExerciseBody key={`${exercise.id}-${attempt}`} exercise={exercise} onGraded={grade} />
+        </div>
+
+        {graded === null && (
+          <div className="mt-5 text-right">
+            <button
+              type="button"
+              onClick={skip}
+              className="cursor-pointer text-sm font-semibold text-ink-faint underline hover:text-grammar"
+            >
+              Don't know it? Show the answer →
+            </button>
+          </div>
+        )}
 
         {graded !== null && (
           <div
             className={`mt-6 rounded-md px-4 py-3 text-sm ${graded ? 'bg-success-bg text-success' : 'bg-error-bg text-error'}`}
             role="status"
           >
-            <p className="m-0 font-bold">{graded ? '¡Correcto!' : 'Not quite.'}</p>
-            {!graded && revealFor(exercise) && (
+            <p className="m-0 font-bold">{graded ? '¡Correcto!' : skipped ? 'Skipped' : 'Not quite.'}</p>
+            {skipped ? (
               <p className="m-0 mt-1">
-                Correct answer: <b>{revealFor(exercise)}</b>
+                Correct answer: <b>{correctAnswerText(exercise)}</b>
               </p>
+            ) : (
+              !graded &&
+              revealFor(exercise) && (
+                <p className="m-0 mt-1">
+                  Correct answer: <b>{revealFor(exercise)}</b>
+                </p>
+              )
             )}
             {exercise.note && <p className="m-0 mt-2 border-t border-current/20 pt-2 text-ink-soft">💡 {exercise.note}</p>}
             {!graded && (
-              /* Owner final-touch #3: the universal "why" pointer — the chapter
+              /* The universal "why" pointer — the chapter
                  IS the explanation, one click away, exercise kept in place. */
               <p className="m-0 mt-2 border-t border-current/20 pt-2 text-xs">
                 <a href={lessonUrl} className="font-semibold text-grammar underline">

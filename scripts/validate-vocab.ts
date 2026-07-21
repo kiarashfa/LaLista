@@ -28,7 +28,7 @@ const manifest = parseCsvRecords(
 // --- Words ---
 if (words.length !== 2001) errors.push(`expected 2001 words, found ${words.length}`);
 
-// The WordReference (_1) files are personal-use only and gitignored (SPEC §14):
+// The WordReference (_1) files are personal-use only and gitignored:
 // a public checkout (e.g. CI) legitimately has NONE of them. All-absent is
 // fine; PARTIALLY absent means something got lost locally — that's an error.
 const wrExpected = words.filter((w) => w.audio.wordreference).length;
@@ -68,7 +68,7 @@ for (const g of groups) {
   if (actual !== g.count) errors.push(`group ${g.slug}: count ${g.count} but ${actual} words`);
 }
 
-// --- Manifest cross-check (SPEC §14: read the manifest rather than assuming) ---
+// --- Manifest cross-check (read the manifest rather than assuming) ---
 const byId = new Map(words.map((w) => [w.id, w]));
 for (const row of manifest) {
   const w = byId.get(row.ID);

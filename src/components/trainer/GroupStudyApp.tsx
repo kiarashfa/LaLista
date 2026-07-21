@@ -1,7 +1,7 @@
 /**
- * Group Study island (SPEC §8) — the only mode that changes SRS stage.
+ * Group Study island — the only mode that changes SRS stage.
  * Sidebar = full jumpable word list with 7-dot stage indicators; main stage
- * runs the §10 batching/interleaving session queue.
+ * runs the batching/interleaving session queue.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { freshness } from '../../lib/srs/scheduling';
@@ -94,8 +94,8 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
     } else if (outcome.kind === 'skip') {
       refreshWord(wordId, applySkip(wordId));
       queueRef.current!.report(wordId, 'skip');
-      // Owner improvement #2: "I don't know" returns to the word's learning
-      // card right away; the queue re-quizzes it a few cards later.
+      // "I don't know" returns to the word's learning card right away;
+      // the queue re-quizzes it a few cards later.
       setCurrent({ wordId, kind: 'study' });
       return;
     } else {
@@ -115,7 +115,10 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
 
   const wordList = words.map((w) => {
     const p = progress[w.id];
-    const isCurrent = current?.wordId === w.id;
+    // Only highlight the current word on its STUDY card — never during its
+    // quiz, where a sidebar highlight would reveal which word is being asked
+    // (the highlight was spoiling the multiple-choice answer).
+    const isCurrent = current?.wordId === w.id && current.kind === 'study';
     return (
       <button
         key={w.id}
@@ -183,7 +186,7 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
       )}
 
       <main className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
-        {/* Mobile: same word list, collapsible above the stage (SPEC §7 — same component, responsive layout) */}
+        {/* Mobile: same word list, collapsible above the stage (same component, responsive layout) */}
         <details className="mb-4 w-full max-w-[600px] rounded-md border border-border bg-surface-raised lg:hidden">
           <summary className="cursor-pointer px-4 py-3 text-sm font-bold text-vocab select-none">
             {groupTitle} · {started}/{words.length} started
@@ -216,6 +219,7 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
             <StudyCard
               key={`${current.wordId}-s`}
               word={currentWord}
+              eyebrow={progress[current.wordId].stage === 0 ? 'New word' : 'Review'}
               difficult={progress[current.wordId].difficult}
               onNext={() => handleStudyNext(current.wordId)}
               onMarkDifficult={() => refreshWord(current.wordId, markDifficult(current.wordId))}

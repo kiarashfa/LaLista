@@ -1,6 +1,6 @@
 /**
  * Fill-in-the-blank conjugation practice (distinct from the <BootTable>
- * teaching component — guide §4). Same 2×3 pronoun layout language.
+ * teaching component). Same 2×3 pronoun layout language.
  * All blanks must be correct for the exercise to count.
  */
 import { useState } from 'react';

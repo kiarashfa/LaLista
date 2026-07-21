@@ -1,4 +1,4 @@
-# Build + deploy to GitHub Pages on push to main (SPEC §1/§2).
+# Build + deploy to GitHub Pages on push to main.
 # Validation runs first: unit tests + data contract checks. The gitignored
 # personal assets (master.xlsx, *_1.mp3) are absent here by design — the
 # committed words.json is the build input, and validate-vocab knows a public

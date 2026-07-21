@@ -1,10 +1,9 @@
 /**
- * Grammar hub dual view (owner refinement #6). Toggle between:
+ * Grammar hub dual view. Toggle between:
  *  - ▦ Parts — the original Part-grouped cards (server-rendered children,
  *    so the SEO surface is unchanged and works without JS);
- *  - ☰ Index — owner-picked proposal D (ledger rows with ghosted Fraunces
- *    numbers, grouped under thin Part rules, pill filters + search) with
- *    proposal C's sortable column headers.
+ *  - ☰ Index — ledger rows with ghosted Fraunces numbers, grouped under
+ *    thin Part rules, pill filters + search, and sortable column headers.
  */
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 
@@ -128,7 +127,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
         children
       ) : (
         <div>
-          {/* Filters (proposal D pill bar) */}
+          {/* Filters (pill bar) */}
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <select value={part} onChange={(e) => setPart(e.target.value)} className={selectClass} aria-label="Filter by Part">
               <option value="all">Part: all</option>
@@ -162,7 +161,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
             />
           </div>
 
-          {/* Sortable column headers (proposal C) */}
+          {/* Sortable column headers */}
           <div className="grid grid-cols-[56px_minmax(0,1fr)_auto] items-baseline gap-x-4 border-b-2 border-border pb-2 sm:grid-cols-[64px_minmax(0,1fr)_auto]">
             <span className="text-right">{header('number', '№')}</span>
             {header('title', 'Chapter')}
