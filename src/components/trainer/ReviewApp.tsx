@@ -30,7 +30,7 @@ export default function ReviewApp({ vocabularyUrl }: { vocabularyUrl: string }) 
   useEffect(() => {
     if (!getProfile()) return; // ProfileGate overlay is up
     const progress = getAllWordProgress();
-    const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6);
+    const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6 && !progress[w.id]?.excluded);
     setPool(shuffle(mastered));
     const stored = localStorage.getItem(MODE_KEY) as QuizMode | null;
     if (stored && MODES.includes(stored)) setMode(stored);

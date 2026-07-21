@@ -16,15 +16,16 @@ interface Props {
   eyebrow?: string;
   /** Already in the difficult bucket (renders the flag filled). */
   difficult?: boolean;
-  onMarkDifficult?: () => void;
+  onToggleDifficult?: () => void;
+  /** Excluded from Review & Test (renders the eye-off filled). */
+  excluded?: boolean;
+  onToggleExcluded?: () => void;
   /** Confirmed mark-as-known — parent retires the word and advances. */
   onMarkKnown?: () => void;
 }
 
-export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = false, onMarkDifficult, onMarkKnown }: Props) {
+export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = false, onToggleDifficult, excluded = false, onToggleExcluded, onMarkKnown }: Props) {
   const [confirmKnown, setConfirmKnown] = useState(false);
-  const [flaggedNow, setFlaggedNow] = useState(false);
-  const flagged = difficult || flaggedNow;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -76,22 +77,35 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
         Next <span className="ml-1 rounded-[4px] bg-white/20 px-1.5 py-0.5 text-[0.68rem]">↵</span>
       </button>
 
-      {(onMarkDifficult || onMarkKnown) && (
+      {(onToggleDifficult || onToggleExcluded || onMarkKnown) && (
         <div className="relative mt-4 flex justify-center gap-3">
-          {onMarkDifficult && (
+          {onToggleDifficult && (
             <button
               type="button"
-              title={flagged ? 'Marked as difficult' : 'Mark as difficult'}
-              aria-label="Mark as difficult"
-              disabled={flagged}
-              onClick={() => {
-                onMarkDifficult();
-                setFlaggedNow(true);
-              }}
-              className={`flex h-10 w-10 items-center justify-center rounded-pill border-[1.5px] ${flagged ? 'border-error text-error' : 'cursor-pointer border-border text-ink-faint hover:border-error hover:text-error'}`}
+              title={difficult ? 'Difficult — click to unmark' : 'Mark as difficult'}
+              aria-label={difficult ? 'Unmark difficult' : 'Mark as difficult'}
+              aria-pressed={difficult}
+              onClick={onToggleDifficult}
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${difficult ? 'border-error text-error' : 'border-border text-ink-faint hover:border-error hover:text-error'}`}
             >
-              <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill={flagged ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill={difficult ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 21V4m0 11h13l-2.5-4.5L17 6H4"></path>
+              </svg>
+            </button>
+          )}
+          {onToggleExcluded && (
+            <button
+              type="button"
+              title={excluded ? 'Excluded from Review & Test — click to include' : 'Exclude from Review & Test'}
+              aria-label={excluded ? 'Include in Review and Test' : 'Exclude from Review and Test'}
+              aria-pressed={excluded}
+              onClick={onToggleExcluded}
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${excluded ? 'border-ink-soft bg-surface-sunken text-ink' : 'border-border text-ink-faint hover:border-ink-soft hover:text-ink'}`}
+            >
+              <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c7 0 10 8 10 8a18.4 18.4 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <path d="M6.6 6.6A13.5 13.5 0 0 0 2 12s3 8 10 8a9.7 9.7 0 0 0 5.4-1.6"></path>
+                <path d="m2 2 20 20"></path>
               </svg>
             </button>
           )}
@@ -114,7 +128,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
       {confirmKnown && onMarkKnown && (
         <ConfirmDialog
           title={`Mark “${word.spanish}” as known?`}
-          body="This jumps the word straight to Mastered — it will leave your study rotation here and appear in Review and Test instead. You can always demote it later by answering it wrong in Group Study."
+          body="This jumps the word straight to Mastered — it leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
           confirmLabel="Yes, I know it"
           onConfirm={() => {
             setConfirmKnown(false);

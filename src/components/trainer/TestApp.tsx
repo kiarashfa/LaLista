@@ -70,7 +70,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   useEffect(() => {
     if (!getProfile()) return; // ProfileGate overlay is up — stay in 'loading'
     const progress = getAllWordProgress();
-    const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6);
+    const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6 && !progress[w.id]?.excluded);
     setPool(mastered);
     setBests(loadSession().testScores);
     const stored = localStorage.getItem(MODE_KEY) as QuizMode | null;

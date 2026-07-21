@@ -41,7 +41,7 @@ function demoState(): SessionState {
     schemaVersion: 1,
     profile: { name: 'Kia', avatar: { kind: 'emoji', value: '🦊' }, createdAt: new Date(NOON).toISOString() },
     grammar: { 'lesson-22': { readAt: 'x', best: { correct: 7, total: 9, at: 'y' }, attempts: 2 } },
-    vocabulary: { colors_rojo: { stage: 6, lastReinforced: NOON, dueAt: NOON, misses: 0, difficult: false } },
+    vocabulary: { colors_rojo: { stage: 6, lastReinforced: NOON, dueAt: NOON, misses: 0, difficult: false, excluded: false } },
     testScores: { allTime: { score: 5, at: 'z' }, today: null },
     streak: { current: 3, longest: 5, lastActiveDate: '2026-07-18' },
     notepad: 'hola',

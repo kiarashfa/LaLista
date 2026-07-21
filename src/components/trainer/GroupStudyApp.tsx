@@ -12,8 +12,10 @@ import {
   applySkip,
   getAllWordProgress,
   getProfile,
-  markDifficult,
   markKnown,
+  setWordProgress,
+  toggleDifficult,
+  toggleExcluded,
 } from '../../lib/storage/session';
 import { newWordProgress, type VocabWordProgress } from '../../types/progress';
 import type { Word } from '../../types/word';
@@ -44,8 +46,26 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(
     () => typeof localStorage === 'undefined' || localStorage.getItem('lalista:vocabSidebar') !== 'closed',
   );
+  const [knownUndo, setKnownUndo] = useState<{ wordId: string; spanish: string; prev: VocabWordProgress } | null>(null);
   const queueRef = useRef<SessionQueue | null>(null);
   const studiedIds = useRef(new Set<string>());
+  const undoTimer = useRef<number | null>(null);
+
+  useEffect(() => () => { if (undoTimer.current) window.clearTimeout(undoTimer.current); }, []);
+
+  const showKnownUndo = (wordId: string, spanish: string, prev: VocabWordProgress) => {
+    setKnownUndo({ wordId, spanish, prev });
+    if (undoTimer.current) window.clearTimeout(undoTimer.current);
+    undoTimer.current = window.setTimeout(() => setKnownUndo(null), 9000);
+  };
+
+  const undoKnown = () => {
+    if (!knownUndo) return;
+    setWordProgress(knownUndo.wordId, knownUndo.prev);
+    setProgress((cur) => ({ ...cur!, [knownUndo.wordId]: knownUndo.prev }));
+    setKnownUndo(null);
+    if (undoTimer.current) window.clearTimeout(undoTimer.current);
+  };
 
   const toggleSidebar = (open: boolean) => {
     setSidebarOpen(open);
@@ -89,8 +109,10 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
 
   const handleQuizDone = (wordId: string, outcome: QuizOutcome) => {
     if (outcome.kind === 'known') {
+      const prev = progress![wordId];
       refreshWord(wordId, markKnown(wordId));
       queueRef.current!.retire(wordId);
+      showKnownUndo(wordId, byId.get(wordId)?.spanish ?? '', prev);
     } else if (outcome.kind === 'skip') {
       refreshWord(wordId, applySkip(wordId));
       queueRef.current!.report(wordId, 'skip');
@@ -221,14 +243,18 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
               word={currentWord}
               eyebrow={progress[current.wordId].stage === 0 ? 'New word' : 'Review'}
               difficult={progress[current.wordId].difficult}
+              excluded={progress[current.wordId].excluded}
               onNext={() => handleStudyNext(current.wordId)}
-              onMarkDifficult={() => refreshWord(current.wordId, markDifficult(current.wordId))}
+              onToggleDifficult={() => refreshWord(current.wordId, toggleDifficult(current.wordId))}
+              onToggleExcluded={() => refreshWord(current.wordId, toggleExcluded(current.wordId))}
               onMarkKnown={() => {
                 // Same as marking known from a quiz: straight to Mastered,
                 // out of this session, on to the next card.
+                const prev = progress[current.wordId];
                 refreshWord(current.wordId, markKnown(current.wordId));
                 queueRef.current!.retire(current.wordId);
                 studiedIds.current.add(current.wordId);
+                showKnownUndo(current.wordId, currentWord.spanish, prev);
                 advance();
               }}
             />
@@ -240,13 +266,31 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
               choiceCount={4}
               showMarkActions
               allowSkip
+              difficult={progress[current.wordId].difficult}
+              excluded={progress[current.wordId].excluded}
               caption={`${STAGE_NAMES[progress[current.wordId].stage as Stage]} · press Enter ↵ to continue after answering`}
               onDone={(outcome) => handleQuizDone(current.wordId, outcome)}
-              onMarkDifficult={() => refreshWord(current.wordId, markDifficult(current.wordId))}
+              onToggleDifficult={() => refreshWord(current.wordId, toggleDifficult(current.wordId))}
+              onToggleExcluded={() => refreshWord(current.wordId, toggleExcluded(current.wordId))}
             />
           )}
         </div>
       </main>
+
+      {knownUndo && (
+        <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-pill border border-border bg-surface-raised px-4 py-2.5 shadow-lg">
+          <span className="text-sm text-ink-soft">
+            Marked <b className="text-ink">{knownUndo.spanish}</b> as known
+          </span>
+          <button
+            type="button"
+            onClick={undoKnown}
+            className="cursor-pointer rounded-pill bg-vocab px-3 py-1 text-xs font-bold text-white hover:bg-vocab-hover"
+          >
+            Undo
+          </button>
+        </div>
+      )}
     </div>
   );
 }

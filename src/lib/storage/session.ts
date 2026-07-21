@@ -171,6 +171,28 @@ export function markDifficult(wordId: string, now = Date.now()): VocabWordProgre
   });
 }
 
+/** Manual difficult flag, undoable — toggles on/off. */
+export function toggleDifficult(wordId: string, now = Date.now()): VocabWordProgress {
+  return withWord(wordId, now, (p) => {
+    p.difficult = !p.difficult;
+    if (p.difficult) p.dueAt = Math.min(p.dueAt, nextDueAt(p.stage as Stage, now, true));
+  });
+}
+
+/** Exclude/include a word from the Review & Test pools — toggles on/off. */
+export function toggleExcluded(wordId: string, now = Date.now()): VocabWordProgress {
+  return withWord(wordId, now, (p) => {
+    p.excluded = !p.excluded;
+  });
+}
+
+/** Restore a word's full progress verbatim — used to undo a Mark-as-known. */
+export function setWordProgress(wordId: string, value: VocabWordProgress): void {
+  updateSession((state) => {
+    state.vocabulary[wordId] = { ...value };
+  });
+}
+
 /** User-asserted override → straight to Mastered (confirm first). */
 export function markKnown(wordId: string, now = Date.now()): VocabWordProgress {
   return withWord(wordId, now, (p) => {

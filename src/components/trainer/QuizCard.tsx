@@ -30,7 +30,11 @@ interface Props {
   /** Caption under the card, e.g. stage name. */
   caption?: string;
   onDone: (outcome: QuizOutcome) => void;
-  onMarkDifficult?: () => void;
+  /** Group Study only: current flags + toggles for the reversible mark actions. */
+  difficult?: boolean;
+  excluded?: boolean;
+  onToggleDifficult?: () => void;
+  onToggleExcluded?: () => void;
 }
 
 const AUTO_ADVANCE_MS = 2500;
@@ -42,10 +46,9 @@ const PROMPT_LABEL: Record<QuizMode, string> = {
   'listen-en': 'What does it mean?',
 };
 
-export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, showTags = true, mode = 'en-es', caption, onDone, onMarkDifficult }: Props) {
+export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, showTags = true, mode = 'en-es', caption, onDone, difficult = false, excluded = false, onToggleDifficult, onToggleExcluded }: Props) {
   const [answered, setAnswered] = useState<null | boolean>(null);
   const [confirmKnown, setConfirmKnown] = useState(false);
-  const [flaggedNow, setFlaggedNow] = useState(false);
   const answeredAt = useRef(0);
   const field = optionFieldFor(mode);
   const listening = mode.startsWith('listen');
@@ -176,17 +179,28 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
               <>
                 <button
                   type="button"
-                  title={flaggedNow ? 'Marked as difficult' : 'Mark as difficult'}
-                  aria-label="Mark as difficult"
-                  disabled={flaggedNow}
-                  onClick={() => {
-                    onMarkDifficult?.();
-                    setFlaggedNow(true);
-                  }}
-                  className={`flex h-10 w-10 items-center justify-center rounded-pill border-[1.5px] ${flaggedNow ? 'border-error text-error' : 'cursor-pointer border-border text-ink-faint hover:border-error hover:text-error'}`}
+                  title={difficult ? 'Difficult — click to unmark' : 'Mark as difficult'}
+                  aria-label={difficult ? 'Unmark difficult' : 'Mark as difficult'}
+                  aria-pressed={difficult}
+                  onClick={onToggleDifficult}
+                  className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${difficult ? 'border-error text-error' : 'border-border text-ink-faint hover:border-error hover:text-error'}`}
                 >
-                  <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill={flaggedNow ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill={difficult ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 21V4m0 11h13l-2.5-4.5L17 6H4"></path>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  title={excluded ? 'Excluded from Review & Test — click to include' : 'Exclude from Review & Test'}
+                  aria-label={excluded ? 'Include in Review and Test' : 'Exclude from Review and Test'}
+                  aria-pressed={excluded}
+                  onClick={onToggleExcluded}
+                  className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${excluded ? 'border-ink-soft bg-surface-sunken text-ink' : 'border-border text-ink-faint hover:border-ink-soft hover:text-ink'}`}
+                >
+                  <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c7 0 10 8 10 8a18.4 18.4 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <path d="M6.6 6.6A13.5 13.5 0 0 0 2 12s3 8 10 8a9.7 9.7 0 0 0 5.4-1.6"></path>
+                    <path d="m2 2 20 20"></path>
                   </svg>
                 </button>
                 <button
@@ -208,7 +222,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
         {confirmKnown && (
           <ConfirmDialog
             title={`Mark “${word.spanish}” as known?`}
-            body="This jumps the word straight to Mastered — it will leave your study rotation here and appear in Review and Test instead. You can always demote it later by answering it wrong in Group Study."
+            body="This jumps the word straight to Mastered — it leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
             confirmLabel="Yes, I know it"
             onConfirm={() => finish('known')}
             onCancel={() => setConfirmKnown(false)}

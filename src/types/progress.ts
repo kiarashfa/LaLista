@@ -35,6 +35,8 @@ export interface VocabWordProgress {
   misses: number;
   /** In the difficult-words bucket (auto via misses, or manual mark). */
   difficult: boolean;
+  /** User-excluded from Review & Test — the word is never prompted there. */
+  excluded: boolean;
 }
 
 export interface TestBest {
@@ -67,5 +69,5 @@ export const EMPTY_LESSON_PROGRESS: GrammarLessonProgress = {
 };
 
 export function newWordProgress(now: number): VocabWordProgress {
-  return { stage: 0, lastReinforced: now, dueAt: now, misses: 0, difficult: false };
+  return { stage: 0, lastReinforced: now, dueAt: now, misses: 0, difficult: false, excluded: false };
 }

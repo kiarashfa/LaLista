@@ -32,7 +32,7 @@ describe('scheduling (date gates)', () => {
     expect(nextDueAt(6, 0, true)).toBe(10.5 * DAY);
   });
   it('isDue compares against dueAt', () => {
-    const p = { stage: 3, lastReinforced: 0, dueAt: 100, misses: 0, difficult: false };
+    const p = { stage: 3, lastReinforced: 0, dueAt: 100, misses: 0, difficult: false, excluded: false };
     expect(isDue(p, 99)).toBe(false);
     expect(isDue(p, 100)).toBe(true);
   });
