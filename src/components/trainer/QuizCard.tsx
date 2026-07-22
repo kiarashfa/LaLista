@@ -1,6 +1,6 @@
 /**
  * Quiz card for Group Study (4 choices, hints, action icons) and Review
- * (6 choices, hints, skip only). Implements the interaction spec:
+ * (6 choices, hints, skip only). Interaction model:
  * number keys, Esc = skip, proactive disambiguation hint, simultaneous
  * red/green feedback, auto-advance ~2.5s on correct OR Enter immediately.
  */

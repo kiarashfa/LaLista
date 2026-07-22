@@ -1,5 +1,5 @@
 /**
- * One pure grading function per exercise type (SPEC folder contract).
+ * One pure grading function per exercise type.
  *
  * Normalization philosophy: lenient on case and whitespace, STRICT on accents
  * and ñ — accents are frequently the very thing being tested (él/el, hablo/
