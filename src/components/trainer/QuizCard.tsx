@@ -10,6 +10,7 @@ import { buildChoices, GENDER_LABEL, optionFieldFor, POS_LABEL, renderExample, t
 import { WordAudioButtons } from './WordAudioButtons';
 import { ChoiceGrid } from '../exercises/ChoiceGrid';
 import { ConfirmDialog } from './ConfirmDialog';
+import { NoteDialog } from './NoteDialog';
 
 export interface QuizOutcome {
   kind: 'correct' | 'wrong' | 'skip' | 'known';
@@ -35,6 +36,9 @@ interface Props {
   excluded?: boolean;
   onToggleDifficult?: () => void;
   onToggleExcluded?: () => void;
+  /** Personal note/mnemonic — the 📝 action next to mark-as-known. */
+  note?: string;
+  onSaveNote?: (text: string) => void;
 }
 
 const AUTO_ADVANCE_MS = 2500;
@@ -46,9 +50,10 @@ const PROMPT_LABEL: Record<QuizMode, string> = {
   'listen-en': 'What does it mean?',
 };
 
-export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, showTags = true, mode = 'en-es', caption, onDone, difficult = false, excluded = false, onToggleDifficult, onToggleExcluded }: Props) {
+export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, showTags = true, mode = 'en-es', caption, onDone, difficult = false, excluded = false, onToggleDifficult, onToggleExcluded, note = '', onSaveNote }: Props) {
   const [answered, setAnswered] = useState<null | boolean>(null);
   const [confirmKnown, setConfirmKnown] = useState(false);
+  const [noteOpen, setNoteOpen] = useState(false);
   const answeredAt = useRef(0);
   const field = optionFieldFor(mode);
   const listening = mode.startsWith('listen');
@@ -67,11 +72,11 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && allowSkip && answered === null && !confirmKnown) {
+      if (e.key === 'Escape' && allowSkip && answered === null && !confirmKnown && !noteOpen) {
         e.preventDefault();
         finish('skip');
       }
-      if (e.key === 'Enter' && answered !== null && Date.now() - answeredAt.current > 250) {
+      if (e.key === 'Enter' && answered !== null && !noteOpen && Date.now() - answeredAt.current > 250) {
         e.preventDefault();
         finish(answered ? 'correct' : 'wrong');
       }
@@ -79,7 +84,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answered, allowSkip, confirmKnown]);
+  }, [answered, allowSkip, confirmKnown, noteOpen]);
 
   return (
     <div>
@@ -160,7 +165,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
           </div>
         )}
 
-        {answered === null && (allowSkip || showMarkActions) && (
+        {answered === null && (allowSkip || showMarkActions || onSaveNote) && (
           <div className="relative mt-5 flex justify-center gap-3">
             {allowSkip && (
               <button
@@ -216,7 +221,26 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
                 </button>
               </>
             )}
+            {onSaveNote && (
+              <button
+                type="button"
+                title={note ? 'Edit your note' : 'Add a note (mnemonic)'}
+                aria-label={note ? 'Edit your note for this word' : 'Add a note for this word'}
+                aria-pressed={!!note}
+                onClick={() => setNoteOpen(true)}
+                className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${note ? 'border-gold text-gold' : 'border-border text-ink-faint hover:border-gold hover:text-gold'}`}
+              >
+                <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+              </button>
+            )}
           </div>
+        )}
+
+        {noteOpen && onSaveNote && (
+          <NoteDialog spanish={word.spanish} initial={note} onSave={onSaveNote} onClose={() => setNoteOpen(false)} />
         )}
 
         {confirmKnown && (

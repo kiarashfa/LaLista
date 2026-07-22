@@ -1,18 +1,22 @@
 /**
- * Test island: high-pressure recall over MASTERED words only.
- * 3 choices, hints OFF, no skip/mark controls. Two user-selectable timer
- * styles (7 s/question or 90 s total pool), both
- * with immediate cutoff. 5 lives; 5 correct in a row restores one (cap 5).
- * Never touches stage; refreshes lastReinforced. Scored independently as a
- * motivational layer (all-time + today's best).
+ * Test island: high-pressure recall. 3 choices, hints OFF, no skip/mark
+ * controls. Two user-selectable timer styles (7 s/question or 90 s total
+ * pool), both with immediate cutoff. 5 lives; 5 correct in a row restores
+ * one (cap 5). Never touches stage; refreshes lastReinforced. Scored
+ * independently as a motivational layer (all-time + today's best).
+ * Setup mirrors Review's: mix any of the four directions, and scope the
+ * pool to all Mastered words or one topic group (mastered-only/every-word).
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { shuffle } from '../../lib/shuffle';
 import { getAllWordProgress, getProfile, loadSession, recordTestScore, refreshReinforced } from '../../lib/storage/session';
 import type { TestScores } from '../../types/progress';
+import type { VocabWordProgress } from '../../types/progress';
 import type { Word } from '../../types/word';
 import words from '../../content/vocabulary/words.json';
-import { buildChoices, MODE_INFO, optionFieldFor, type QuizMode } from './wordUtils';
+import groups from '../../content/vocabulary/groups.json';
+import { buildChoices, loadStoredModes, MODE_INFO, modesSummary, optionFieldFor, storeModes, type QuizMode } from './wordUtils';
+import { buildPool, groupOptionsFor, masteredCount, ModePicker, ScopePicker, type PoolKind, type Scope } from './setupControls';
 import { WordAudioButtons } from './WordAudioButtons';
 import { ChoiceGrid } from '../exercises/ChoiceGrid';
 import LoadingBar from '../ui/LoadingBar';
@@ -26,12 +30,14 @@ const MAX_LIVES = 5;
 const REDEMPTION_STREAK = 5;
 const FLASH_MS = 350;
 const TICK_MS = 100;
+/** Fewer than this and 3-choice questions stop making sense. */
+const MIN_POOL = 3;
 
 type TimerStyle = 'perQuestion' | 'totalPool';
-type Phase = 'loading' | 'prep' | 'empty' | 'setup' | 'running' | 'done';
+type Phase = 'loading' | 'prep' | 'setup' | 'running' | 'done';
 
-const MODE_KEY = 'lalista:testMode';
-const MODES: QuizMode[] = ['en-es', 'es-en', 'listen-es', 'listen-en'];
+const MODES_KEY = 'lalista:testModes';
+const LEGACY_MODE_KEY = 'lalista:testMode';
 
 interface EndState {
   score: number;
@@ -43,20 +49,23 @@ interface EndState {
 export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   const [phase, setPhase] = useState<Phase>('loading');
   const [style, setStyle] = useState<TimerStyle>('perQuestion');
-  const [qmode, setQmode] = useState<QuizMode>('en-es');
+  const [modes, setModes] = useState<QuizMode[]>(['en-es']);
+  const [scope, setScope] = useState<Scope>('all');
+  const [poolKind, setPoolKind] = useState<PoolKind>('mastered');
+  const [progress, setProgress] = useState<Record<string, VocabWordProgress>>({});
   const [pool, setPool] = useState<Word[]>([]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(MAX_LIVES);
   const [streak, setStreak] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [flash, setFlash] = useState(false);
   const [end, setEnd] = useState<EndState | null>(null);
   const [bests, setBests] = useState<TestScores>({ allTime: null, today: null });
 
   const scoreRef = useRef(0);
   const answeredRef = useRef(false);
   const endedRef = useRef(false);
+  const progressRef = useRef<Record<string, VocabWordProgress>>({});
 
   const groupPools = useMemo(() => {
     const map = new Map<string, Word[]>();
@@ -69,15 +78,21 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
 
   useEffect(() => {
     if (!getProfile()) return; // ProfileGate overlay is up — stay in 'loading'
-    const progress = getAllWordProgress();
-    const mastered = ALL_WORDS.filter((w) => progress[w.id]?.stage === 6 && !progress[w.id]?.excluded);
-    setPool(mastered);
+    const all = getAllWordProgress();
+    setProgress(all);
+    progressRef.current = all;
     setBests(loadSession().testScores);
-    const stored = localStorage.getItem(MODE_KEY) as QuizMode | null;
-    if (stored && MODES.includes(stored)) setQmode(stored);
+    setModes(loadStoredModes(MODES_KEY, LEGACY_MODE_KEY));
+    // Deep link from a group page: /vocabulary/test/?group=<slug>
+    const wanted = new URLSearchParams(window.location.search).get('group');
+    if (wanted && groups.some((g) => g.slug === wanted)) setScope(wanted);
     // Brief prep moment before the setup screen.
-    setPhase(mastered.length < 3 ? 'empty' : 'prep');
+    setPhase('prep');
   }, []);
+
+  const groupOptions = useMemo(() => groupOptionsFor(ALL_WORDS, groups, progress), [progress]);
+  const masteredTotal = useMemo(() => masteredCount(ALL_WORDS, progress), [progress]);
+  const poolCount = useMemo(() => buildPool(ALL_WORDS, progress, scope, poolKind).length, [progress, scope, poolKind]);
 
   const finish = useCallback((reason: 'time' | 'lives') => {
     if (endedRef.current) return;
@@ -90,24 +105,43 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
   }, []);
 
   const word = pool.length > 0 ? pool[index % pool.length] : null;
-  // MEMOIZED per question — computing choices inline in render was the
-  // this was a bug: every 100 ms timer tick re-render reshuffled the
-  // option labels under the user's cursor.
+  // Per-question direction: stable for the life of the question (memo on
+  // index), random across the selected set.
+  const qmode = useMemo<QuizMode>(
+    () => modes[Math.floor(Math.random() * modes.length)] ?? 'en-es',
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [index, phase === 'running'],
+  );
+  // MEMOIZED per question — computing choices inline in render was a bug:
+  // every 100 ms timer tick re-render reshuffled the option labels under
+  // the user's cursor.
   const options = useMemo(
     () => (word ? buildChoices(word, groupPools.get(word.group) ?? ALL_WORDS, 3, optionFieldFor(qmode)) : []),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [word?.id, index, qmode, groupPools],
   );
 
+  /** Brightness refresh only for words with an entry — an every-word run
+   *  must not create stage-0 entries as a side effect. */
+  const reinforce = useCallback((id: string) => {
+    if (progressRef.current[id]) refreshReinforced(id);
+  }, []);
+
+  const pickModes = (next: QuizMode[]) => {
+    setModes(next);
+    if (next.length > 0) storeModes(MODES_KEY, next);
+  };
+
   const start = (chosen: TimerStyle) => {
+    const p = shuffle(buildPool(ALL_WORDS, progressRef.current, scope, poolKind));
+    if (p.length < MIN_POOL || modes.length === 0) return;
     setStyle(chosen);
-    setPool((p) => shuffle(p));
+    setPool(p);
     setIndex(0);
     setScore(0);
     scoreRef.current = 0;
     setLives(MAX_LIVES);
     setStreak(0);
-    setFlash(false);
     setEnd(null);
     answeredRef.current = false;
     endedRef.current = false;
@@ -117,7 +151,6 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
 
   const advance = useCallback(() => {
     answeredRef.current = false;
-    setFlash(false);
     setIndex((i) => i + 1);
     if (style === 'perQuestion') setTimeLeft(PER_QUESTION_MS);
   }, [style]);
@@ -149,7 +182,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
         if (!answeredRef.current) {
           answeredRef.current = true;
           const word = pool[index % pool.length];
-          if (word) refreshReinforced(word.id);
+          if (word) reinforce(word.id);
           loseLife();
           if (!endedRef.current) setTimeout(advance, 0);
         }
@@ -157,7 +190,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
       });
     }, TICK_MS);
     return () => clearInterval(interval);
-  }, [phase, style, index, pool, finish, loseLife, advance]);
+  }, [phase, style, index, pool, finish, loseLife, advance, reinforce]);
 
   if (phase === 'loading') return null;
 
@@ -165,50 +198,43 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
     return <LoadingBar label="Shuffling the deck…" accent="vocab" onDone={() => setPhase('setup')} />;
   }
 
-  if (phase === 'empty') {
-    return (
-      <div className="rounded-lg border border-border bg-surface-raised px-8 py-10 text-center shadow-md">
-        <p className="m-0 text-4xl" aria-hidden="true">⏱️</p>
-        <h2 className="mt-3 mb-2 text-xl font-bold text-ink">Test needs Mastered words</h2>
-        <p className="mx-auto mb-6 max-w-[420px] text-sm leading-relaxed text-ink-soft">
-          Test mode draws only from words you've <b>Mastered</b> (at least 3). Master some words in Group Study first —
-          then come race the clock.
-        </p>
-        <a href={vocabularyUrl} className="rounded-pill bg-vocab px-6 py-3 text-sm font-bold text-white no-underline hover:bg-vocab-hover">
-          Go to Group Study →
-        </a>
-      </div>
-    );
-  }
-
   if (phase === 'setup') {
     return (
-      <div className="rounded-lg border border-border bg-surface-raised px-8 py-8 shadow-md">
-        <h2 className="m-0 text-center text-xl font-bold text-ink">Direction, then your clock</h2>
-        <p className="m-0 mt-1 text-center text-sm text-ink-soft">
-          {pool.length} Mastered words in the pool · 5 lives · 5 in a row wins one back
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {MODES.map((m) => (
-            <button
-              key={m}
-              type="button"
-              title={MODE_INFO[m].desc}
-              onClick={() => {
-                setQmode(m);
-                localStorage.setItem(MODE_KEY, m);
-              }}
-              className={`cursor-pointer rounded-pill border-2 px-4 py-1.5 text-sm font-bold ${qmode === m ? 'border-vocab bg-vocab-soft text-vocab' : 'border-border text-ink-soft hover:border-ink-faint'}`}
-            >
-              {MODE_INFO[m].title}
-            </button>
-          ))}
-        </div>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+      <div className="rounded-lg border border-border bg-surface-raised px-6 py-8 shadow-md sm:px-8">
+        <h2 className="m-0 text-center text-xl font-bold text-ink">Set up your test</h2>
+        <p className="m-0 mt-1 text-center text-sm text-ink-soft">5 lives · 5 in a row wins one back · picking a clock starts the run</p>
+
+        {masteredTotal < MIN_POOL && (
+          <p className="mt-4 mb-0 rounded-md border border-gold bg-gold-bg px-4 py-3 text-sm leading-relaxed text-ink-soft">
+            ⏱️ Test normally draws from words you've <b>Mastered</b> (at least {MIN_POOL}) — you're not there yet. Pick a
+            topic group below and choose <b>Every word</b> to race on it anyway, or{' '}
+            <a href={vocabularyUrl} className="font-semibold text-ink underline">
+              master some in Group Study
+            </a>{' '}
+            first.
+          </p>
+        )}
+
+        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Which words</p>
+        <ScopePicker
+          groups={groupOptions}
+          masteredTotal={masteredTotal}
+          scope={scope}
+          poolKind={poolKind}
+          onScope={setScope}
+          onPoolKind={setPoolKind}
+        />
+
+        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Directions — mix any</p>
+        <ModePicker modes={modes} onChange={pickModes} />
+
+        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Your clock</p>
+        <div className="grid gap-4 sm:grid-cols-2">
           <button
             type="button"
             onClick={() => start('perQuestion')}
-            className="cursor-pointer rounded-md border-2 border-border bg-surface-raised p-5 text-left hover:border-vocab hover:bg-vocab-soft"
+            disabled={poolCount < MIN_POOL || modes.length === 0}
+            className="cursor-pointer rounded-md border-2 border-border bg-surface-raised p-5 text-left hover:border-vocab hover:bg-vocab-soft disabled:cursor-default disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface-raised"
           >
             <p className="m-0 font-bold text-ink">Per-question</p>
             <p className="m-0 mt-1 text-sm text-ink-soft">7 seconds per word, fresh every question. Slow answers cost a life.</p>
@@ -216,14 +242,19 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
           <button
             type="button"
             onClick={() => start('totalPool')}
-            className="cursor-pointer rounded-md border-2 border-border bg-surface-raised p-5 text-left hover:border-vocab hover:bg-vocab-soft"
+            disabled={poolCount < MIN_POOL || modes.length === 0}
+            className="cursor-pointer rounded-md border-2 border-border bg-surface-raised p-5 text-left hover:border-vocab hover:bg-vocab-soft disabled:cursor-default disabled:opacity-40 disabled:hover:border-border disabled:hover:bg-surface-raised"
           >
             <p className="m-0 font-bold text-ink">Total pool</p>
             <p className="m-0 mt-1 text-sm text-ink-soft">90 seconds for the whole run. Fast answers bank time for harder ones.</p>
           </button>
         </div>
-        <p className="m-0 mt-5 text-center text-xs text-ink-faint">
-          Wrong answers can't demote a word here — Test never touches your learning progress.
+        <p className="m-0 mt-3 text-center text-xs text-ink-faint">
+          {modes.length === 0
+            ? 'Pick at least one direction.'
+            : poolCount < MIN_POOL
+              ? `Need at least ${MIN_POOL} words — this selection has ${poolCount}.`
+              : `${poolCount} words · ${modesSummary(modes)} · wrong answers can't demote a word here.`}
         </p>
         {(bests.allTime || bests.today) && (
           <p className="m-0 mt-2 text-center text-sm font-semibold text-ink-soft">
@@ -273,7 +304,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
             onClick={() => setPhase('setup')}
             className="cursor-pointer rounded-pill border-2 border-border px-5 py-2.5 text-sm font-bold text-ink hover:border-vocab"
           >
-            Change clock
+            Change setup
           </button>
           <a href={vocabularyUrl} className="rounded-pill border-2 border-border px-5 py-2.5 text-sm font-bold text-ink no-underline hover:border-vocab">
             Done
@@ -306,7 +337,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
         </div>
       </div>
 
-      <div className={`mb-5 h-2 overflow-hidden rounded-pill bg-surface-sunken ${style === 'perQuestion' ? '' : ''}`}>
+      <div className="mb-5 h-2 overflow-hidden rounded-pill bg-surface-sunken">
         <div
           className={`h-full rounded-pill ${timerPct < 25 ? 'bg-error' : 'bg-vocab'}`}
           style={{ width: `${timerPct}%`, transition: `width ${TICK_MS}ms linear` }}
@@ -332,8 +363,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
           onGraded={(ok) => {
             if (answeredRef.current || endedRef.current) return;
             answeredRef.current = true;
-            setFlash(true);
-            refreshReinforced(word.id);
+            reinforce(word.id);
             if (ok) {
               scoreRef.current += 1;
               setScore(scoreRef.current);

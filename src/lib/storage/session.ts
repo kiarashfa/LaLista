@@ -24,6 +24,7 @@ function emptySession(): SessionState {
     testScores: { allTime: null, today: null },
     streak: emptyStreak(),
     notepad: '',
+    grammarNotepad: '',
   };
 }
 
@@ -94,6 +95,12 @@ export function hasUnsavedChanges(): boolean {
 export function setNotepad(text: string): void {
   updateSession((state) => {
     state.notepad = text;
+  });
+}
+
+export function setGrammarNotepad(text: string): void {
+  updateSession((state) => {
+    state.grammarNotepad = text;
   });
 }
 
@@ -208,6 +215,24 @@ export function refreshReinforced(wordId: string, now = Date.now()): VocabWordPr
   return withWord(wordId, now, (p) => {
     p.lastReinforced = now;
   }, { activity: true });
+}
+
+/**
+ * Streak credit for practice on words WITHOUT a progress entry (e.g. a
+ * scoped every-word Review) — refreshReinforced would create one, which
+ * would wrongly count the word as "started" on the dashboard.
+ */
+export function touchPracticeActivity(now = Date.now()): void {
+  updateSession((state) => touchActivity(state, now));
+}
+
+/** Set/replace a word's personal note; an empty note removes it. */
+export function setWordNote(wordId: string, note: string, now = Date.now()): VocabWordProgress {
+  return withWord(wordId, now, (p) => {
+    const trimmed = note.trim();
+    if (trimmed) p.note = trimmed;
+    else delete p.note;
+  });
 }
 
 /** Records a Test score; returns which boards it beat (all-time + today). */

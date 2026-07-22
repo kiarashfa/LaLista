@@ -25,6 +25,7 @@ export function buildSaveFile(state: SessionState, now = Date.now()): SaveFile {
     testScores: state.testScores,
     streak: state.streak,
     notepad: state.notepad,
+    grammarNotepad: state.grammarNotepad,
   };
 }
 
@@ -70,6 +71,7 @@ export function sessionFromSaveFile(file: SaveFile): SessionState {
     testScores: file.testScores,
     streak: file.streak,
     notepad: typeof file.notepad === 'string' ? file.notepad : '',
+    grammarNotepad: typeof file.grammarNotepad === 'string' ? file.grammarNotepad : '',
   };
 }
 

@@ -37,6 +37,8 @@ export interface VocabWordProgress {
   difficult: boolean;
   /** User-excluded from Review & Test — the word is never prompted there. */
   excluded: boolean;
+  /** Personal mnemonic/note, set from the 📝 button on a word card. Absent when none. */
+  note?: string;
 }
 
 export interface TestBest {
@@ -59,7 +61,11 @@ export interface SessionState {
   vocabulary: Record<string, VocabWordProgress>;
   testScores: TestScores;
   streak: import('./profile').StreakState;
+  /** General free-form notes (small HTML subset — see src/lib/richtext.ts). */
   notepad: string;
+  /** Grammar-tab notes, same format. Added post-launch as an optional slice —
+   *  older saves simply lack it and load as ''. */
+  grammarNotepad: string;
 }
 
 export const EMPTY_LESSON_PROGRESS: GrammarLessonProgress = {

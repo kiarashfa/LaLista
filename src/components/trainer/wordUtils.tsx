@@ -31,9 +31,11 @@ export const GENDER_LABEL: Record<Exclude<Word['gender'], null>, string> = {
 
 /**
  * Quiz direction/mode. Group Study stays 'en-es';
- * Review and Test let the user choose, including the two listening modes.
+ * Review and Test let the user mix any combination, listening included.
  */
 export type QuizMode = 'en-es' | 'es-en' | 'listen-es' | 'listen-en';
+
+export const ALL_MODES: QuizMode[] = ['en-es', 'es-en', 'listen-es', 'listen-en'];
 
 export const MODE_INFO: Record<QuizMode, { title: string; desc: string }> = {
   'en-es': { title: 'EN → ES', desc: 'See the English, pick the Spanish.' },
@@ -41,6 +43,45 @@ export const MODE_INFO: Record<QuizMode, { title: string; desc: string }> = {
   'listen-es': { title: '🔊 Listen → ES', desc: 'Hear the word, pick the Spanish spelling.' },
   'listen-en': { title: '🔊 Listen → EN', desc: 'Hear the word, pick the meaning.' },
 };
+
+/**
+ * Load the user's saved direction set. Falls back to the pre-multi-select
+ * single-mode key (so an existing visitor keeps their last choice), then
+ * to EN→ES.
+ */
+export function loadStoredModes(key: string, legacyKey: string): QuizMode[] {
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      const parsed: unknown = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        const valid = parsed.filter((m): m is QuizMode => ALL_MODES.includes(m as QuizMode));
+        if (valid.length > 0) return valid;
+      }
+    }
+  } catch {
+    // fall through to the legacy key
+  }
+  const legacy = localStorage.getItem(legacyKey) as QuizMode | null;
+  return legacy && ALL_MODES.includes(legacy) ? [legacy] : ['en-es'];
+}
+
+export function storeModes(key: string, modes: QuizMode[]): void {
+  localStorage.setItem(key, JSON.stringify(modes));
+}
+
+/**
+ * One direction per question: balanced across the selected set (no mode
+ * starves), then shuffled so the sequence stays unpredictable.
+ */
+export function assignModes(count: number, modes: QuizMode[]): QuizMode[] {
+  return shuffle(Array.from({ length: count }, (_, i) => modes[i % modes.length]));
+}
+
+/** "EN → ES" for a single direction, "Mixed · N directions" for a blend. */
+export function modesSummary(modes: QuizMode[]): string {
+  return modes.length === 1 ? MODE_INFO[modes[0]].title : `Mixed · ${modes.length} directions`;
+}
 
 /** Which word field the answer options are drawn from for a given mode. */
 export function optionFieldFor(mode: QuizMode): 'spanish' | 'english' {

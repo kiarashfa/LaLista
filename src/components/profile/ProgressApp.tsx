@@ -6,12 +6,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { withBase } from '../../lib/paths';
 import { forgetHandle, openWithPicker, readInputFile, supportsFileSystemAccess, type SaveOutcome } from '../../lib/storage/fileAccess';
 import { parseSaveFile, SAVE_ERROR_MESSAGES } from '../../lib/storage/saveFile';
-import { applyLoadedSaveFile, closeSession, createProfile, loadSession, setNotepad } from '../../lib/storage/session';
+import { applyLoadedSaveFile, closeSession, createProfile, loadSession } from '../../lib/storage/session';
 import { effectiveStreak, localDateString } from '../../lib/storage/streak';
 import { scoreBand, type ScoreBand } from '../../lib/grading/thresholds';
 import { STAGE_NAMES } from '../../lib/srs/stages';
 import type { SessionState } from '../../types/progress';
 import { AvatarPicker, AvatarView } from './AvatarPicker';
+import Notepad from './Notepad';
 import TransferOverlay from './TransferOverlay';
 import { useSave } from './useSave';
 import type { Avatar } from '../../types/profile';
@@ -58,7 +59,8 @@ export default function ProgressApp({ groups, parts }: Props) {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
-  const notepadTimer = useRef<ReturnType<typeof setTimeout>>(null);
+  /** Bumped on every file load so uncontrolled surfaces (Notepad) remount with the new contents. */
+  const [fileStamp, setFileStamp] = useState(0);
   const [loadTransfer, setLoadTransfer] = useState<null | { done: boolean; name: string }>(null);
   const { dirty, fsa, status, save, refresh, overlay: saveOverlay } = useSave();
 
@@ -89,6 +91,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         setLoadTransfer(null);
         refresh();
         reload();
+        setFileStamp((s) => s + 1);
       }}
     />
   ) : null;
@@ -206,7 +209,7 @@ export default function ProgressApp({ groups, parts }: Props) {
   }
 
   // ---------- Profile + dashboard ----------
-  const { profile, vocabulary, grammar, testScores, streak, notepad } = state;
+  const { profile, vocabulary, grammar, testScores, streak, notepad, grammarNotepad } = state;
   const stageCounts = Array.from({ length: 7 }, (_, s) => Object.values(vocabulary).filter((p) => p.stage === s).length);
   const started = Object.values(vocabulary).length;
   const masteredCount = stageCounts[6];
@@ -314,21 +317,8 @@ export default function ProgressApp({ groups, parts }: Props) {
         </div>
       </section>
 
-      {/* ---- Notepad ---- */}
-      <section className="mt-6">
-        <h2 className="mb-2 text-sm font-bold tracking-wide text-ink-soft uppercase">Notepad</h2>
-        <textarea
-          defaultValue={notepad}
-          rows={4}
-          placeholder="Jot anything — mnemonic tricks, words to ask about, favorite sentences. Lives in your save file."
-          className="w-full rounded-md border-2 border-border bg-surface-raised px-4 py-3 text-[0.95rem] text-ink outline-none focus:border-gold"
-          onChange={(e) => {
-            if (notepadTimer.current) clearTimeout(notepadTimer.current);
-            const text = e.target.value;
-            notepadTimer.current = setTimeout(() => setNotepad(text), 500);
-          }}
-        />
-      </section>
+      {/* ---- Notepad: general / vocabulary / grammar ---- */}
+      <Notepad key={fileStamp} notepad={notepad} grammarNotepad={grammarNotepad} vocabulary={vocabulary} />
 
       {/* ---- Dashboard: vocabulary groups ---- */}
       <section className="mt-8">

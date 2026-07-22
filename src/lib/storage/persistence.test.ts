@@ -41,10 +41,13 @@ function demoState(): SessionState {
     schemaVersion: 1,
     profile: { name: 'Kia', avatar: { kind: 'emoji', value: '🦊' }, createdAt: new Date(NOON).toISOString() },
     grammar: { 'lesson-22': { readAt: 'x', best: { correct: 7, total: 9, at: 'y' }, attempts: 2 } },
-    vocabulary: { colors_rojo: { stage: 6, lastReinforced: NOON, dueAt: NOON, misses: 0, difficult: false, excluded: false } },
+    vocabulary: {
+      colors_rojo: { stage: 6, lastReinforced: NOON, dueAt: NOON, misses: 0, difficult: false, excluded: false, note: 'red like a rojo rose' },
+    },
     testScores: { allTime: { score: 5, at: 'z' }, today: null },
     streak: { current: 3, longest: 5, lastActiveDate: '2026-07-18' },
     notepad: 'hola',
+    grammarNotepad: 'ser <b>vs</b> estar',
   };
 }
 
@@ -79,6 +82,15 @@ describe('save file', () => {
 
   it('refuses to build without a profile', () => {
     expect(() => buildSaveFile({ ...demoState(), profile: null }, NOON)).toThrow();
+  });
+
+  it('loads a pre-grammarNotepad save with the new slice defaulted', () => {
+    const file = buildSaveFile(demoState(), NOON) as Record<string, unknown>;
+    delete file.grammarNotepad;
+    const parsed = parseSaveFile(JSON.stringify(file));
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    expect(sessionFromSaveFile(parsed.file).grammarNotepad).toBe('');
   });
 });
 

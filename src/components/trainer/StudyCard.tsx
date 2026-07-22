@@ -8,6 +8,7 @@ import type { Word } from '../../types/word';
 import { GENDER_LABEL, POS_LABEL, renderExample } from './wordUtils';
 import { WordAudioButtons } from './WordAudioButtons';
 import { ConfirmDialog } from './ConfirmDialog';
+import { NoteDialog } from './NoteDialog';
 
 interface Props {
   word: Word;
@@ -22,21 +23,25 @@ interface Props {
   onToggleExcluded?: () => void;
   /** Confirmed mark-as-known — parent retires the word and advances. */
   onMarkKnown?: () => void;
+  /** Personal note/mnemonic — the 📝 action next to mark-as-known. */
+  note?: string;
+  onSaveNote?: (text: string) => void;
 }
 
-export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = false, onToggleDifficult, excluded = false, onToggleExcluded, onMarkKnown }: Props) {
+export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = false, onToggleDifficult, excluded = false, onToggleExcluded, onMarkKnown, note = '', onSaveNote }: Props) {
   const [confirmKnown, setConfirmKnown] = useState(false);
+  const [noteOpen, setNoteOpen] = useState(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !confirmKnown) {
+      if (e.key === 'Enter' && !confirmKnown && !noteOpen) {
         e.preventDefault();
         onNext();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onNext, confirmKnown]);
+  }, [onNext, confirmKnown, noteOpen]);
 
   return (
     <div className="relative overflow-hidden rounded-lg bg-surface-raised px-6 py-8 text-center shadow-lg sm:px-10">
@@ -77,7 +82,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
         Next <span className="ml-1 rounded-[4px] bg-white/20 px-1.5 py-0.5 text-[0.68rem]">↵</span>
       </button>
 
-      {(onToggleDifficult || onToggleExcluded || onMarkKnown) && (
+      {(onToggleDifficult || onToggleExcluded || onMarkKnown || onSaveNote) && (
         <div className="relative mt-4 flex justify-center gap-3">
           {onToggleDifficult && (
             <button
@@ -122,7 +127,26 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
               </svg>
             </button>
           )}
+          {onSaveNote && (
+            <button
+              type="button"
+              title={note ? 'Edit your note' : 'Add a note (mnemonic)'}
+              aria-label={note ? 'Edit your note for this word' : 'Add a note for this word'}
+              aria-pressed={!!note}
+              onClick={() => setNoteOpen(true)}
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] ${note ? 'border-gold text-gold' : 'border-border text-ink-faint hover:border-gold hover:text-gold'}`}
+            >
+              <svg className="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+          )}
         </div>
+      )}
+
+      {noteOpen && onSaveNote && (
+        <NoteDialog spanish={word.spanish} initial={note} onSave={onSaveNote} onClose={() => setNoteOpen(false)} />
       )}
 
       {confirmKnown && onMarkKnown && (

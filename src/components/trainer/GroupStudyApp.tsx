@@ -13,6 +13,7 @@ import {
   getAllWordProgress,
   getProfile,
   markKnown,
+  setWordNote,
   setWordProgress,
   toggleDifficult,
   toggleExcluded,
@@ -28,6 +29,9 @@ interface Props {
   groupTitle: string;
   words: Word[];
   vocabularyUrl: string;
+  /** Review/Test pre-scoped to this group (?group=<slug>). */
+  reviewUrl: string;
+  testUrl: string;
 }
 
 interface SessionStats {
@@ -36,7 +40,7 @@ interface SessionStats {
   correct: number;
 }
 
-export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Props) {
+export default function GroupStudyApp({ groupTitle, words, vocabularyUrl, reviewUrl, testUrl }: Props) {
   const now = Date.now();
   const byId = useMemo(() => new Map(words.map((w) => [w.id, w])), [words]);
   const [progress, setProgress] = useState<Record<string, VocabWordProgress> | null>(null);
@@ -233,9 +237,17 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
                 </p>
               )}
               <SaveNudge />
-              <a href={vocabularyUrl} className="mt-5 inline-block rounded-pill bg-vocab px-6 py-3 text-sm font-bold text-white no-underline hover:bg-vocab-hover">
-                Back to all groups
-              </a>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <a href={vocabularyUrl} className="rounded-pill bg-vocab px-6 py-3 text-sm font-bold text-white no-underline hover:bg-vocab-hover">
+                  Back to all groups
+                </a>
+                <a href={reviewUrl} className="rounded-pill border-2 border-border px-5 py-2.5 text-sm font-bold text-ink no-underline hover:border-success">
+                  Review this group
+                </a>
+                <a href={testUrl} className="rounded-pill border-2 border-border px-5 py-2.5 text-sm font-bold text-ink no-underline hover:border-vocab">
+                  Test this group
+                </a>
+              </div>
             </div>
           ) : current.kind === 'study' ? (
             <StudyCard
@@ -244,6 +256,8 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
               eyebrow={progress[current.wordId].stage === 0 ? 'New word' : 'Review'}
               difficult={progress[current.wordId].difficult}
               excluded={progress[current.wordId].excluded}
+              note={progress[current.wordId].note ?? ''}
+              onSaveNote={(text) => refreshWord(current.wordId, setWordNote(current.wordId, text))}
               onNext={() => handleStudyNext(current.wordId)}
               onToggleDifficult={() => refreshWord(current.wordId, toggleDifficult(current.wordId))}
               onToggleExcluded={() => refreshWord(current.wordId, toggleExcluded(current.wordId))}
@@ -269,6 +283,8 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl }: Prop
               difficult={progress[current.wordId].difficult}
               excluded={progress[current.wordId].excluded}
               caption={`${STAGE_NAMES[progress[current.wordId].stage as Stage]} · press Enter ↵ to continue after answering`}
+              note={progress[current.wordId].note ?? ''}
+              onSaveNote={(text) => refreshWord(current.wordId, setWordNote(current.wordId, text))}
               onDone={(outcome) => handleQuizDone(current.wordId, outcome)}
               onToggleDifficult={() => refreshWord(current.wordId, toggleDifficult(current.wordId))}
               onToggleExcluded={() => refreshWord(current.wordId, toggleExcluded(current.wordId))}

@@ -16,5 +16,12 @@ const words = (allWords as unknown as Word[]).filter((w) => w.group === group.sl
 ---
 
 <BaseLayout requireProfile section="vocabulary" title={`${group.title} — LaLista Vocabulary`} description={`Study the ${group.count} words of ${group.title} with spaced repetition and audio.`}>
-  <GroupStudyApp client:only="react" groupTitle={group.title} words={words} vocabularyUrl={withBase('/vocabulary/')} />
+  <GroupStudyApp
+    client:only="react"
+    groupTitle={group.title}
+    words={words}
+    vocabularyUrl={withBase('/vocabulary/')}
+    reviewUrl={withBase(`/vocabulary/review/?group=${group.slug}`)}
+    testUrl={withBase(`/vocabulary/test/?group=${group.slug}`)}
+  />
 </BaseLayout>

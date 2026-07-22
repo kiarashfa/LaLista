@@ -37,6 +37,8 @@ export interface SaveFile {
   testScores: TestScores;
   streak: StreakState;
   notepad: string;
+  /** Added additively within v1 — absent in older files, defaulted to '' on load. */
+  grammarNotepad?: string;
 }
 
 export type SaveFileError =
