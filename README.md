@@ -28,5 +28,9 @@ Astro + React islands, no backend.
 A personal, non-profit project — nothing to sign, nothing to sell. Just a quiet
 place to build real Spanish, one word and one rule at a time.
 
+© 2026 Kiarash Farajzadehahary.
+
+⚖ Licensed under the [KFA Source-Available License 1.0](LICENSE).
+
 Made with ❤️, and a lot of *¿* and *¡*.
 
