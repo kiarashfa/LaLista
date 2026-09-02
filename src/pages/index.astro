@@ -1,22 +1,25 @@
 ---
 /** Landing page. */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/paths';
 import groups from '../content/vocabulary/groups.json';
 import words from '../content/vocabulary/words.json';
+
+const chapters = await getCollection('grammarMeta');
 ---
 
-<BaseLayout title="LaLista — learn Spanish, the Castellano way" description="Free Spanish vocabulary trainer and complete grammar reference. No ads, no accounts — your progress lives in a file you keep.">
+<BaseLayout title="LaLista: learn Spanish, the Castellano way" description="Free Spanish vocabulary trainer and complete grammar reference. No ads, no accounts. Your progress lives in a file you keep.">
   <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-16 sm:px-8">
     <header class="relative mx-auto max-w-[640px] text-center">
       <span class="font-display pointer-events-none absolute -top-10 -left-4 z-0 text-[11rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
       <span class="font-display pointer-events-none absolute -right-4 -bottom-16 z-0 text-[11rem] leading-none font-light text-grammar opacity-[0.06] select-none" aria-hidden="true">¡</span>
       <h1 class="display-friendly wordmark-gradient relative z-10 m-0 text-5xl font-medium sm:text-6xl">¡LaLista!</h1>
       <p class="relative z-10 mx-auto mt-5 max-w-[480px] text-lg leading-relaxed text-ink-soft">
-        Learn Spanish — the Castellano way. {words.length} words with real pronunciation, and a grammar reference that
-        covers every topic completely.
+        Learn Spanish, the Castellano way. {words.length} words with real pronunciation, and a {chapters.length}-chapter
+        grammar reference that covers every topic completely.
       </p>
-      <p class="relative z-10 mt-3 text-sm text-ink-faint">Free. No ads. No accounts — your progress lives in a file you keep.</p>
+      <p class="relative z-10 mt-3 text-sm text-ink-faint">Free. No ads. No accounts. Your progress lives in a file you keep.</p>
       <p class="relative z-10 mt-5 flex justify-center gap-3">
         <a href={withBase('/progress/')} class="rounded-pill border-2 border-border bg-surface-raised px-5 py-2.5 text-sm font-bold text-ink no-underline hover:border-success">📂 Load your progress file</a>
         <a href={withBase('/progress/')} class="rounded-pill bg-vocab px-5 py-2.5 text-sm font-bold text-white no-underline hover:bg-vocab-hover">Start fresh →</a>
@@ -34,7 +37,7 @@ import words from '../content/vocabulary/words.json';
       <a href={withBase('/grammar/')} class="group rounded-lg border border-border bg-surface-raised p-6 no-underline shadow-md transition-shadow hover:shadow-lg">
         <p class="m-0 text-xs font-bold tracking-widest text-grammar uppercase">Grammar</p>
         <p class="display-editorial m-0 mt-2 text-2xl font-semibold text-ink group-hover:text-grammar">The reference</p>
-        <p class="m-0 mt-2 text-sm leading-relaxed text-ink-soft">57 chapters, each one grammatical topic covered end-to-end, with interactive workbooks.</p>
+        <p class="m-0 mt-2 text-sm leading-relaxed text-ink-soft">{chapters.length} chapters, each one grammatical topic covered end-to-end, with interactive workbooks.</p>
       </a>
     </div>
   </main>

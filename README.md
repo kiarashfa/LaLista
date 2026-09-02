@@ -1,7 +1,6 @@
 # ¡LaLista!
 
-**LaLista** — Spanish for "the list" (also means "the clever one") — is a free,
-
+**LaLista** (Spanish for "the list", also meaning "the clever one") is a free,
 no-login, no-ads site for learning Spanish the way it's spoken in Spain: *Castellano*.
 
 Consider it your first lesson: ***la*** for grammar, and ***lista*** for vocabulary.
@@ -15,21 +14,12 @@ No sign-up, no accounts, no tracking. Your progress lives in a small file *you*
 keep, load it when you arrive and save it when you leave. Fully static:
 Astro + React islands, no backend.
 
-
-
-## Credits
-
-* Definitions informed by [WordReference](https://www.wordreference.com/) and the [RAE](https://www.rae.es/).
-* Pronunciations from [Lingua Libre](https://lingualibre.org/) volunteers (CC BY 4.0) and [Piper](https://github.com/rhasspy/piper) text-to-speech.
-* Set in Fraunces \& Figtree.
-
 ## About
 
-A personal, non-profit project — nothing to sign, nothing to sell. Just a quiet
+A personal, non-profit project: nothing to sign, nothing to sell. Just a quiet
 place to build real Spanish, one word and one rule at a time.
 
 © 2026 Kiarash Farajzadehahary.
-
 ⚖ Licensed under the [KFA Source-Available License 1.0](LICENSE).
 
 Made with ❤️, and a lot of *¿* and *¡*.

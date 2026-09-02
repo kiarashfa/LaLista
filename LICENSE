@@ -173,7 +173,6 @@ Appendix — Project-Specific Notice
 
 This repository incorporates certain third-party material (specifically,
 pronunciation audio recordings) that is correctly and completely attributed
-under its own license within the site's Credits page (src/pages/credits.astro,
-published at /credits) and src/content/vocabulary/audio-credits.md. That
-material is governed solely by its original license; it is not covered by
-this License and this License does not apply to it.
+under its own license within the site's Credits page. That material is
+governed solely by its original license; it is not covered by this License
+and this License does not apply to it.

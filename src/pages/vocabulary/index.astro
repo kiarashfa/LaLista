@@ -28,15 +28,15 @@ const groupRows = groups.map((group, i) => {
   requireProfile
   section="vocabulary"
   title="Vocabulary — LaLista"
-  description="2001 Spanish (Castellano) words across 27 topic groups, each with native and TTS pronunciation."
+  description={`${words.length} Spanish (Castellano) words across ${groups.length} topic groups, each with native and TTS pronunciation.`}
 >
   <main class="mx-auto w-full max-w-[900px] flex-1 px-6 py-12 sm:px-8">
     <header class="relative mb-10">
       <span class="font-display pointer-events-none absolute -top-8 -left-2 z-0 text-[9rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
       <h1 class="display-friendly relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">Vocabulary</h1>
       <p class="relative z-10 mt-4 text-lg leading-relaxed text-ink-soft">
-        {words.length} words in {groups.length} topic groups, every one with audio. Pick a group to study — or drill
-        what you've already mastered.
+        {words.length} words across {groups.length} topic groups, every one with real audio. Pick a group to start
+        studying, then use Review for relaxed no-clock practice or Test to race the clock once you're ready.
       </p>
     </header>
 

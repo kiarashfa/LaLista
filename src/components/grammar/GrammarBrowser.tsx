@@ -102,7 +102,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
   );
 
   const selectClass =
-    'cursor-pointer rounded-pill border-[1.5px] border-border bg-surface-raised px-3 py-1.5 text-[0.8rem] font-semibold text-ink-soft outline-none hover:border-grammar focus:border-grammar';
+    'max-w-[150px] shrink cursor-pointer truncate rounded-pill border-[1.5px] border-border bg-surface-raised px-3 py-1.5 text-[0.8rem] font-semibold text-ink-soft outline-none hover:border-grammar focus:border-grammar';
 
   return (
     <div>
@@ -128,7 +128,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
       ) : (
         <div>
           {/* Filters (pill bar) */}
-          <div className="mb-4 flex flex-wrap items-center gap-2">
+          <div className="mb-4 flex flex-wrap items-center gap-2 sm:flex-nowrap">
             <select value={part} onChange={(e) => setPart(e.target.value)} className={selectClass} aria-label="Filter by Part">
               <option value="all">Part: all</option>
               {parts.map(([numeral, title]) => (
@@ -157,7 +157,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="search chapters…"
-              className="min-w-[140px] flex-1 rounded-pill border-[1.5px] border-border bg-surface-raised px-4 py-1.5 text-[0.85rem] text-ink outline-none placeholder:text-ink-faint focus:border-grammar sm:max-w-[220px] sm:flex-none sm:ml-auto"
+              className="min-w-[140px] flex-1 rounded-pill border-[1.5px] border-border bg-surface-raised px-4 py-1.5 text-[0.85rem] text-ink outline-none placeholder:text-ink-faint focus:border-grammar sm:min-w-0 sm:max-w-[220px] sm:flex-1 sm:ml-auto"
             />
           </div>
 

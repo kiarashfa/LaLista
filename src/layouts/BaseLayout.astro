@@ -20,6 +20,9 @@ interface Props {
 
 const { title, description, section = null, requireProfile = false } = Astro.props;
 
+const ogImage = new URL(withBase('/og-image.png'), Astro.site).href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
 const navItems = [
   { key: 'vocabulary', label: 'Vocabulary', short: 'Vocab', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
   { key: 'grammar', label: 'Grammar', short: 'Grammar', href: withBase('/grammar/'), activeClass: 'text-grammar bg-grammar-soft' },
@@ -34,6 +37,15 @@ const navItems = [
     <meta name="generator" content={Astro.generator} />
     {description && <meta name="description" content={description} />}
     <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
     <script is:inline>
       // Theme init before first paint — user toggle wins, else system preference.
       (() => {
@@ -105,13 +117,12 @@ const navItems = [
     {requireProfile && <ProfileGate client:load />}
     <slot />
 
-    <footer class="mt-auto border-t border-border px-8 py-6 text-center text-xs text-ink-faint">
-      <p>
-        LaLista is free, ad-free and account-free —
-        <a href={withBase('/about/')} class="font-semibold text-ink-soft underline">about the project</a>.
-        Definitions informed by WordReference and the RAE.
-        Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS —
-        <a href={withBase('/credits/')} class="font-semibold text-ink-soft underline">full credits</a>.
+    <footer class="mt-auto border-t border-border px-8 py-4 text-center text-xs leading-relaxed text-ink-faint">
+      <p class="m-0">
+        LaLista is free, ad-free and account-free (<a href={withBase('/about/')} class="font-semibold text-ink-soft underline">about the project</a>).
+      </p>
+      <p class="m-0">
+        Definitions informed by WordReference and the RAE. Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS (<a href={withBase('/credits/')} class="font-semibold text-ink-soft underline">full credits</a>).
       </p>
     </footer>
 
