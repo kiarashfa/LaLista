@@ -23,6 +23,13 @@ const { title, description, section = null, requireProfile = false } = Astro.pro
 const ogImage = new URL(withBase('/og-image.png'), Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 
+// First-commit year, from `git log --reverse`. Pinned rather than queried at build time:
+// it can never change, and CI checkouts are shallow (git history isn't there to query).
+const COPYRIGHT_START_YEAR = 2026;
+const currentYear = new Date().getFullYear();
+const copyrightYears =
+  currentYear > COPYRIGHT_START_YEAR ? `${COPYRIGHT_START_YEAR}-${currentYear}` : `${COPYRIGHT_START_YEAR}`;
+
 const navItems = [
   { key: 'vocabulary', label: 'Vocabulary', short: 'Vocab', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
   { key: 'grammar', label: 'Grammar', short: 'Grammar', href: withBase('/grammar/'), activeClass: 'text-grammar bg-grammar-soft' },
@@ -33,6 +40,9 @@ const navItems = [
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <meta name="theme-color" content="#fafaf7" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     {description && <meta name="description" content={description} />}
@@ -48,6 +58,8 @@ const navItems = [
     <meta name="twitter:image" content={ogImage} />
     <script is:inline>
       // Theme init before first paint — user toggle wins, else system preference.
+      // theme-color follows the RESOLVED theme, not prefers-color-scheme, because the
+      // toggle can disagree with the system setting.
       (() => {
         const stored = localStorage.getItem('lalista:theme');
         const theme =
@@ -57,7 +69,20 @@ const navItems = [
               ? 'dark'
               : 'light';
         document.documentElement.setAttribute('data-theme', theme);
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute('content', theme === 'dark' ? '#17171f' : '#fafaf7');
       })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TH5G240G6K"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-TH5G240G6K');
     </script>
   </head>
   <body class="flex min-h-screen flex-col">
@@ -120,6 +145,7 @@ const navItems = [
     <footer class="mt-auto border-t border-border px-8 py-4 text-center text-xs leading-relaxed text-ink-faint">
       <p class="m-0">
         LaLista is free, ad-free and account-free (<a href={withBase('/about/')} class="font-semibold text-ink-soft underline">about the project</a>).
+        © {copyrightYears} Kiarash Farajzadehahary.
       </p>
       <p class="m-0">
         Definitions informed by WordReference and the RAE. Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS (<a href={withBase('/credits/')} class="font-semibold text-ink-soft underline">full credits</a>).
@@ -133,6 +159,9 @@ const navItems = [
         const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
         localStorage.setItem('lalista:theme', next);
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute('content', next === 'dark' ? '#17171f' : '#fafaf7');
       });
     </script>
 

@@ -38,6 +38,7 @@ lalista-progress-*.json
 # local/dev-only artifacts
 .claude
 CLAUDE.md
+v1_instruct.md
 docs/*
 coverage/
 *.tsbuildinfo
