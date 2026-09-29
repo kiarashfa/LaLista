@@ -8,7 +8,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-  mode: 'save' | 'load';
+  mode: 'save' | 'load' | 'sync';
+  /** Overrides the busy caption (e.g. naming the cloud being read). */
+  busyLabel?: string;
   /** Parent flips this when the real operation has finished successfully. */
   done: boolean;
   /** Called once the 100% + check moment has played out. */
@@ -18,9 +20,10 @@ interface Props {
 const LABEL = {
   save: { busy: 'Saving your progress…', done: 'Saved' },
   load: { busy: 'Reading your file…', done: '¡Listo!' },
+  sync: { busy: 'Syncing your progress…', done: 'Synced' },
 };
 
-export default function TransferOverlay({ mode, done, onFinished }: Props) {
+export default function TransferOverlay({ mode, busyLabel, done, onFinished }: Props) {
   const [pct, setPct] = useState(0);
   const [complete, setComplete] = useState(false);
   const raf = useRef<number>(0);
@@ -28,17 +31,27 @@ export default function TransferOverlay({ mode, done, onFinished }: Props) {
   const finishedRef = useRef(onFinished);
   finishedRef.current = onFinished;
 
-  // Ease toward 90% while busy; sprint to 100% once done.
+  const pctRef = useRef(0);
+
+  // While busy, creep toward 95% ever more slowly — a slow network sync never
+  // visibly stalls. Once done, ease out from wherever the bar is to 100% over
+  // a short duration (longer when there's more left), never a jump.
   useEffect(() => {
     const started = performance.now();
+    const from = pctRef.current;
+    const finishMs = 250 + (100 - from) * 4;
     const tick = (now: number) => {
       const elapsed = now - started;
-      setPct((current) => {
-        if (done) return Math.min(100, current + 4.5);
-        const target = 90 * (1 - Math.exp(-elapsed / 450));
-        return Math.max(current, Math.min(90, target));
-      });
-      raf.current = requestAnimationFrame(tick);
+      let next: number;
+      if (done) {
+        const t = Math.min(1, elapsed / finishMs);
+        next = from + (100 - from) * (1 - (1 - t) ** 3);
+      } else {
+        next = Math.max(pctRef.current, from + (95 - from) * (1 - Math.exp(-elapsed / 1200)));
+      }
+      pctRef.current = next;
+      setPct(next);
+      if (next < 100) raf.current = requestAnimationFrame(tick);
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
@@ -55,7 +68,7 @@ export default function TransferOverlay({ mode, done, onFinished }: Props) {
     return () => clearTimeout(t);
   }, [complete]);
 
-  const accent = mode === 'save' ? 'from-success to-gold' : 'from-vocab to-gold';
+  const accent = mode === 'load' ? 'from-vocab to-gold' : 'from-success to-gold';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-base/70 p-6 backdrop-blur-[2px]" role="status" aria-live="polite">
@@ -71,7 +84,7 @@ export default function TransferOverlay({ mode, done, onFinished }: Props) {
           </p>
         ) : (
           <>
-            <p className="m-0 text-sm font-semibold text-ink-soft">{LABEL[mode].busy}</p>
+            <p className="m-0 text-sm font-semibold text-ink-soft">{busyLabel ?? LABEL[mode].busy}</p>
             <p className="display-friendly m-0 mt-1 text-4xl font-semibold text-ink tabular-nums">{Math.round(pct)}%</p>
           </>
         )}

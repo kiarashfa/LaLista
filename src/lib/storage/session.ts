@@ -44,12 +44,37 @@ export function loadSession(): SessionState {
   }
 }
 
+/** Fired on window after every local progress change (cloud sync listens). */
+export const SESSION_CHANGED_EVENT = 'lalista:changed';
+/** Fired on window when cloud sync replaced the working cache with newer progress. */
+export const SESSION_REPLACED_EVENT = 'lalista:replaced';
+
 export function updateSession(mutate: (state: SessionState) => void): SessionState {
   const state = loadSession();
   mutate(state);
   localStorage.setItem(KEY, JSON.stringify(state));
   localStorage.setItem(MODIFIED_KEY, String(Date.now()));
+  window.dispatchEvent(new Event(SESSION_CHANGED_EVENT));
   return state;
+}
+
+/** Epoch ms of the last change to the working cache (0 = never). */
+export function getModifiedAt(): number {
+  if (typeof localStorage === 'undefined') return 0;
+  return Number(localStorage.getItem(MODIFIED_KEY) ?? 0);
+}
+
+/**
+ * Replace the whole working cache (cloud sync bringing in merged progress).
+ * Returns the new modified-at stamp. Does NOT fire SESSION_CHANGED_EVENT —
+ * this change came from the cloud, it isn't a new local edit.
+ */
+export function replaceSession(state: SessionState): number {
+  localStorage.setItem(KEY, JSON.stringify(state));
+  const now = Date.now();
+  localStorage.setItem(MODIFIED_KEY, String(now));
+  window.dispatchEvent(new Event(SESSION_REPLACED_EVENT));
+  return now;
 }
 
 // ---------- Profile & save-file lifecycle ----------

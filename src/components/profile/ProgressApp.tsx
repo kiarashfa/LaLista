@@ -1,20 +1,24 @@
 /**
  * The Progress page island — the load/save surface plus the two
  * surfaces (Dashboard + Profile), honestly framed: files, never accounts.
+ * Progress can also sync through the user's own cloud storage (optional).
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { withBase } from '../../lib/paths';
-import { forgetHandle, openWithPicker, readInputFile, supportsFileSystemAccess, type SaveOutcome } from '../../lib/storage/fileAccess';
+import { connectAndList, getLink, linkCurrentProfile, loadFromCloud, unlink } from '../../lib/cloud/sync';
+import type { CloudProvider, ProviderId, RemoteSave } from '../../lib/cloud/types';
+import { forgetHandle, openWithPicker, readInputFile, supportsFileSystemAccess } from '../../lib/storage/fileAccess';
 import { parseSaveFile, SAVE_ERROR_MESSAGES } from '../../lib/storage/saveFile';
-import { applyLoadedSaveFile, closeSession, createProfile, loadSession } from '../../lib/storage/session';
+import { applyLoadedSaveFile, closeSession, createProfile, loadSession, SESSION_REPLACED_EVENT } from '../../lib/storage/session';
 import { effectiveStreak, localDateString } from '../../lib/storage/streak';
 import { scoreBand, type ScoreBand } from '../../lib/grading/thresholds';
 import { STAGE_NAMES } from '../../lib/srs/stages';
 import type { SessionState } from '../../types/progress';
 import { AvatarPicker, AvatarView } from './AvatarPicker';
+import { CloudStart, CloudStatusPanel, cloudErrorMessage, useCloudProviders } from './CloudPanel';
 import Notepad from './Notepad';
 import TransferOverlay from './TransferOverlay';
-import { useSave } from './useSave';
+import { persisted, useSave } from './useSave';
 import type { Avatar } from '../../types/profile';
 
 interface GroupCard {
@@ -41,9 +45,6 @@ interface Props {
   parts: PartSection[];
 }
 
-/** A save outcome that actually wrote the user's progress to a file. */
-const persisted = (o: SaveOutcome) => o === 'saved-in-place' || o === 'saved-as' || o === 'downloaded';
-
 const BAND_CHIP: Record<ScoreBand, string> = {
   none: 'border-border bg-surface-sunken text-ink-faint',
   poor: 'border-error bg-error-bg text-error',
@@ -61,11 +62,25 @@ export default function ProgressApp({ groups, parts }: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
   /** Bumped on every file load so uncontrolled surfaces (Notepad) remount with the new contents. */
   const [fileStamp, setFileStamp] = useState(0);
-  const [loadTransfer, setLoadTransfer] = useState<null | { done: boolean; name: string }>(null);
-  const { dirty, fsa, status, save, refresh, overlay: saveOverlay } = useSave();
+  const [loadTransfer, setLoadTransfer] = useState<null | { done: boolean; name: string; label?: string }>(null);
+  const { dirty, fsa, status, cloud, save, saveToFile, refresh, overlay: saveOverlay } = useSave();
+  const providers = useCloudProviders();
+  /** Signed in to a cloud with no LaLista progress yet — the new profile goes there. */
+  const [pendingCloud, setPendingCloud] = useState<null | { providerId: ProviderId; account: string | null; label: string }>(null);
+  const [connecting, setConnecting] = useState<ProviderId | null>(null);
 
   const reload = () => setState(loadSession());
   useEffect(reload, []);
+
+  // Cloud sync brought in progress from another device — show it.
+  useEffect(() => {
+    const onReplaced = () => {
+      reload();
+      setFileStamp((s) => s + 1);
+    };
+    window.addEventListener(SESSION_REPLACED_EVENT, onReplaced);
+    return () => window.removeEventListener(SESSION_REPLACED_EVENT, onReplaced);
+  }, []);
 
   const now = Date.now();
 
@@ -76,15 +91,52 @@ export default function ProgressApp({ groups, parts }: Props) {
       return;
     }
     setLoadError(null);
+    // A different local file replaces whatever this device was syncing.
+    if (getLink()) unlink();
     // Loading theater: apply immediately, reveal after.
     setLoadTransfer({ done: false, name: parsed.file.profile.name });
     applyLoadedSaveFile(parsed.file);
     setTimeout(() => setLoadTransfer((t) => (t ? { ...t, done: true } : t)), 350);
   };
 
+  const pickCloudSave = async (providerId: ProviderId, remote: RemoteSave, account: string | null) => {
+    setLoadError(null);
+    const label = providers.find((p) => p.id === providerId)?.label ?? 'the cloud';
+    setLoadTransfer({ done: false, name: remote.profileName, label: `Fetching from ${label}…` });
+    try {
+      const name = await loadFromCloud(providerId, remote, account);
+      setLoadTransfer({ done: true, name });
+    } catch (e) {
+      setLoadTransfer(null);
+      setLoadError(cloudErrorMessage(e));
+    }
+  };
+
+  // Dashboard: start syncing the current profile (joins/merges a same-name save).
+  const connectProfile = async (provider: CloudProvider) => {
+    setConnecting(provider.id);
+    setLoadError(null);
+    try {
+      const { account, saves } = await connectAndList(provider.id);
+      const how = await linkCurrentProfile(provider.id, account, saves);
+      setNotice(
+        how === 'merged'
+          ? `Connected — merged with the progress already in ${provider.label}. This profile now syncs by itself.`
+          : `Connected — this profile now syncs with ${provider.label}. On your other devices, choose “Continue with ${provider.label}”.`,
+      );
+      reload();
+      setFileStamp((s) => s + 1);
+    } catch (e) {
+      setLoadError(cloudErrorMessage(e));
+    } finally {
+      setConnecting(null);
+    }
+  };
+
   const loadOverlay = loadTransfer ? (
     <TransferOverlay
       mode="load"
+      busyLabel={loadTransfer.label}
       done={loadTransfer.done}
       onFinished={() => {
         setNotice(`Welcome back, ${loadTransfer.name} — progress loaded.`);
@@ -115,6 +167,7 @@ export default function ProgressApp({ groups, parts }: Props) {
   const doneForNow = async () => {
     if (dirty && !persisted(await save())) return;
     await forgetHandle();
+    if (getLink()) unlink();
     closeSession();
     window.location.assign(withBase('/'));
   };
@@ -144,7 +197,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         <h1 className="display-editorial m-0 text-center text-4xl font-medium text-ink">Your progress, your file</h1>
         <p className="mx-auto mt-3 mb-8 max-w-[440px] text-center leading-relaxed text-ink-soft">
           LaLista has no accounts. Your progress lives in a small file <em>you</em> keep — load it when you arrive, save
-          it when you're done.
+          it when you're done{providers.length > 0 ? ' — or let your own cloud storage keep it in sync across your devices' : ''}.
         </p>
 
         {loadError && <p className="mb-4 rounded-md border border-error bg-error-bg px-4 py-3 text-sm text-error">{loadError}</p>}
@@ -154,6 +207,18 @@ export default function ProgressApp({ groups, parts }: Props) {
           </p>
         )}
 
+        {!creating && providers.length > 0 && (
+          <CloudStart
+            providers={providers}
+            onPick={(id, remote, account) => void pickCloudSave(id, remote, account)}
+            onEmpty={(providerId, account, label) => {
+              setLoadError(null);
+              setPendingCloud({ providerId, account, label });
+              setCreating(true);
+            }}
+            onError={setLoadError}
+          />
+        )}
         {!creating ? (
           <div className="grid gap-4 sm:grid-cols-2">
             <button type="button" onClick={() => void startLoad()} className="cursor-pointer rounded-lg border-2 border-border bg-surface-raised p-6 text-left shadow-md hover:border-success">
@@ -178,10 +243,23 @@ export default function ProgressApp({ groups, parts }: Props) {
               // fresh location (fixes saving a new user under an old user's file).
               await forgetHandle();
               createProfile({ name: name.trim(), avatar, createdAt: new Date().toISOString() });
+              if (pendingCloud) {
+                try {
+                  await linkCurrentProfile(pendingCloud.providerId, pendingCloud.account, []);
+                  setNotice(`Welcome, ${name.trim()} — your progress will sync with ${pendingCloud.label} as you study.`);
+                } catch (err) {
+                  setLoadError(`Profile created, but it isn't syncing yet (${cloudErrorMessage(err) ?? 'cancelled'}). Use “Sync with ${pendingCloud.label}” below.`);
+                }
+              }
               reload();
               refresh();
             }}
           >
+            {pendingCloud && (
+              <p className="m-0 mb-4 rounded-md bg-success-bg px-4 py-2.5 text-sm text-ink-soft">
+                ☁ No LaLista progress in your {pendingCloud.label} yet — create your profile and it'll be kept there.
+              </p>
+            )}
             <label className="mb-1 block text-sm font-bold text-ink" htmlFor="profile-name">Name</label>
             <input
               id="profile-name"
@@ -195,7 +273,14 @@ export default function ProgressApp({ groups, parts }: Props) {
             <p className="mt-4 mb-1 text-sm font-bold text-ink">Avatar</p>
             <AvatarPicker value={avatar} onChange={setAvatar} />
             <div className="mt-5 flex items-center justify-end gap-3">
-              <button type="button" onClick={() => setCreating(false)} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink">
+              <button
+                type="button"
+                onClick={() => {
+                  setCreating(false);
+                  setPendingCloud(null);
+                }}
+                className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink"
+              >
                 Back
               </button>
               <button type="submit" disabled={!name.trim()} className="cursor-pointer rounded-pill bg-vocab px-6 py-2.5 text-sm font-bold text-white hover:bg-vocab-hover disabled:opacity-40">
@@ -229,7 +314,7 @@ export default function ProgressApp({ groups, parts }: Props) {
 
       <header className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-surface-raised p-6 shadow-md">
         <AvatarView avatar={profile.avatar} size={64} />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[9rem] flex-1">
           <h1 className="display-friendly m-0 truncate text-3xl font-semibold text-ink">{profile.name}</h1>
           <p className="m-0 mt-0.5 flex flex-wrap gap-x-2 text-sm text-ink-faint">
             <span className="whitespace-nowrap">since {new Date(profile.createdAt).toLocaleDateString()}</span>
@@ -243,7 +328,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button type="button" onClick={() => void save()} className="cursor-pointer rounded-pill bg-success px-5 py-2.5 text-sm font-bold text-white hover:opacity-90">
-            {status ?? (dirty ? 'Save changes' : 'Save')}
+            {status ?? (cloud.link ? 'Sync now' : dirty ? 'Save changes' : 'Save')}
           </button>
           <button type="button" onClick={() => void loadDifferent()} className="cursor-pointer rounded-pill border-2 border-border px-4 py-2 text-sm font-bold text-ink hover:border-ink-faint">
             Load a different file
@@ -256,13 +341,25 @@ export default function ProgressApp({ groups, parts }: Props) {
             Done for now
           </button>
         </div>
-        {!fsa && (
+        {!fsa && !cloud.link && (
           <p className="m-0 w-full rounded-md bg-surface-sunken px-4 py-2.5 text-xs leading-relaxed text-ink-soft">
             This browser can't save in place, so each save downloads a fresh copy of your file — keep the newest one.
             (Chrome and Edge can save directly to the same file.)
           </p>
         )}
       </header>
+
+      <CloudStatusPanel
+        providers={providers}
+        cloud={cloud}
+        connecting={connecting}
+        onConnect={(p) => void connectProfile(p)}
+        onStop={() => {
+          unlink();
+          setNotice('This device no longer syncs. Your cloud copy is untouched — reconnect any time.');
+        }}
+        onSaveCopy={() => void saveToFile()}
+      />
 
       <input ref={fileInput} type="file" accept=".json,application/json" hidden onChange={async (e) => {
         const f = e.target.files?.[0];

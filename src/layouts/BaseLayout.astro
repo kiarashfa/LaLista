@@ -120,7 +120,7 @@ const navItems = [
             <path d="M12 7.5h.01"></path>
           </svg>
         </a>
-        <SaveButton client:load />
+        <SaveButton client:load autoRefreshes={section === 'progress'} />
         <button
           id="theme-toggle"
           type="button"

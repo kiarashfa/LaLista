@@ -7,6 +7,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/paths';
 import groups from '../content/vocabulary/groups.json';
 import words from '../content/vocabulary/words.json';
+
+// Optional cloud sync is only described when this build has it configured.
+const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
 ---
 
 <BaseLayout
@@ -77,6 +80,17 @@ import words from '../content/vocabulary/words.json';
         arrive, hit save when you're done. The same page is your dashboard — every group and chapter at a glance —
         plus your streak, test bests, and a notepad for your own notes, word mnemonics included.
       </p>
+      {
+        cloudSync && (
+          <p id="privacy" class="mt-3 leading-relaxed text-ink-soft">
+            Studying on more than one device? You can optionally let <b class="text-ink">Google Drive</b> keep that file
+            in sync for you. It is stored in a private, hidden LaLista folder in <em>your own</em> Drive and travels
+            straight between your browser and Google — LaLista has no server, never sees your progress, and can't
+            access anything else in your Drive. You can stop syncing at any time, and remove the folder from Google
+            Drive's settings under <i>Manage apps</i>.
+          </p>
+        )
+      }
     </section>
 
     <section class="mb-12 rounded-lg border border-border bg-surface-raised p-6 shadow-md sm:p-8">
