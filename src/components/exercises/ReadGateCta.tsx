@@ -49,7 +49,7 @@ export default function ReadGateCta({ lessonId, workbookUrl, exerciseCount, type
           >
             I've read this chapter ✓
           </button>
-          <span className="text-xs text-ink-faint">unlocks the workbook — one click, not a test</span>
+          <span className="text-xs text-ink-faint">unlocks the workbook: one click, not a test</span>
         </span>
       )}
     </div>

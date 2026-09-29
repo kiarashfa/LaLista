@@ -4,7 +4,6 @@
  * the active-link accent flexes — coral for vocabulary, plum for grammar).
  */
 import '../styles/global.css';
-import ProfileChip from '../components/profile/ProfileChip';
 import ProfileGate from '../components/profile/ProfileGate';
 import SaveButton from '../components/profile/SaveButton';
 import { withBase } from '../lib/paths';
@@ -57,7 +56,7 @@ const navItems = [
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImage} />
     <script is:inline>
-      // Theme init before first paint — user toggle wins, else system preference.
+      // Theme init before first paint: user toggle wins, else system preference.
       // theme-color follows the RESOLVED theme, not prefers-color-scheme, because the
       // toggle can disagree with the system setting.
       (() => {
@@ -86,17 +85,19 @@ const navItems = [
     </script>
   </head>
   <body class="flex min-h-screen flex-col">
-    <nav class="flex items-center justify-between gap-1 border-b border-border bg-surface-raised px-2.5 py-3 sm:px-8 sm:py-4">
-      <a href={withBase('/')} class="font-display text-xl font-semibold no-underline sm:text-2xl">
-        <span class="wordmark-gradient">¡LaLista!</span>
-      </a>
-      <div class="flex items-center gap-0.5 sm:gap-3">
+    <nav class="flex items-center justify-between gap-1 border-b border-border bg-surface-raised px-2 py-3 sm:px-8 sm:py-4">
+      {/* Left: wordmark + sections. Right: site tools | save/sync + profile (one island). */}
+      <div class="flex min-w-0 items-center gap-1 sm:gap-5">
+        <a href={withBase('/')} class="font-display shrink-0 text-lg font-semibold no-underline sm:text-2xl">
+          <span class="wordmark-gradient">¡LaLista!</span>
+        </a>
+        <div class="flex items-center sm:gap-1">
         {
           navItems.map((item) => (
             <a
               href={item.href}
               class:list={[
-                'rounded-pill px-2 py-1.5 text-[0.82rem] font-semibold no-underline sm:px-3 sm:py-2 sm:text-sm',
+                'rounded-pill px-1.5 py-1.5 text-[0.82rem] font-semibold no-underline sm:px-3 sm:py-2 sm:text-sm',
                 section === item.key ? item.activeClass : 'text-ink-soft hover:text-ink',
               ]}
             >
@@ -105,27 +106,28 @@ const navItems = [
             </a>
           ))
         }
-        <ProfileChip client:load active={section === 'progress'} />
+        </div>
+      </div>
+      <div class="flex shrink-0 items-center gap-0.5 sm:gap-2">
         <a
           href={withBase('/about/')}
           title="About LaLista"
           aria-label="About LaLista"
           class:list={[
-            'flex h-9 w-9 shrink-0 items-center justify-center rounded-pill border border-border no-underline sm:h-10 sm:w-10',
+            'flex h-9 w-9 shrink-0 items-center justify-center rounded-pill border border-border no-underline max-[374px]:h-8 max-[374px]:w-8 sm:h-10 sm:w-10',
             section === 'about' ? 'bg-surface-sunken text-ink' : 'bg-surface-base text-ink-soft hover:text-ink',
           ]}
         >
-          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 17v-6"></path>
-            <path d="M12 7.5h.01"></path>
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 10.5v7.25"></path>
+            <path d="M12 6.25h.01"></path>
           </svg>
         </a>
-        <SaveButton client:load autoRefreshes={section === 'progress'} />
         <button
           id="theme-toggle"
           type="button"
           aria-label="Toggle dark mode"
-          class="ml-1 flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-pill border border-border bg-surface-base text-ink-soft hover:text-ink sm:h-10 sm:w-10"
+          class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-pill border border-border bg-surface-base text-ink-soft hover:text-ink max-[374px]:h-8 max-[374px]:w-8 sm:h-10 sm:w-10"
         >
           {/* Sun shown in dark mode ("switch to light"), moon in light mode */}
           <svg class="theme-icon-moon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -136,6 +138,8 @@ const navItems = [
             <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"></path>
           </svg>
         </button>
+        <span class="mx-0.5 h-6 w-px bg-border sm:mx-1.5" aria-hidden="true"></span>
+        <SaveButton client:load autoRefreshes={section === 'progress'} profileActive={section === 'progress'} />
       </div>
     </nav>
 

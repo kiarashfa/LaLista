@@ -59,7 +59,7 @@ export function ClozePassage({ exercise, onGraded }: { exercise: Ex; onGraded: (
       {answered && result.accentMisses > 0 && (
         <p className="m-0 mt-3 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
           <b className="text-warning">{result.accentMisses === 1 ? 'One blank' : `${result.accentMisses} blanks`}</b> had
-          the right word but a missing tilde — counted as correct, exact spelling shown in amber.
+          the right word but a missing tilde. Counted as correct, with the exact spelling shown in amber.
         </p>
       )}
       <div className="mt-3 flex items-start justify-between gap-4">

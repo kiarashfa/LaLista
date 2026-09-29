@@ -6,11 +6,15 @@
  *
  * Simulate "another device" by editing a file under lalista-dev:mock-files
  * (bump its version); simulate token expiry with
- * localStorage['lalista-dev:mock-token'] = '0'.
+ * localStorage['lalista-dev:mock-token'] = '0'. Set
+ * localStorage['lalista-dev:mock-redirect'] = '1' to sign in by page
+ * redirect (like Dropbox) instead of in place (like Google).
  */
-import { CloudAuthError, type CloudProvider } from './types';
+import { withBase } from '../paths';
+import { CloudAuthError, type CloudProvider, type ConnectIntent, type RedirectResult } from './types';
 
 const FILES_KEY = 'lalista-dev:mock-files';
+const PENDING_KEY = 'lalista-dev:mock-pending';
 const TOKEN_KEY = 'lalista-dev:mock-token';
 const LATENCY_MS = 400;
 
@@ -38,10 +42,25 @@ export const mockProvider: CloudProvider = {
   location: 'the development mock cloud',
   hasToken: () => Number(localStorage.getItem(TOKEN_KEY) ?? 0) > Date.now(),
   preload() {},
-  async connect() {
+  async connect(_hint, intent: ConnectIntent = 'start') {
+    if (localStorage.getItem('lalista-dev:mock-redirect') === '1') {
+      localStorage.setItem(PENDING_KEY, JSON.stringify({ intent, returnTo: intent === 'reconnect' ? location.href : null }));
+      location.assign(`${withBase('/progress/')}?code=mock&state=mock`);
+      return new Promise<never>(() => {});
+    }
     await delay();
     localStorage.setItem(TOKEN_KEY, String(Date.now() + 3600_000));
     return 'dev@example.com';
+  },
+  async completeRedirect(): Promise<RedirectResult | null> {
+    const url = new URL(location.href);
+    const pending = JSON.parse(localStorage.getItem(PENDING_KEY) ?? 'null') as { intent: ConnectIntent; returnTo: string | null } | null;
+    if (url.searchParams.get('state') !== 'mock' || !pending) return null;
+    localStorage.removeItem(PENDING_KEY);
+    history.replaceState(history.state, '', url.pathname);
+    await delay();
+    localStorage.setItem(TOKEN_KEY, String(Date.now() + 3600_000));
+    return { account: 'dev@example.com', intent: pending.intent, returnTo: pending.returnTo };
   },
   forget: () => localStorage.removeItem(TOKEN_KEY),
   async list() {

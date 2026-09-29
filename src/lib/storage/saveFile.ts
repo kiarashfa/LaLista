@@ -76,9 +76,9 @@ export function sessionFromSaveFile(file: SaveFile): SessionState {
 }
 
 export const SAVE_ERROR_MESSAGES: Record<SaveFileError, string> = {
-  unreadable: "That file isn't readable as JSON — it may be damaged, or it might not be a LaLista file at all.",
+  unreadable: "That file isn't readable as JSON. It may be damaged, or it might not be a LaLista file at all.",
   'not-lalista': "That's a JSON file, but not a LaLista progress file. Look for a file named like lalista-progress-‹name›.json.",
   'version-newer':
-    'This file was saved by a newer version of LaLista than this site is running. Refresh the page (or come back later) and try again — loading it here could lose data.',
+    'This file was saved by a newer version of LaLista than this site is running. Refresh the page (or come back later) and try again, since loading it here could lose data.',
   corrupt: 'That looks like a LaLista file, but its contents are damaged or incomplete. If you have a backup copy, try that one.',
 };

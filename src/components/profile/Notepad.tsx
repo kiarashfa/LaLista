@@ -98,7 +98,7 @@ export default function Notepad({ notepad, grammarNotepad, vocabulary }: Props) 
           initial={notepad}
           onChange={setNotepad}
           ariaLabel="General notes"
-          placeholder="Jot anything — tricks, words to ask about, favorite sentences. Lives in your save file."
+          placeholder="Jot anything: tricks, words to ask about, favorite sentences. Lives in your save file."
         />
       )}
 
@@ -107,7 +107,7 @@ export default function Notepad({ notepad, grammarNotepad, vocabulary }: Props) 
           initial={grammarNotepad}
           onChange={setGrammarNotepad}
           ariaLabel="Grammar notes"
-          placeholder="Your own grammar cheat-sheet — rules that finally clicked, endings to remember, ser vs estar tricks…"
+          placeholder="Your own grammar cheat-sheet: rules that finally clicked, endings to remember, ser vs estar tricks…"
         />
       )}
 
@@ -119,7 +119,7 @@ export default function Notepad({ notepad, grammarNotepad, vocabulary }: Props) 
               <a href={withBase('/vocabulary/')} className="font-semibold text-ink underline">
                 Group Study
               </a>{' '}
-              has a ✏️ button — mnemonics you add there collect here.
+              has a ✏️ button, and the mnemonics you add there collect here.
             </p>
           </div>
         ) : !wordIndex ? (

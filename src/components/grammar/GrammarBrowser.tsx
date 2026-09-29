@@ -169,7 +169,7 @@ export default function GrammarBrowser({ lessons, children }: Props) {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="py-10 text-center text-sm text-ink-faint">No chapters match — loosen a filter or clear the search.</p>
+            <p className="py-10 text-center text-sm text-ink-faint">No chapters match. Loosen a filter or clear the search.</p>
           ) : (
             <div>
               {filtered.map((l, i) => {

@@ -173,7 +173,7 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
         <p className="m-0 text-4xl" aria-hidden="true">🔒</p>
         <h2 className="mt-3 mb-2 text-xl font-bold text-ink">Read the chapter first</h2>
         <p className="mx-auto mb-6 max-w-[420px] text-sm leading-relaxed text-ink-soft">
-          The workbook unlocks once you've marked Chapter {lessonNumber} as read — a one-time step, not a test. If you've
+          The workbook unlocks once you've marked Chapter {lessonNumber} as read (a one-time step, not a test). If you've
           already read it, just hit the button at the bottom of the chapter.
         </p>
         <a href={lessonUrl} className="rounded-pill bg-grammar px-6 py-3 text-sm font-bold text-white no-underline hover:bg-grammar-hover">
@@ -201,7 +201,7 @@ export default function WorkbookApp({ lessonId, lessonNumber, exercises, lessonU
             </span>
           )}
         </p>
-        <p className="mt-1 text-xs text-ink-faint">Retake any time — only your best attempt counts.</p>
+        <p className="mt-1 text-xs text-ink-faint">Retake any time. Only your best attempt counts.</p>
         <SaveNudge />
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <button

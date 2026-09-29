@@ -87,7 +87,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
           {onToggleDifficult && (
             <button
               type="button"
-              title={difficult ? 'Difficult — click to unmark' : 'Mark as difficult'}
+              title={difficult ? 'Difficult (click to unmark)' : 'Mark as difficult'}
               aria-label={difficult ? 'Unmark difficult' : 'Mark as difficult'}
               aria-pressed={difficult}
               onClick={onToggleDifficult}
@@ -101,7 +101,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
           {onToggleExcluded && (
             <button
               type="button"
-              title={excluded ? 'Excluded from Review & Test — click to include' : 'Exclude from Review & Test'}
+              title={excluded ? 'Excluded from Review & Test (click to include)' : 'Exclude from Review & Test'}
               aria-label={excluded ? 'Include in Review and Test' : 'Exclude from Review and Test'}
               aria-pressed={excluded}
               onClick={onToggleExcluded}
@@ -118,7 +118,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
             <button
               type="button"
               title="Mark as known"
-              aria-label="Mark as known — jump straight to Mastered"
+              aria-label="Mark as known: jump straight to Mastered"
               onClick={() => setConfirmKnown(true)}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] border-border text-ink-faint hover:border-success hover:text-success"
             >
@@ -152,7 +152,7 @@ export function StudyCard({ word, onNext, eyebrow = 'New word', difficult = fals
       {confirmKnown && onMarkKnown && (
         <ConfirmDialog
           title={`Mark “${word.spanish}” as known?`}
-          body="This jumps the word straight to Mastered — it leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
+          body="This jumps the word straight to Mastered. It leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
           confirmLabel="Yes, I know it"
           onConfirm={() => {
             setConfirmKnown(false);

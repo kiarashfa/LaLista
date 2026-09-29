@@ -46,7 +46,7 @@ export function NoteDialog({ spanish, initial, onSave, onClose }: Props) {
       <div className="w-full max-w-[400px] rounded-md border border-border bg-surface-raised p-5 text-left shadow-lg">
         <p className="m-0 font-bold text-ink">Note for “{spanish}”</p>
         <p className="m-0 mt-1 text-xs leading-relaxed text-ink-soft">
-          A mnemonic, a rhyme, anything that makes it stick — it also shows up in your Progress notepad.
+          A mnemonic, a rhyme, anything that makes it stick. It also shows up in your Progress notepad.
         </p>
         <textarea
           ref={textarea}

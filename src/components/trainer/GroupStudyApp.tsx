@@ -232,7 +232,7 @@ export default function GroupStudyApp({ groupTitle, words, vocabularyUrl, review
                 </p>
               ) : (
                 <p className="mx-auto m-0 max-w-[400px] text-sm leading-relaxed text-ink-soft">
-                  Nothing in this group is due right now — the date gates are doing their job. Come back tomorrow, or
+                  Nothing in this group is due right now. The date gates are doing their job. Come back tomorrow, or
                   keep Mastered words bright in Review.
                 </p>
               )}

@@ -75,7 +75,7 @@ function loadGis(): Promise<GoogleOAuth2> {
     };
     script.onerror = () => {
       gisLoading = null;
-      reject(new Error("Couldn't reach Google sign-in — check your connection"));
+      reject(new Error("Couldn't reach Google sign-in. Check your connection."));
     };
     document.head.appendChild(script);
   });
@@ -119,7 +119,7 @@ function getTokenClient(oauth2: GoogleOAuth2): TokenClient {
         return;
       }
       if (!oauth2.hasGrantedAllScopes(response, SCOPE)) {
-        settle.reject(new CloudCancelledError('LaLista needs permission to keep its save file in your Drive — please tick that box.'));
+        settle.reject(new CloudCancelledError('LaLista needs permission to keep its save file in your Drive. Please tick that box.'));
         return;
       }
       const stored: StoredToken = { token: response.access_token, expiresAt: Date.now() + Number(response.expires_in ?? 3600) * 1000 };
@@ -130,7 +130,7 @@ function getTokenClient(oauth2: GoogleOAuth2): TokenClient {
       const settle = pending;
       pending = null;
       if (!settle) return;
-      if (error.type === 'popup_failed_to_open') settle.reject(new Error('Your browser blocked the Google sign-in window — allow pop-ups for this site and try again.'));
+      if (error.type === 'popup_failed_to_open') settle.reject(new Error('Your browser blocked the Google sign-in window. Allow pop-ups for this site and try again.'));
       else settle.reject(new CloudCancelledError());
     },
   });

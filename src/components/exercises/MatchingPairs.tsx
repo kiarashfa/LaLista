@@ -104,7 +104,7 @@ export function MatchingPairs({ exercise, onGraded }: { exercise: Ex; onGraded: 
       </div>
       {done && mistakes.current > 0 && (
         <p className="col-span-2 mt-1 text-sm text-ink-soft">
-          All matched — with <b className="text-error">{mistakes.current}</b> {mistakes.current === 1 ? 'mismatch' : 'mismatches'} along the way.
+          All matched, with <b className="text-error">{mistakes.current}</b> {mistakes.current === 1 ? 'mismatch' : 'mismatches'} along the way.
         </p>
       )}
     </div>

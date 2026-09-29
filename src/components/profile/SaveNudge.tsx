@@ -35,14 +35,14 @@ export default function SaveNudge() {
     if (cloud.phase !== 'needs-auth' && cloud.phase !== 'error') {
       return (
         <p className="m-0 mt-3 text-xs text-ink-faint">
-          ☁ {cloud.phase === 'synced' ? `Synced with ${cloud.providerLabel}` : cloud.phase === 'offline' ? "Offline — progress will sync when you're back online" : `Syncing with ${cloud.providerLabel}…`}
+          ☁ {cloud.phase === 'synced' ? `Synced with ${cloud.providerLabel}` : cloud.phase === 'offline' ? "Offline, progress will sync once you're back online" : `Syncing with ${cloud.providerLabel}…`}
         </p>
       );
     }
     return (
       <p className="m-0 mt-3 text-sm">
         {overlay}
-        <span className="text-ink-soft">☁ Nice session — sync it to {cloud.providerLabel}:</span>{' '}
+        <span className="text-ink-soft">☁ Nice session! Sync it to {cloud.providerLabel}:</span>{' '}
         <button type="button" onClick={() => void save()} className="cursor-pointer font-bold text-success underline">
           Sync now
         </button>
@@ -59,7 +59,7 @@ export default function SaveNudge() {
         <span className="font-semibold text-success">{status}</span>
       ) : (
         <>
-          <span className="text-ink-soft">💾 Nice session — remember your file:</span>{' '}
+          <span className="text-ink-soft">💾 Nice session! Remember your file:</span>{' '}
           <button type="button" onClick={() => void save()} className="cursor-pointer font-bold text-success underline">
             Save now
           </button>

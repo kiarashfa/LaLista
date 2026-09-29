@@ -95,7 +95,7 @@ export default function VocabularyBrowser({ groups, children }: Props) {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="search groups — or any word, e.g. “rojo”…"
+              placeholder="search groups or any word, e.g. “rojo”…"
               className="w-full max-w-[340px] rounded-pill border-[1.5px] border-border bg-surface-raised px-4 py-1.5 text-[0.85rem] text-ink outline-none placeholder:text-ink-faint focus:border-vocab"
             />
             <span className="ml-auto text-xs text-ink-faint">search looks inside every group's words</span>
@@ -108,7 +108,7 @@ export default function VocabularyBrowser({ groups, children }: Props) {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="py-10 text-center text-sm text-ink-faint">No group contains that — try another spelling.</p>
+            <p className="py-10 text-center text-sm text-ink-faint">No group contains that. Try another spelling.</p>
           ) : (
             filtered.map((g) => (
               <a

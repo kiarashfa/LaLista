@@ -5,17 +5,19 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { withBase } from '../../lib/paths';
-import { connectAndList, getLink, linkCurrentProfile, loadFromCloud, unlink } from '../../lib/cloud/sync';
+import { getProvider } from '../../lib/cloud/providers';
+import { completeReconnect, connectAndList, getLink, linkCurrentProfile, loadFromCloud, resumeRedirectConnect, unlink } from '../../lib/cloud/sync';
 import type { CloudProvider, ProviderId, RemoteSave } from '../../lib/cloud/types';
 import { forgetHandle, openWithPicker, readInputFile, supportsFileSystemAccess } from '../../lib/storage/fileAccess';
 import { parseSaveFile, SAVE_ERROR_MESSAGES } from '../../lib/storage/saveFile';
-import { applyLoadedSaveFile, closeSession, createProfile, loadSession, SESSION_REPLACED_EVENT } from '../../lib/storage/session';
+import { applyLoadedSaveFile, closeSession, createProfile, loadSession, SESSION_REPLACED_EVENT, setProfileAvatar } from '../../lib/storage/session';
 import { effectiveStreak, localDateString } from '../../lib/storage/streak';
 import { scoreBand, type ScoreBand } from '../../lib/grading/thresholds';
 import { STAGE_NAMES } from '../../lib/srs/stages';
 import type { SessionState } from '../../types/progress';
+import AvatarDialog from './AvatarDialog';
 import { AvatarPicker, AvatarView } from './AvatarPicker';
-import { CloudStart, CloudStatusPanel, cloudErrorMessage, useCloudProviders } from './CloudPanel';
+import { CloudStart, CloudStatusPanel, cloudErrorMessage, useCloudProviders, type CloudChoice } from './CloudPanel';
 import Notepad from './Notepad';
 import TransferOverlay from './TransferOverlay';
 import { persisted, useSave } from './useSave';
@@ -68,6 +70,12 @@ export default function ProgressApp({ groups, parts }: Props) {
   /** Signed in to a cloud with no LaLista progress yet — the new profile goes there. */
   const [pendingCloud, setPendingCloud] = useState<null | { providerId: ProviderId; account: string | null; label: string }>(null);
   const [connecting, setConnecting] = useState<ProviderId | null>(null);
+  /** Landing: the cloud currently signing in, and the picker when it holds several profiles. */
+  const [cloudBusy, setCloudBusy] = useState<ProviderId | null>(null);
+  const [cloudChoice, setCloudChoice] = useState<CloudChoice | null>(null);
+  /** Finishing a sign-in that returned by redirect (e.g. Dropbox). */
+  const [resuming, setResuming] = useState(false);
+  const [editingAvatar, setEditingAvatar] = useState(false);
 
   const reload = () => setState(loadSession());
   useEffect(reload, []);
@@ -99,12 +107,12 @@ export default function ProgressApp({ groups, parts }: Props) {
     setTimeout(() => setLoadTransfer((t) => (t ? { ...t, done: true } : t)), 350);
   };
 
-  const pickCloudSave = async (providerId: ProviderId, remote: RemoteSave, account: string | null) => {
+  const pickCloudSave = async (provider: CloudProvider, remote: RemoteSave, account: string | null) => {
     setLoadError(null);
-    const label = providers.find((p) => p.id === providerId)?.label ?? 'the cloud';
-    setLoadTransfer({ done: false, name: remote.profileName, label: `Fetching from ${label}…` });
+    setCloudChoice(null);
+    setLoadTransfer({ done: false, name: remote.profileName, label: `Fetching from ${provider.label}…` });
     try {
-      const name = await loadFromCloud(providerId, remote, account);
+      const name = await loadFromCloud(provider.id, remote, account);
       setLoadTransfer({ done: true, name });
     } catch (e) {
       setLoadTransfer(null);
@@ -112,20 +120,52 @@ export default function ProgressApp({ groups, parts }: Props) {
     }
   };
 
+  // Landing, after signing in: no saves → create a profile there; one →
+  // load it; several → let the user pick.
+  const continueStart = (provider: CloudProvider, account: string | null, saves: RemoteSave[]) => {
+    setLoadError(null);
+    if (saves.length === 0) {
+      setPendingCloud({ providerId: provider.id, account, label: provider.label });
+      setCreating(true);
+    } else if (saves.length === 1) {
+      void pickCloudSave(provider, saves[0], account);
+    } else {
+      setCloudChoice({ provider, account, saves });
+    }
+  };
+
+  const startCloud = async (provider: CloudProvider) => {
+    setCloudBusy(provider.id);
+    setLoadError(null);
+    try {
+      // Redirect-style clouds leave the page here; the flow resumes on return.
+      const { account, saves } = await connectAndList(provider.id, 'start');
+      continueStart(provider, account, saves);
+    } catch (e) {
+      setLoadError(cloudErrorMessage(e));
+    } finally {
+      setCloudBusy(null);
+    }
+  };
+
   // Dashboard: start syncing the current profile (joins/merges a same-name save).
+  const finishLink = async (provider: CloudProvider, account: string | null, saves: RemoteSave[]) => {
+    const how = await linkCurrentProfile(provider.id, account, saves);
+    setNotice(
+      how === 'merged'
+        ? `Connected and merged with the progress already in ${provider.label}. This profile now syncs by itself.`
+        : `Connected! This profile now syncs with ${provider.label}. On your other devices, choose “Continue with ${provider.label}”.`,
+    );
+    reload();
+    setFileStamp((s) => s + 1);
+  };
+
   const connectProfile = async (provider: CloudProvider) => {
     setConnecting(provider.id);
     setLoadError(null);
     try {
-      const { account, saves } = await connectAndList(provider.id);
-      const how = await linkCurrentProfile(provider.id, account, saves);
-      setNotice(
-        how === 'merged'
-          ? `Connected — merged with the progress already in ${provider.label}. This profile now syncs by itself.`
-          : `Connected — this profile now syncs with ${provider.label}. On your other devices, choose “Continue with ${provider.label}”.`,
-      );
-      reload();
-      setFileStamp((s) => s + 1);
+      const { account, saves } = await connectAndList(provider.id, 'link');
+      await finishLink(provider, account, saves);
     } catch (e) {
       setLoadError(cloudErrorMessage(e));
     } finally {
@@ -133,13 +173,41 @@ export default function ProgressApp({ groups, parts }: Props) {
     }
   };
 
+  // Back from a redirect-style sign-in: pick up what the user set out to do.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has('state')) return;
+    setResuming(true);
+    void (async () => {
+      try {
+        const result = await resumeRedirectConnect();
+        const provider = result && getProvider(result.providerId);
+        if (!result || !provider) return;
+        if (result.intent === 'reconnect') {
+          const ok = await completeReconnect(result.account);
+          if (ok && result.returnTo) window.location.replace(result.returnTo);
+        } else if (result.intent === 'link' && loadSession().profile) {
+          await finishLink(provider, result.account, await provider.list());
+        } else {
+          continueStart(provider, result.account, await provider.list());
+        }
+      } catch (e) {
+        setLoadError(cloudErrorMessage(e));
+      } finally {
+        setResuming(false);
+      }
+    })();
+  }, []);
+
+  const resumeOverlay =
+    resuming && !loadTransfer ? <TransferOverlay mode="load" busyLabel="Finishing sign-in…" done={false} onFinished={() => {}} /> : null;
+
   const loadOverlay = loadTransfer ? (
     <TransferOverlay
       mode="load"
       busyLabel={loadTransfer.label}
       done={loadTransfer.done}
       onFinished={() => {
-        setNotice(`Welcome back, ${loadTransfer.name} — progress loaded.`);
+        setNotice(`Welcome back, ${loadTransfer.name}! Progress loaded.`);
         setLoadTransfer(null);
         refresh();
         reload();
@@ -189,6 +257,7 @@ export default function ProgressApp({ groups, parts }: Props) {
     return (
       <div className="mx-auto max-w-[560px]">
         {loadOverlay}
+        {resumeOverlay}
         <input ref={fileInput} type="file" accept=".json,application/json" hidden onChange={async (e) => {
           const f = e.target.files?.[0];
           if (f) applyText((await readInputFile(f)).text, f.name);
@@ -196,27 +265,25 @@ export default function ProgressApp({ groups, parts }: Props) {
         }} />
         <h1 className="display-editorial m-0 text-center text-4xl font-medium text-ink">Your progress, your file</h1>
         <p className="mx-auto mt-3 mb-8 max-w-[440px] text-center leading-relaxed text-ink-soft">
-          LaLista has no accounts. Your progress lives in a small file <em>you</em> keep — load it when you arrive, save
-          it when you're done{providers.length > 0 ? ' — or let your own cloud storage keep it in sync across your devices' : ''}.
+          LaLista has no accounts. Your progress lives in a small file <em>you</em> keep: load it when you arrive, save
+          it when you're done.{providers.length > 0 ? ' Or let your own cloud storage keep it in sync across your devices.' : ''}
         </p>
 
         {loadError && <p className="mb-4 rounded-md border border-error bg-error-bg px-4 py-3 text-sm text-error">{loadError}</p>}
         {anonymousProgress && (
           <p className="mb-4 rounded-md border border-gold bg-gold-bg px-4 py-3 text-sm text-ink-soft">
-            You've been studying without a profile — creating one now will keep that progress.
+            You've been studying without a profile. Creating one now will keep that progress.
           </p>
         )}
 
         {!creating && providers.length > 0 && (
           <CloudStart
             providers={providers}
-            onPick={(id, remote, account) => void pickCloudSave(id, remote, account)}
-            onEmpty={(providerId, account, label) => {
-              setLoadError(null);
-              setPendingCloud({ providerId, account, label });
-              setCreating(true);
-            }}
-            onError={setLoadError}
+            busy={cloudBusy}
+            choice={cloudChoice}
+            onStart={(p) => void startCloud(p)}
+            onPick={(remote) => cloudChoice && void pickCloudSave(cloudChoice.provider, remote, cloudChoice.account)}
+            onBack={() => setCloudChoice(null)}
           />
         )}
         {!creating ? (
@@ -246,7 +313,7 @@ export default function ProgressApp({ groups, parts }: Props) {
               if (pendingCloud) {
                 try {
                   await linkCurrentProfile(pendingCloud.providerId, pendingCloud.account, []);
-                  setNotice(`Welcome, ${name.trim()} — your progress will sync with ${pendingCloud.label} as you study.`);
+                  setNotice(`Welcome, ${name.trim()}! Your progress will sync with ${pendingCloud.label} as you study.`);
                 } catch (err) {
                   setLoadError(`Profile created, but it isn't syncing yet (${cloudErrorMessage(err) ?? 'cancelled'}). Use “Sync with ${pendingCloud.label}” below.`);
                 }
@@ -257,7 +324,7 @@ export default function ProgressApp({ groups, parts }: Props) {
           >
             {pendingCloud && (
               <p className="m-0 mb-4 rounded-md bg-success-bg px-4 py-2.5 text-sm text-ink-soft">
-                ☁ No LaLista progress in your {pendingCloud.label} yet — create your profile and it'll be kept there.
+                ☁ No LaLista progress in your {pendingCloud.label} yet. Create your profile and it'll be kept there.
               </p>
             )}
             <label className="mb-1 block text-sm font-bold text-ink" htmlFor="profile-name">Name</label>
@@ -309,11 +376,37 @@ export default function ProgressApp({ groups, parts }: Props) {
   return (
     <div className="mx-auto max-w-[900px]">
       {loadOverlay}
+      {resumeOverlay}
       {saveOverlay}
       {notice && <p className="mb-6 rounded-md border border-success bg-success-bg px-4 py-3 text-sm font-semibold text-success">{notice}</p>}
 
+      {editingAvatar && (
+        <AvatarDialog
+          current={profile.avatar}
+          onClose={() => setEditingAvatar(false)}
+          onSave={(next) => {
+            setProfileAvatar(next);
+            setEditingAvatar(false);
+            reload();
+          }}
+        />
+      )}
+
       <header className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-surface-raised p-6 shadow-md">
-        <AvatarView avatar={profile.avatar} size={64} />
+        <button
+          type="button"
+          onClick={() => setEditingAvatar(true)}
+          title="Change your avatar"
+          aria-label="Change your avatar"
+          className="group relative shrink-0 cursor-pointer rounded-pill"
+        >
+          <AvatarView avatar={profile.avatar} size={64} />
+          <span className="absolute -right-0.5 -bottom-0.5 flex h-6 w-6 items-center justify-center rounded-pill border border-border bg-surface-raised text-ink-soft shadow-sm transition-colors group-hover:border-vocab group-hover:text-vocab" aria-hidden="true">
+            <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+            </svg>
+          </span>
+        </button>
         <div className="min-w-[9rem] flex-1">
           <h1 className="display-friendly m-0 truncate text-3xl font-semibold text-ink">{profile.name}</h1>
           <p className="m-0 mt-0.5 flex flex-wrap gap-x-2 text-sm text-ink-faint">
@@ -343,7 +436,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         </div>
         {!fsa && !cloud.link && (
           <p className="m-0 w-full rounded-md bg-surface-sunken px-4 py-2.5 text-xs leading-relaxed text-ink-soft">
-            This browser can't save in place, so each save downloads a fresh copy of your file — keep the newest one.
+            This browser can't save in place, so each save downloads a fresh copy of your file, so keep the newest one.
             (Chrome and Edge can save directly to the same file.)
           </p>
         )}
@@ -356,7 +449,7 @@ export default function ProgressApp({ groups, parts }: Props) {
         onConnect={(p) => void connectProfile(p)}
         onStop={() => {
           unlink();
-          setNotice('This device no longer syncs. Your cloud copy is untouched — reconnect any time.');
+          setNotice('This device no longer syncs. Your cloud copy is untouched, and you can reconnect any time.');
         }}
         onSaveCopy={() => void saveToFile()}
       />
@@ -405,11 +498,11 @@ export default function ProgressApp({ groups, parts }: Props) {
         <div className="rounded-lg border border-border bg-surface-raised p-5 shadow-sm">
           <p className="m-0 text-xs font-bold tracking-widest text-gold uppercase">Test bests</p>
           <p className="m-0 mt-2 text-3xl font-bold text-ink">
-            {testScores.allTime?.score ?? '—'}
+            {testScores.allTime?.score ?? '–'}
             <span className="text-base font-semibold text-ink-faint"> all-time</span>
           </p>
           <p className="m-0 mt-1 text-sm text-ink-soft">
-            today: <b>{testScores.today?.date === today ? testScores.today.score : '—'}</b>
+            today: <b>{testScores.today?.date === today ? testScores.today.score : '–'}</b>
           </p>
         </div>
       </section>
@@ -475,7 +568,7 @@ export default function ProgressApp({ groups, parts }: Props) {
                         <a
                           key={l.id}
                           href={l.url}
-                          title={`${l.number} · ${l.title}${p?.best ? ` — best ${p.best.correct}/${p.best.total}` : ''}${p?.readAt ? ' · read' : ''}`}
+                          title={`${l.number} · ${l.title}${p?.best ? ` · best ${p.best.correct}/${p.best.total}` : ''}${p?.readAt ? ' · read' : ''}`}
                           className={`relative flex h-6 w-7 items-center justify-center rounded-[5px] border text-[0.68rem] font-bold no-underline ${BAND_CHIP[band]}`}
                         >
                           {l.number}

@@ -2,7 +2,11 @@
 import { useRef, useState } from 'react';
 import type { Avatar } from '../../types/profile';
 
-const EMOJI = ['🦊', '🐸', '🦉', '🐙', '🌵', '🌞', '🌙', '⚡', '🍊', '🫒', '🐚', '🎨', '🎸', '🚲', '🏔️', '☕'];
+/**
+ * 16 = full rows at both grid widths (4 per row on phones, 8 wider), in
+ * themed runs of four: pets & big cats, bears, woodland, playful.
+ */
+const EMOJI = ['🐶', '🐱', '🦁', '🐯', '🧸', '🐻', '🐼', '🐨', '🦊', '🦉', '🐸', '🐌', '🐣', '🎃', '🥸', '🤖'];
 
 export function AvatarView({ avatar, size = 48 }: { avatar: Avatar; size?: number }) {
   return avatar.kind === 'photo' ? (
@@ -28,11 +32,18 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
-      const size = 96;
+      // Largest display is 64px; 160px stays sharp on high-density screens
+      // while the JPEG is still only a few KB in the save file.
+      const size = 160;
       const canvas = document.createElement('canvas');
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d')!;
+      // JPEG has no transparency: without a backdrop, transparent PNGs turn black.
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
       const scale = Math.max(size / img.width, size / img.height);
       const w = img.width * scale;
       const h = img.height * scale;
@@ -41,7 +52,7 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
       URL.revokeObjectURL(url);
     };
     img.onerror = () => {
-      setPhotoError("Couldn't read that image — try a different file.");
+      setPhotoError("Couldn't read that image. Try a different file.");
       URL.revokeObjectURL(url);
     };
     img.src = url;
@@ -49,7 +60,7 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="grid w-fit grid-cols-4 gap-2 sm:grid-cols-8">
         {EMOJI.map((e) => (
           <button
             key={e}
@@ -64,6 +75,8 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
             {e}
           </button>
         ))}
+      </div>
+      <div className="mt-3 flex items-center">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}

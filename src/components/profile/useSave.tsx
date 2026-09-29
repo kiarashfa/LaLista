@@ -83,7 +83,7 @@ export function useSave(): SaveHook {
       setTransfer({ mode: 'save', done: true, message: outcome === 'downloaded' ? 'Downloaded a fresh copy ✓' : 'Saved to your file ✓' });
     } else {
       setTransfer(null);
-      if (outcome === 'failed') flash("Couldn't save — try again?", 4000);
+      if (outcome === 'failed') flash("Couldn't save. Try again?", 4000);
     }
     busy.current = false;
     refresh();
@@ -103,7 +103,7 @@ export function useSave(): SaveHook {
     setTransfer(null);
     const after = getSyncStatus();
     if (after.phase === 'error' || after.phase === 'offline') {
-      flash(after.phase === 'offline' ? "Couldn't sync — you seem to be offline" : "Couldn't sync — try again?", 4000);
+      flash(after.phase === 'offline' ? "Couldn't sync, you seem to be offline" : "Couldn't sync. Try again?", 4000);
       return 'failed';
     }
     return 'cancelled';

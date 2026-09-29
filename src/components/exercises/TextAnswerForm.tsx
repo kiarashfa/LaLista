@@ -72,13 +72,13 @@ export function TextAnswerForm({ placeholder = 'Type your answer…', grade, exp
 
       {phase === 'retry' && (
         <p className="m-0 mt-2 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
-          <b className="text-warning">¡Casi!</b> That's the right word — it's just missing an accent mark. Type it once
+          <b className="text-warning">¡Casi!</b> That's the right word, just missing an accent mark. Type it once
           more <b>with the tilde</b> (the ´ button below helps).
         </p>
       )}
       {final === 'accent' && (
         <p className="m-0 mt-2 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
-          Counted as correct — but the exact spelling is <b className="text-ink">{expected}</b>. Tildes are part of the
+          Counted as correct, but the exact spelling is <b className="text-ink">{expected}</b>. Tildes are part of the
           word, and sometimes the meaning (<i>estas</i> “these” ≠ <i>estás</i> “you are”).
         </p>
       )}

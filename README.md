@@ -12,7 +12,7 @@ each covered end to end, every one with its own interactive workbook.
 
 No sign-up, no accounts, no ads. Your progress lives in a small file *you*
 keep, load it when you arrive and save it when you leave. Studying on more
-than one device? Optionally let your own Google Drive keep it in sync. Fully
+than one device? Optionally let your own Google Drive or Dropbox keep it in sync. Fully
 static: Astro + React islands, no backend.
 
 ## About

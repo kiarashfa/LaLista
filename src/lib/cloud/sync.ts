@@ -17,9 +17,10 @@
 import type { SessionState } from '../../types/progress';
 import { buildSaveFile, parseSaveFile, SAVE_ERROR_MESSAGES, sessionFromSaveFile } from '../storage/saveFile';
 import { applyLoadedSaveFile, getModifiedAt, loadSession, replaceSession, SESSION_CHANGED_EVENT } from '../storage/session';
+import { saveFileName } from '../../types/profile';
 import { deepEqual, mergeSessions } from './merge';
-import { getProvider } from './providers';
-import { CloudAuthError, CloudCancelledError, type CloudProvider, type ProviderId, type RemoteSave } from './types';
+import { availableProviders, getProvider } from './providers';
+import { CloudAuthError, CloudCancelledError, type CloudProvider, type ProviderId, type RedirectResult, type RemoteSave } from './types';
 
 const LINK_KEY = 'lalista:cloud';
 const BASE_KEY = 'lalista:cloudBase';
@@ -254,21 +255,48 @@ export async function syncNow({ interactive = false } = {}): Promise<boolean> {
       return false;
     }
     try {
-      const account = await provider.connect(link.account);
-      if (link.account && account && account.toLowerCase() !== link.account.toLowerCase()) {
-        // Syncing with a different account would silently start a second copy there.
-        provider.forget();
-        setStatus({ phase: 'error', error: `This profile syncs with ${link.account} — sign in with that account.` });
-        return false;
-      }
-      const current = getLink();
-      if (current && account && !current.account) writeLink({ ...current, account });
+      // Redirect-style providers leave the page here and finish in completeReconnect().
+      if (!acceptAccount(provider, await provider.connect(link.account, 'reconnect'))) return false;
     } catch (e) {
       setStatus(e instanceof CloudCancelledError ? { phase: 'needs-auth' } : describeError(e));
       return false;
     }
   }
   return runSync(provider);
+}
+
+/** After a reconnect sign-in: refuses a different account than the linked one. */
+function acceptAccount(provider: CloudProvider, account: string | null): boolean {
+  const link = getLink();
+  if (!link) return false;
+  if (link.account && account && account.toLowerCase() !== link.account.toLowerCase()) {
+    // Syncing with a different account would silently start a second copy there.
+    provider.forget();
+    setStatus({ phase: 'error', error: `This profile syncs with ${link.account}. Please sign in with that account.` });
+    return false;
+  }
+  if (account && !link.account) writeLink({ ...link, account });
+  return true;
+}
+
+/** Finish a redirect-style reconnect, then sync. */
+export async function completeReconnect(account: string | null): Promise<boolean> {
+  const link = getLink();
+  const provider = link && getProvider(link.provider);
+  if (!provider || !acceptAccount(provider, account)) return false;
+  return runSync(provider);
+}
+
+/**
+ * Finish a redirect-style sign-in if this page load is the return trip from
+ * one (e.g. Dropbox). Returns what the user had set out to do, or null.
+ */
+export async function resumeRedirectConnect(): Promise<(RedirectResult & { providerId: ProviderId }) | null> {
+  for (const provider of availableProviders()) {
+    const result = await provider.completeRedirect?.();
+    if (result) return { ...result, providerId: provider.id };
+  }
+  return null;
 }
 
 // ---------- Automatic syncing ----------
@@ -326,10 +354,16 @@ export function startAutoSync(): void {
 
 // ---------- Linking (all called from taps on the Progress page) ----------
 
-/** Sign in and list the LaLista saves found in that cloud. */
-export async function connectAndList(providerId: ProviderId): Promise<{ account: string | null; saves: RemoteSave[] }> {
+/**
+ * Sign in and list the LaLista saves found in that cloud. `intent` says what
+ * happens next, so redirect-style providers can resume it after sign-in.
+ */
+export async function connectAndList(
+  providerId: ProviderId,
+  intent: 'start' | 'link' = 'start',
+): Promise<{ account: string | null; saves: RemoteSave[] }> {
   const provider = mustGetProvider(providerId);
-  const account = await provider.connect();
+  const account = await provider.connect(null, intent);
   return { account, saves: await provider.list() };
 }
 
@@ -359,8 +393,9 @@ export async function linkCurrentProfile(
   const provider = mustGetProvider(providerId);
   const local = loadSession();
   if (!local.profile) throw new Error('Create or load a profile first.');
-  const name = local.profile.name.trim().toLowerCase();
-  const existing = saves.find((s) => s.profileName.trim().toLowerCase() === name);
+  // Compare by file name: some clouds only know the profile by its file.
+  const fileOf = (name: string) => saveFileName(name).toLowerCase();
+  const existing = saves.find((s) => fileOf(s.profileName) === fileOf(local.profile!.name));
 
   if (!existing) {
     const snapshotAt = getModifiedAt();

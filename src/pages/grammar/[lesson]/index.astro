@@ -63,7 +63,7 @@ const components = {
 };
 ---
 
-<BaseLayout requireProfile section="grammar" title={`${meta.data.title} — LaLista Grammar`} description={meta.data.summary}>
+<BaseLayout requireProfile section="grammar" title={`${meta.data.title} · LaLista Grammar`} description={meta.data.summary}>
   <div id="lesson-grid" class="collapsible-grid relative mx-auto grid w-full max-w-[1100px] flex-1 grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)]">
     <aside class="collapsible-aside hidden border-r border-border px-6 py-10 lg:block">
       <nav class="sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto pr-1">
@@ -161,7 +161,7 @@ const components = {
               <>
                 {i > 0 && ', '}
                 <a href={withBase(`/grammar/${pid}/`)} class="font-semibold text-grammar">
-                  Ch. {lessonNumber(pid)} — {titleOf(pid)}
+                  Ch. {lessonNumber(pid)} · {titleOf(pid)}
                 </a>
               </>
             ))}

@@ -4,7 +4,7 @@
 
 1747 pronunciation recordings come from
 [WordReference.com](https://www.wordreference.com/), whose audio has long been
-a reference for Spanish learners — gratefully credited as this site's default
+a reference for Spanish learners. It is gratefully credited as this site's default
 voice.
 
 ## Lingua Libre recordings (CC BY 4.0)

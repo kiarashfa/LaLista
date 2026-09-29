@@ -32,10 +32,11 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     env:
-      # Public OAuth client ID for optional Google Drive sync (a repository
-      # variable, not a secret — it ships in the page anyway). Unset = the
-      # site builds without the cloud option.
+      # Public app IDs for optional cloud sync (repository variables, not
+      # secrets — they ship in the page anyway). Unset = the site builds
+      # without that cloud option.
       PUBLIC_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+      PUBLIC_DROPBOX_APP_KEY: ${{ vars.DROPBOX_APP_KEY }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v7

@@ -5,7 +5,21 @@
  * (sync.ts) owns all merge/conflict logic.
  */
 
-export type ProviderId = 'gdrive' | 'mock';
+export type ProviderId = 'gdrive' | 'dropbox' | 'mock';
+
+/**
+ * Why a sign-in was started. Redirect-style providers leave the page to sign
+ * in, so the intent travels with them and is resumed when the user returns.
+ */
+export type ConnectIntent = 'start' | 'link' | 'reconnect';
+
+/** A redirect sign-in that just completed on this page load. */
+export interface RedirectResult {
+  account: string | null;
+  intent: ConnectIntent;
+  /** Page to go back to after a reconnect (null = stay). */
+  returnTo: string | null;
+}
 
 /** A save file found in the user's cloud. */
 export interface RemoteSave {
@@ -21,16 +35,19 @@ export interface CloudProvider {
   label: string;
   /** Short phrase for where files live, used in UI copy. */
   location: string;
-  /** True while a usable access token is cached — no UI needed to call the API. */
+  /** True while the API can be called without any UI (a cached or silently renewable token). */
   hasToken(): boolean;
   /** Warm up any sign-in script so connect() can open its popup inside the user's tap. */
   preload(): void;
   /**
    * Interactive sign-in / consent. MUST be called from a user gesture
    * (browsers block popups otherwise). Resolves with the account label
-   * (e.g. an email) when known.
+   * (e.g. an email) when known. Redirect-style providers navigate away
+   * instead and never resolve; see completeRedirect().
    */
-  connect(accountHint?: string | null): Promise<string | null>;
+  connect(accountHint?: string | null, intent?: ConnectIntent): Promise<string | null>;
+  /** Redirect-style providers: finish a sign-in whose result is in this page's URL (null = none). */
+  completeRedirect?(): Promise<RedirectResult | null>;
   /** Drop the cached token on this device. */
   forget(): void;
   list(): Promise<RemoteSave[]>;

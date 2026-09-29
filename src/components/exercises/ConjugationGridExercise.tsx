@@ -81,7 +81,7 @@ export function ConjugationGrid({ exercise, onGraded }: { exercise: Ex; onGraded
       {answered && result.accentMisses > 0 && (
         <p className="m-0 mt-3 rounded-md border border-warning bg-gold-bg px-3 py-2 text-sm text-ink-soft">
           <b className="text-warning">{result.accentMisses === 1 ? 'One form' : `${result.accentMisses} forms`}</b> had the
-          right conjugation but a missing tilde — counted as correct, exact spelling shown in amber. Accents are part of
+          right conjugation but a missing tilde. Counted as correct, with the exact spelling shown in amber. Accents are part of
           the word.
         </p>
       )}

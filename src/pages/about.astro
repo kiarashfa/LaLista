@@ -8,21 +8,25 @@ import { withBase } from '../lib/paths';
 import groups from '../content/vocabulary/groups.json';
 import words from '../content/vocabulary/words.json';
 
-// Optional cloud sync is only described when this build has it configured.
-const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
+// Optional cloud sync is only described for the services this build has configured.
+const clouds = [
+  import.meta.env.PUBLIC_GOOGLE_CLIENT_ID && 'Google Drive',
+  import.meta.env.PUBLIC_DROPBOX_APP_KEY && 'Dropbox',
+].filter(Boolean) as string[];
+const cloudSync = clouds.length > 0;
 ---
 
 <BaseLayout
   section="about"
-  title="About — LaLista"
-  description="What LaLista is and how to use it: a free Spanish (Castellano) vocabulary trainer and complete grammar reference — no ads, no accounts, your progress in a file you keep."
+  title="About · LaLista"
+  description="What LaLista is and how to use it: a free Spanish (Castellano) vocabulary trainer and complete grammar reference. No ads, no accounts, your progress in a file you keep."
 >
   <main class="mx-auto w-full max-w-[720px] flex-1 px-6 py-12 sm:px-8">
     <header class="relative mb-12">
       <span class="font-display pointer-events-none absolute -top-8 -left-3 z-0 text-[9rem] leading-none font-light text-vocab opacity-[0.06] select-none" aria-hidden="true">¿</span>
       <h1 class="display-editorial relative z-10 m-0 text-4xl font-medium text-ink sm:text-5xl">About LaLista</h1>
       <p class="relative z-10 mt-4 text-lg leading-relaxed text-ink-soft">
-        LaLista is a free place to learn Spanish — Castellano, specifically. {words.length} words with real
+        LaLista is a free place to learn Spanish (Castellano, specifically). {words.length} words with real
         pronunciation and a grammar reference that covers every topic completely, side by side on one site. No ads, no
         accounts, no cookie banners. Just the list.
       </p>
@@ -33,23 +37,23 @@ const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
       <h2 class="display-friendly m-0 mt-2 text-2xl font-semibold text-ink">Words, three ways</h2>
       <p class="mt-3 leading-relaxed text-ink-soft">
         The <a href={withBase('/vocabulary/')} class="font-semibold text-vocab underline">vocabulary trainer</a> holds {words.length} words
-        in {groups.length} topic groups — colors, food, travel and so on — each with audio, phonetics and an example
+        in {groups.length} topic groups (colors, food, travel and so on), each with audio, phonetics and an example
         sentence. Three modes share them:
       </p>
       <ul class="mt-3 flex list-none flex-col gap-3 p-0">
         <li class="rounded-md border border-border bg-surface-raised px-4 py-3 leading-relaxed text-ink-soft shadow-sm">
-          <b class="text-ink">Group Study</b> — where learning happens. Pick a group; new words arrive in small
+          <b class="text-ink">Group Study</b> is where learning happens. Pick a group; new words arrive in small
           batches and get quizzed until they climb the seven stages from <i>New</i> to <i>Mastered</i>. Skip what you
-          don't know yet, flag difficult words, mark words you already know — and pin a note to any word to make it
+          don't know yet, flag difficult words, mark words you already know, and pin a note to any word to make it
           stick.
         </li>
         <li class="rounded-md border border-border bg-surface-raised px-4 py-3 leading-relaxed text-ink-soft shadow-sm">
-          <b class="text-ink">Review</b> — relaxed reinforcement: six choices, no clock. Mix any directions
+          <b class="text-ink">Review</b> is relaxed reinforcement: six choices, no clock. Mix any directions
           (English→Spanish, Spanish→English, listening) in one run, over everything you've mastered or a single group.
-          Review never changes a word's learning stage — it just keeps it bright.
+          Review never changes a word's learning stage. It just keeps it bright.
         </li>
         <li class="rounded-md border border-border bg-surface-raised px-4 py-3 leading-relaxed text-ink-soft shadow-sm">
-          <b class="text-ink">Test</b> — the opposite: three choices, a real clock, five lives, and a high score to
+          <b class="text-ink">Test</b> is the opposite: three choices, a real clock, five lives, and a high score to
           beat. Pure recall under pressure, with your learning progress safely out of reach.
         </li>
       </ul>
@@ -61,11 +65,11 @@ const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
       <p class="mt-3 leading-relaxed text-ink-soft">
         The <a href={withBase('/grammar/')} class="font-semibold text-grammar underline">grammar reference</a> has 57
         chapters in 13 parts. Instead of slicing a topic into pieces across difficulty levels, each chapter tells one
-        story end to end — <i>ser</i> vs <i>estar</i>, the subjunctive, <i>por</i> vs <i>para</i> — from the first idea
+        story end to end (<i>ser</i> vs <i>estar</i>, the subjunctive, <i>por</i> vs <i>para</i>), from the first idea
         to the finest exceptions, so there's always exactly one place to look something up.
       </p>
       <p class="mt-3 leading-relaxed text-ink-soft">
-        Read a chapter, mark it read, then open its <b class="text-ink">workbook</b>: interactive exercises — multiple
+        Read a chapter, mark it read, then open its <b class="text-ink">workbook</b>: interactive exercises like multiple
         choice, fill-in-the-blank, error correction, conjugation grids, sentence reordering and more. Retake them as
         often as you like; only your best score counts, so a bad day never sets you back.
       </p>
@@ -73,21 +77,22 @@ const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
 
     <section class="mb-12">
       <p class="m-0 text-xs font-bold tracking-widest text-success uppercase">Progress</p>
-      <h2 class="display-friendly m-0 mt-2 text-2xl font-semibold text-ink">No accounts — a file you keep</h2>
+      <h2 class="display-friendly m-0 mt-2 text-2xl font-semibold text-ink">No accounts, just a file you keep</h2>
       <p class="mt-3 leading-relaxed text-ink-soft">
         There is nothing to sign into. Your progress lives in a small file on your own computer: load it on
         the <a href={withBase('/progress/')} class="font-semibold text-ink underline">Progress page</a> when you
-        arrive, hit save when you're done. The same page is your dashboard — every group and chapter at a glance —
+        arrive, hit save when you're done. The same page is your dashboard (every group and chapter at a glance),
         plus your streak, test bests, and a notepad for your own notes, word mnemonics included.
       </p>
       {
         cloudSync && (
           <p id="privacy" class="mt-3 leading-relaxed text-ink-soft">
-            Studying on more than one device? You can optionally let <b class="text-ink">Google Drive</b> keep that file
-            in sync for you. It is stored in a private, hidden LaLista folder in <em>your own</em> Drive and travels
-            straight between your browser and Google — LaLista has no server, never sees your progress, and can't
-            access anything else in your Drive. You can stop syncing at any time, and remove the folder from Google
-            Drive's settings under <i>Manage apps</i>.
+            Studying on more than one device? You can optionally let <b class="text-ink">{clouds.join(' or ')}</b> keep
+            that file in sync for you. It is stored in a LaLista folder in <em>your own</em> account and travels
+            straight between your browser and that service. LaLista has no server, never sees your progress, and
+            can't access anything else you keep there. You can stop syncing at any time.
+            {clouds.includes('Google Drive') && <> On Google Drive the folder is hidden; remove it under Drive's settings → <i>Manage apps</i>.</>}
+            {clouds.includes('Dropbox') && <> On Dropbox it's the LaLista folder inside <i>Apps</i>.</>}
           </p>
         )
       }
@@ -108,8 +113,8 @@ const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
           <p class="m-0 mt-1 text-sm font-semibold text-ink-faint">Scientist · developer · designer · Spanish learner</p>
           <p class="mt-4 leading-relaxed text-ink-soft">
             I built LaLista because the site I wanted to learn from didn't exist. Everything I tried treated vocabulary
-            and grammar as separate worlds — great flashcards with barely any grammar, or solid grammar chopped into
-            fragments — and the rest sat behind subscriptions, ads, accounts and cookie walls. I wanted one quiet,
+            and grammar as separate worlds (great flashcards with barely any grammar, or solid grammar chopped into
+            fragments), and the rest sat behind subscriptions, ads, accounts and cookie walls. I wanted one quiet,
             complete place where the two are learned together. So I built it.
           </p>
           <p class="mt-3 leading-relaxed text-ink-soft">
@@ -159,7 +164,7 @@ const cloudSync = Boolean(import.meta.env.PUBLIC_GOOGLE_CLIENT_ID);
       <p class="m-0 text-xs font-bold tracking-widest text-gold uppercase">Support</p>
       <h2 class="display-friendly m-0 mt-2 text-2xl font-semibold text-ink">Keep the coffee warm</h2>
       <p class="mx-auto mt-3 max-w-[480px] leading-relaxed text-ink-soft">
-        LaLista is free and stays free — no ads, ever. If it has earned a spot in your Spanish routine and you feel
+        LaLista is free and stays free. No ads, ever. If it has earned a spot in your Spanish routine and you feel
         like giving something back, a coffee genuinely helps.
       </p>
       <p class="mt-5 flex flex-wrap justify-center gap-3">

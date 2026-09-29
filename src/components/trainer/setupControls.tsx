@@ -132,7 +132,7 @@ export function ScopePicker({ groups, masteredTotal, scope, poolKind, onScope, o
           <option value="">Choose a group…</option>
           {groups.map((g) => (
             <option key={g.slug} value={g.slug}>
-              {g.title} — {g.mastered}/{g.total} mastered
+              {g.title} · {g.mastered}/{g.total} mastered
             </option>
           ))}
         </select>

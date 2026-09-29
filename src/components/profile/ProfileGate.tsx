@@ -29,7 +29,7 @@ export default function ProfileGate() {
         <h2 className="relative mt-3 mb-2 text-xl font-bold text-ink">First, a home for your progress</h2>
         <p className="relative m-0 text-sm leading-relaxed text-ink-soft">
           Studying without a profile would leave your progress with nowhere to live. Load your{' '}
-          <b>lalista-progress</b> file{cloud ? ', continue from the cloud' : ''} — or start fresh — and come right back.
+          <b>lalista-progress</b> file{cloud ? ', continue from the cloud' : ''} or start fresh, then come right back.
         </p>
         <div className="relative mt-6 flex flex-wrap items-center justify-center gap-3">
           <a href={withBase('/progress/')} className="rounded-pill bg-vocab px-6 py-3 text-sm font-bold text-white no-underline hover:bg-vocab-hover">

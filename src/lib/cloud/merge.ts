@@ -112,7 +112,7 @@ function mergeStreak(l: StreakState, r: StreakState): StreakState {
 }
 
 /** Marks where the other device's notes begin when both edited the same notepad. */
-export const NOTE_MERGE_DIVIDER = '<p><b>— From your other device —</b></p>';
+export const NOTE_MERGE_DIVIDER = '<p><b>From your other device:</b></p>';
 
 function mergeNotes(l: string, r: string): string {
   if (isRichEmpty(toEditableHtml(l))) return r;

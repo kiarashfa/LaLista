@@ -84,12 +84,12 @@ export default function ReviewApp({ vocabularyUrl }: { vocabularyUrl: string }) 
     return (
       <div className="rounded-lg border border-border bg-surface-raised px-6 py-8 shadow-md sm:px-8">
         <h2 className="m-0 text-center text-xl font-bold text-ink">Set up your review</h2>
-        <p className="m-0 mt-1 text-center text-sm text-ink-soft">Stages never change here — this only keeps words bright.</p>
+        <p className="m-0 mt-1 text-center text-sm text-ink-soft">Stages never change here. This only keeps words bright.</p>
 
         {masteredTotal === 0 && (
           <p className="mt-4 mb-0 rounded-md border border-gold bg-gold-bg px-4 py-3 text-sm leading-relaxed text-ink-soft">
             🌱 You haven't Mastered any words yet, so the usual pool is empty. Pick a topic group below and choose{' '}
-            <b>Every word</b> to practice it anyway — or{' '}
+            <b>Every word</b> to practice it anyway, or{' '}
             <a href={vocabularyUrl} className="font-semibold text-ink underline">
               master some in Group Study
             </a>{' '}
@@ -107,7 +107,7 @@ export default function ReviewApp({ vocabularyUrl }: { vocabularyUrl: string }) 
           onPoolKind={setPoolKind}
         />
 
-        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Directions — mix any</p>
+        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Directions: mix any</p>
         <ModePicker modes={modes} onChange={pickModes} />
 
         <div className="mt-6 text-center">
@@ -178,7 +178,7 @@ export default function ReviewApp({ vocabularyUrl }: { vocabularyUrl: string }) 
         showMarkActions={false}
         allowSkip
         mode={mode}
-        caption="Review never changes a word's stage — it just keeps it bright."
+        caption="Review never changes a word's stage. It just keeps it bright."
         onDone={(outcome) => {
           // Brightness refresh only for words that HAVE an entry; an
           // every-word run must not create stage-0 entries as a side effect.

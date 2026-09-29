@@ -82,7 +82,7 @@ export default function CloudToast({ status, onSync, autoRefreshes }: Props) {
     return (
       <Toast tone="warn">
         <span className="min-w-0 flex-1 text-ink-soft">
-          <b className="text-ink">☁ Sync paused.</b> {where} needs a quick tap now and then to keep your devices in step.
+          <b className="text-ink">☁ Sync paused.</b> Tap to reconnect {where} and keep your devices in step.
         </span>
         <button type="button" className={`${btn} bg-success text-white hover:opacity-90`} onClick={onSync}>
           Sync now

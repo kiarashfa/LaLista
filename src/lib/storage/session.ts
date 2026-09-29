@@ -117,6 +117,13 @@ export function hasUnsavedChanges(): boolean {
   return modified > Number(localStorage.getItem(SAVED_KEY) ?? 0);
 }
 
+/** Change the profile picture (emoji or photo). */
+export function setProfileAvatar(avatar: ProfileInfo['avatar']): void {
+  updateSession((state) => {
+    if (state.profile) state.profile = { ...state.profile, avatar };
+  });
+}
+
 export function setNotepad(text: string): void {
   updateSession((state) => {
     state.notepad = text;

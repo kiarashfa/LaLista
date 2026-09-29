@@ -206,7 +206,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
 
         {masteredTotal < MIN_POOL && (
           <p className="mt-4 mb-0 rounded-md border border-gold bg-gold-bg px-4 py-3 text-sm leading-relaxed text-ink-soft">
-            ⏱️ Test normally draws from words you've <b>Mastered</b> (at least {MIN_POOL}) — you're not there yet. Pick a
+            ⏱️ Test normally draws from words you've <b>Mastered</b> (at least {MIN_POOL}), and you're not there yet. Pick a
             topic group below and choose <b>Every word</b> to race on it anyway, or{' '}
             <a href={vocabularyUrl} className="font-semibold text-ink underline">
               master some in Group Study
@@ -225,7 +225,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
           onPoolKind={setPoolKind}
         />
 
-        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Directions — mix any</p>
+        <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Directions: mix any</p>
         <ModePicker modes={modes} onChange={pickModes} />
 
         <p className="mt-5 mb-2 text-xs font-bold tracking-widest text-ink-faint uppercase">Your clock</p>
@@ -253,7 +253,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
           {modes.length === 0
             ? 'Pick at least one direction.'
             : poolCount < MIN_POOL
-              ? `Need at least ${MIN_POOL} words — this selection has ${poolCount}.`
+              ? `Need at least ${MIN_POOL} words. This selection has ${poolCount}.`
               : `${poolCount} words · ${modesSummary(modes)} · wrong answers can't demote a word here.`}
         </p>
         {(bests.allTime || bests.today) && (
@@ -383,7 +383,7 @@ export default function TestApp({ vocabularyUrl }: { vocabularyUrl: string }) {
           }}
         />
       </div>
-      <p className="mt-3 text-center text-xs text-ink-faint">No hints, no skips — pure recall. Stages are never touched.</p>
+      <p className="mt-3 text-center text-xs text-ink-faint">No hints, no skips: pure recall. Stages are never touched.</p>
     </div>
   );
 }

@@ -4,18 +4,20 @@
  *   picker when that cloud holds several profiles;
  * - CloudStatusPanel: on the dashboard, either the live sync state or an
  *   invitation to start syncing this profile.
- * The heavy lifting (sign-in, merge, sync) lives in src/lib/cloud/sync.ts.
+ * Both are presentational; ProgressApp drives the flows (which may resume
+ * after a sign-in redirect), and src/lib/cloud/ does the syncing.
  */
 import { useEffect, useState } from 'react';
 import { availableProviders } from '../../lib/cloud/providers';
-import { connectAndList, type SyncStatus } from '../../lib/cloud/sync';
+import type { SyncStatus } from '../../lib/cloud/sync';
 import { CloudCancelledError, type CloudProvider, type ProviderId, type RemoteSave } from '../../lib/cloud/types';
+import ProviderLogo from './ProviderLogo';
 
 /** User-facing message for a failed cloud action; null for a plain cancel. */
 export function cloudErrorMessage(e: unknown): string | null {
   if (e instanceof CloudCancelledError) return e.message === 'Cancelled' ? null : e.message;
-  if (e instanceof TypeError) return "Couldn't reach the cloud — check your connection and try again.";
-  return e instanceof Error ? e.message : 'Something went wrong — try again.';
+  if (e instanceof TypeError) return "Couldn't reach the cloud. Check your connection and try again.";
+  return e instanceof Error ? e.message : 'Something went wrong. Please try again.';
 }
 
 export function useCloudProviders(): CloudProvider[] {
@@ -37,55 +39,56 @@ function when(iso: string | number): string {
   return new Date(ms).toLocaleDateString();
 }
 
-const CloudIcon = ({ className = 'h-6 w-6' }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-  </svg>
-);
+/** A service's logo on a small white tile, legible in light and dark themes. */
+function LogoTile({ id, size = 'lg' }: { id: ProviderId; size?: 'sm' | 'lg' }) {
+  const box = size === 'lg' ? 'h-11 w-11' : 'h-9 w-9';
+  const logo = size === 'lg' ? 'h-6 w-6' : 'h-5 w-5';
+  return (
+    <span className={`flex shrink-0 items-center justify-center rounded-md border border-border bg-white text-ink-soft ${box}`}>
+      <ProviderLogo id={id} className={logo} />
+    </span>
+  );
+}
 
 // ---------- Landing ----------
 
-interface StartProps {
-  providers: CloudProvider[];
-  onPick: (providerId: ProviderId, save: RemoteSave, account: string | null) => void;
-  /** Signed in, but that cloud holds no LaLista progress yet. */
-  onEmpty: (providerId: ProviderId, account: string | null, label: string) => void;
-  onError: (message: string) => void;
+export interface CloudChoice {
+  provider: CloudProvider;
+  account: string | null;
+  saves: RemoteSave[];
 }
 
-export function CloudStart({ providers, onPick, onEmpty, onError }: StartProps) {
-  const [busy, setBusy] = useState<ProviderId | null>(null);
-  const [choice, setChoice] = useState<null | { provider: CloudProvider; account: string | null; saves: RemoteSave[] }>(null);
+interface StartProps {
+  providers: CloudProvider[];
+  /** The provider currently signing in (its button shows progress). */
+  busy: ProviderId | null;
+  /** Several profiles found — show the picker instead of the buttons. */
+  choice: CloudChoice | null;
+  onStart: (provider: CloudProvider) => void;
+  onPick: (save: RemoteSave) => void;
+  onBack: () => void;
+}
 
-  const start = async (provider: CloudProvider) => {
-    setBusy(provider.id);
-    try {
-      const { account, saves } = await connectAndList(provider.id);
-      if (saves.length === 0) onEmpty(provider.id, account, provider.label);
-      else if (saves.length === 1) onPick(provider.id, saves[0], account);
-      else setChoice({ provider, account, saves });
-    } catch (e) {
-      const message = cloudErrorMessage(e);
-      if (message) onError(message);
-    } finally {
-      setBusy(null);
-    }
-  };
-
+export function CloudStart({ providers, busy, choice, onStart, onPick, onBack }: StartProps) {
   if (choice) {
     return (
       <div className="mb-4 rounded-lg border-2 border-success bg-surface-raised p-5 shadow-md">
-        <p className="m-0 font-bold text-ink">Which profile?</p>
-        <p className="m-0 mt-1 text-sm text-ink-soft">
-          {choice.provider.label}
-          {choice.account ? ` (${choice.account})` : ''} holds several LaLista profiles.
-        </p>
+        <div className="flex items-center gap-3">
+          <LogoTile id={choice.provider.id} size="sm" />
+          <div className="min-w-0">
+            <p className="m-0 font-bold text-ink">Which profile?</p>
+            <p className="m-0 truncate text-sm text-ink-soft">
+              {choice.provider.label}
+              {choice.account ? ` (${choice.account})` : ''} holds several LaLista profiles.
+            </p>
+          </div>
+        </div>
         <ul className="m-0 mt-3 flex list-none flex-col gap-2 p-0">
           {choice.saves.map((s) => (
             <li key={s.id}>
               <button
                 type="button"
-                onClick={() => onPick(choice.provider.id, s, choice.account)}
+                onClick={() => onPick(s)}
                 className="flex w-full cursor-pointer items-baseline justify-between gap-3 rounded-md border border-border bg-surface-base px-4 py-3 text-left hover:border-success"
               >
                 <span className="truncate font-semibold text-ink">{s.profileName}</span>
@@ -94,7 +97,7 @@ export function CloudStart({ providers, onPick, onEmpty, onError }: StartProps) 
             </li>
           ))}
         </ul>
-        <button type="button" onClick={() => setChoice(null)} className="mt-3 cursor-pointer text-sm font-semibold text-ink-soft underline">
+        <button type="button" onClick={onBack} className="mt-3 cursor-pointer text-sm font-semibold text-ink-soft underline">
           Back
         </button>
       </div>
@@ -102,21 +105,19 @@ export function CloudStart({ providers, onPick, onEmpty, onError }: StartProps) 
   }
 
   return (
-    <div className="mb-4 flex flex-col gap-3">
+    <div className={`mb-4 grid gap-3 ${providers.length > 1 ? 'sm:grid-cols-2' : ''}`}>
       {providers.map((p) => (
         <button
           key={p.id}
           type="button"
           disabled={busy !== null}
-          onClick={() => void start(p)}
+          onClick={() => onStart(p)}
           className="flex cursor-pointer items-center gap-4 rounded-lg border-2 border-border bg-surface-raised p-5 text-left shadow-md hover:border-success disabled:cursor-wait disabled:opacity-70"
         >
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-success-bg text-success">
-            <CloudIcon />
-          </span>
+          <LogoTile id={p.id} />
           <span className="min-w-0">
             <span className="block font-bold text-ink">{busy === p.id ? `Connecting to ${p.label}…` : `Continue with ${p.label}`}</span>
-            <span className="mt-0.5 block text-sm text-ink-soft">Pick up on any device — your progress syncs by itself as you study.</span>
+            <span className="mt-0.5 block text-sm text-ink-soft">Pick up on any device. Progress syncs by itself.</span>
           </span>
         </button>
       ))}
@@ -131,8 +132,8 @@ const PHASE_TEXT: Record<SyncStatus['phase'], string> = {
   synced: 'Up to date',
   pending: 'Changes waiting to sync',
   syncing: 'Syncing…',
-  'needs-auth': 'Paused — tap Sync now to reconnect',
-  offline: "Offline — will sync when you're back online",
+  'needs-auth': 'Paused: tap Sync now to reconnect',
+  offline: "Offline, will sync once you're back online",
   error: "Couldn't sync",
 };
 
@@ -153,15 +154,13 @@ export function CloudStatusPanel({ providers, cloud, onConnect, connecting, onSt
     const attention = cloud.phase === 'needs-auth' || cloud.phase === 'error';
     return (
       <section className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border bg-surface-raised px-5 py-4 shadow-sm ${attention ? 'border-warning' : 'border-border'}`}>
-        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-pill ${attention ? 'bg-gold-bg text-warning' : 'bg-success-bg text-success'}`}>
-          <CloudIcon className="h-5 w-5" />
-        </span>
+        <LogoTile id={cloud.link.provider} size="sm" />
         <div className="min-w-[12rem] flex-1">
           <p className="m-0 text-sm font-bold text-ink">Syncing with {cloud.providerLabel}</p>
           {cloud.link.account && <p className="m-0 truncate text-xs text-ink-faint">{cloud.link.account}</p>}
           <p className={`m-0 text-xs ${attention ? 'font-semibold text-warning' : 'text-ink-soft'}`}>
             {PHASE_TEXT[cloud.phase]}
-            {cloud.phase === 'error' && cloud.error ? ` — ${cloud.error}` : ''}
+            {cloud.phase === 'error' && cloud.error ? `: ${cloud.error}` : ''}
             {cloud.link.lastSyncAt ? ` · last synced ${when(cloud.link.lastSyncAt)}` : ''}
           </p>
         </div>
@@ -193,12 +192,9 @@ export function CloudStatusPanel({ providers, cloud, onConnect, connecting, onSt
 
   return (
     <section className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 rounded-lg border border-dashed border-border bg-surface-raised px-5 py-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-pill bg-surface-sunken text-ink-soft">
-        <CloudIcon className="h-5 w-5" />
-      </span>
       <div className="min-w-[12rem] flex-1">
         <p className="m-0 text-sm font-bold text-ink">Studying on more than one device?</p>
-        <p className="m-0 text-xs text-ink-soft">Sync this profile through your own cloud — no more moving files around.</p>
+        <p className="m-0 text-xs text-ink-soft">Sync this profile through your own cloud and stop moving files around.</p>
       </div>
       <span className="flex flex-wrap gap-2">
         {providers.map((p) => (
@@ -207,8 +203,11 @@ export function CloudStatusPanel({ providers, cloud, onConnect, connecting, onSt
             type="button"
             disabled={connecting !== null}
             onClick={() => onConnect(p)}
-            className="cursor-pointer rounded-pill border-2 border-success px-4 py-2 text-sm font-bold text-success hover:bg-success-bg disabled:cursor-wait disabled:opacity-60"
+            className="flex cursor-pointer items-center gap-2 rounded-pill border-2 border-border bg-surface-base py-1.5 pr-4 pl-2 text-sm font-bold text-ink hover:border-success disabled:cursor-wait disabled:opacity-60"
           >
+            <span className="flex h-6 w-6 items-center justify-center rounded-pill bg-white">
+              <ProviderLogo id={p.id} className="h-4 w-4" />
+            </span>
             {connecting === p.id ? 'Connecting…' : `Sync with ${p.label}`}
           </button>
         ))}

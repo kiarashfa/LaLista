@@ -143,7 +143,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
           <div className="relative mt-5 rounded-md bg-surface-sunken px-4 py-3 text-center">
             <p className="m-0 flex items-center justify-center gap-3 text-[0.95rem] font-semibold text-ink">
               {word.spanish}
-              <span className="font-normal text-ink-faint">— {word.english}</span>
+              <span className="font-normal text-ink-faint">· {word.english}</span>
               {word.phonetics && <span className="font-normal text-ink-faint">{word.phonetics}</span>}
               {/* Auto-pronounce on a CORRECT answer; listening modes already played it. */}
               <WordAudioButtons word={word} autoPlayFirst={answered === true && !listening} />
@@ -171,7 +171,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
               <button
                 type="button"
                 title="I don't know (Esc)"
-                aria-label="Skip — I don't know"
+                aria-label="Skip, I don't know"
                 onClick={() => finish('skip')}
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] border-border text-ink-faint hover:border-ink-faint hover:text-ink"
               >
@@ -184,7 +184,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
               <>
                 <button
                   type="button"
-                  title={difficult ? 'Difficult — click to unmark' : 'Mark as difficult'}
+                  title={difficult ? 'Difficult (click to unmark)' : 'Mark as difficult'}
                   aria-label={difficult ? 'Unmark difficult' : 'Mark as difficult'}
                   aria-pressed={difficult}
                   onClick={onToggleDifficult}
@@ -196,7 +196,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
                 </button>
                 <button
                   type="button"
-                  title={excluded ? 'Excluded from Review & Test — click to include' : 'Exclude from Review & Test'}
+                  title={excluded ? 'Excluded from Review & Test (click to include)' : 'Exclude from Review & Test'}
                   aria-label={excluded ? 'Include in Review and Test' : 'Exclude from Review and Test'}
                   aria-pressed={excluded}
                   onClick={onToggleExcluded}
@@ -211,7 +211,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
                 <button
                   type="button"
                   title="Mark as known"
-                  aria-label="Mark as known — jump straight to Mastered"
+                  aria-label="Mark as known: jump straight to Mastered"
                   onClick={() => setConfirmKnown(true)}
                   className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-[1.5px] border-border text-ink-faint hover:border-success hover:text-success"
                 >
@@ -246,7 +246,7 @@ export function QuizCard({ word, pool, choiceCount, showMarkActions, allowSkip, 
         {confirmKnown && (
           <ConfirmDialog
             title={`Mark “${word.spanish}” as known?`}
-            body="This jumps the word straight to Mastered — it leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
+            body="This jumps the word straight to Mastered. It leaves your study rotation here and shows up in Review and Test instead. You can undo it right after, or demote it later by answering it wrong in Group Study."
             confirmLabel="Yes, I know it"
             onConfirm={() => finish('known')}
             onCancel={() => setConfirmKnown(false)}
