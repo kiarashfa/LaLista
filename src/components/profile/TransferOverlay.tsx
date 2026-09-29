@@ -89,10 +89,9 @@ export default function TransferOverlay({ mode, busyLabel, done, onFinished }: P
           </>
         )}
         <div className="mt-4 h-2 overflow-hidden rounded-pill bg-surface-sunken">
-          <div
-            className={`h-full rounded-pill bg-gradient-to-r transition-[width] duration-100 ease-out ${accent}`}
-            style={{ width: `${pct}%` }}
-          />
+          {/* No CSS transition here: the animation loop already moves the bar every
+              frame, and a transition on top made it trail behind the percentage. */}
+          <div className={`h-full rounded-pill bg-gradient-to-r ${accent}`} style={{ width: `${pct}%` }} />
         </div>
       </div>
     </div>

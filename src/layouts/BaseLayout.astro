@@ -27,7 +27,13 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const COPYRIGHT_START_YEAR = 2026;
 const currentYear = new Date().getFullYear();
 const copyrightYears =
-  currentYear > COPYRIGHT_START_YEAR ? `${COPYRIGHT_START_YEAR}-${currentYear}` : `${COPYRIGHT_START_YEAR}`;
+  currentYear > COPYRIGHT_START_YEAR ? `${COPYRIGHT_START_YEAR}–${currentYear}` : `${COPYRIGHT_START_YEAR}`;
+
+const footerLinks = [
+  { label: 'Profile', href: withBase('/progress/') },
+  { label: 'About', href: withBase('/about/') },
+  { label: 'Credits', href: withBase('/credits/') },
+];
 
 const navItems = [
   { key: 'vocabulary', label: 'Vocabulary', short: 'Vocab', href: withBase('/vocabulary/'), activeClass: 'text-vocab bg-vocab-soft' },
@@ -146,14 +152,16 @@ const navItems = [
     {requireProfile && <ProfileGate client:load />}
     <slot />
 
-    <footer class="mt-auto border-t border-border px-8 py-4 text-center text-xs leading-relaxed text-ink-faint">
-      <p class="m-0">
-        LaLista is free, ad-free and account-free (<a href={withBase('/about/')} class="font-semibold text-ink-soft underline">about the project</a>).
-        © {copyrightYears} Kiarash Farajzadehahary.
-      </p>
-      <p class="m-0">
-        Definitions informed by WordReference and the RAE. Pronunciations by Lingua Libre volunteers (CC BY 4.0) and Piper TTS (<a href={withBase('/credits/')} class="font-semibold text-ink-soft underline">full credits</a>).
-      </p>
+    <footer class="mt-auto border-t border-border px-4 py-5 text-xs text-ink-faint sm:px-8">
+      <div class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+        <div class="flex items-center gap-5">
+          <a href={withBase('/')} class="font-display text-base font-semibold text-ink-soft no-underline hover:text-ink">¡LaLista!</a>
+          <nav aria-label="Footer" class="flex items-center gap-4">
+            {footerLinks.map((link) => <a href={link.href} class="text-ink-faint no-underline hover:text-ink hover:underline">{link.label}</a>)}
+          </nav>
+        </div>
+        <p class="m-0">© {copyrightYears} Kiarash Farajzadehahary.</p>
+      </div>
     </footer>
 
     <script>
