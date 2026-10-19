@@ -60,7 +60,7 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
 
   return (
     <div>
-      <div className="grid w-fit grid-cols-4 gap-2 sm:grid-cols-8">
+      <div className="mx-auto grid w-full max-w-[248px] grid-cols-4 gap-2 sm:max-w-[504px] sm:grid-cols-8">
         {EMOJI.map((e) => (
           <button
             key={e}
@@ -68,7 +68,7 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
             onClick={() => onChange({ kind: 'emoji', value: e })}
             aria-label={`avatar ${e}`}
             className={[
-              'flex h-10 w-10 cursor-pointer items-center justify-center rounded-pill border-2 text-xl',
+              'flex aspect-square w-full cursor-pointer items-center justify-center rounded-pill border-2 text-xl',
               value.kind === 'emoji' && value.value === e ? 'border-vocab bg-vocab-soft' : 'border-border bg-surface-raised hover:border-ink-faint',
             ].join(' ')}
           >
@@ -76,7 +76,7 @@ export function AvatarPicker({ value, onChange }: { value: Avatar; onChange: (a:
           </button>
         ))}
       </div>
-      <div className="mt-3 flex items-center">
+      <div className="mt-3 flex items-center justify-center">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
